@@ -121,9 +121,9 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     throw("NULL file");
   int position = valpointer_ + subfileoffset;
   if (TagIsSubIFD()) {
-    if (tagid_ == tag_makernote)
-      position = valpointer_;
-    printf("Loading SUB IFD %0x at %d (%d + %d)", tagid_, position,
+    //if (tagid_ == tag_makernote)
+    position = valpointer_;
+    printf("Loading SUB IFD %0x at %d (%d ##+ %d)", tagid_, position,
 	  valpointer_, subfileoffset);
     
     subifd_ = new TiffIfd(pFile, position, true,

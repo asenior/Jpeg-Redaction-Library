@@ -124,10 +124,10 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   if (pending_pointers_where.size() != pending_pointers_what.size())
     throw("pending pointers don't match");
   for(int i = 0; i < pending_pointers_what.size(); ++i) {
-    printf("Write TiffIfd Locs Where: %d What: %d-%d\n",
+    printf("Write TiffIfd Locs Where: %d What: %d ## -%d\n",
 	   pending_pointers_where[i], pending_pointers_what[i], subfileoffset);
     fseek(pFile, pending_pointers_where[i], SEEK_SET); // Where 
-    const unsigned int ifdloc = pending_pointers_what[i]-subfileoffset;  // What
+    const unsigned int ifdloc = pending_pointers_what[i]/*-subfileoffset*/;  // What
     iRV = fwrite(&ifdloc, sizeof(unsigned int), 1, pFile);  
   }
   iRV = fseek(pFile, 0, SEEK_END);

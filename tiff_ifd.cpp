@@ -1,6 +1,5 @@
 // TiffIIfd.cpp: implementation of the TiffIfd class.
-//
-//////////////////////////////////////////////////////////////////////
+// (c) 2011 Andrew Senior andrewsenior@google.com
 
 #include "tiff_ifd.h"
 #include "tiff_tag.h"
@@ -74,8 +73,10 @@ void TiffIfd::ListTags() const {
 unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
 			      int subfileoffset) const
 {
-  std::vector<unsigned int> pending_pointers_where;  // Pairs of Where/What
-  std::vector<unsigned int> pending_pointers_what;  // Pairs of Where/What
+  // Values that need to be filled in later.
+  // Record where in the file and then what value will be put there.
+  std::vector<unsigned int> pending_pointers_where;
+  std::vector<unsigned int> pending_pointers_what;
 
   int iRV = fseek(pFile, 0, SEEK_END);
 
@@ -86,10 +87,9 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   iRV = fwrite(&nr, sizeof(short), 1, pFile);
   int whereisdata = -1;
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
-    unsigned int pointer = tags_[tagindex]->Write(pFile);   
-    if (pointer) 
-    {
-      if (tags_[tagindex]->GetTag()==TiffTag::tag_stripoffset ||
+    unsigned int pointer = tags_[tagindex]->Write(pFile);   // 0 if no pointer.
+    if (pointer) {
+      if (tags_[tagindex]->GetTag() == TiffTag::tag_stripoffset ||
 	  tags_[tagindex]->GetTag() == TiffTag::tag_thumbnailoffset)
         whereisdata = pending_pointers_where.size();  // Which entry corresponds to the strips/thumbnail
       pending_pointers_where.push_back(pointer); // "Where":  Where we stored the pointer
@@ -124,7 +124,8 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   if (pending_pointers_where.size() != pending_pointers_what.size())
     throw("pending pointers don't match");
   for(int i = 0; i < pending_pointers_what.size(); ++i) {
-    printf("Locs Where: %d What: %d\n", pending_pointers_where[i], pending_pointers_what[i]);
+    printf("Write TiffIfd Locs Where: %d What: %d-%d\n",
+	   pending_pointers_where[i], pending_pointers_what[i], subfileoffset);
     fseek(pFile, pending_pointers_where[i], SEEK_SET); // Where 
     const unsigned int ifdloc = pending_pointers_what[i]-subfileoffset;  // What
     iRV = fwrite(&ifdloc, sizeof(unsigned int), 1, pFile);  

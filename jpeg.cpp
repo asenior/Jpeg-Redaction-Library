@@ -78,15 +78,18 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
     //   continue;
     // }
     if (marker == jpeg_app + 1) { // App1 is EXIF
+      bool arch_big_endian = ArchBigEndian();
       unsigned int magic = 0, exifoffset = 0;
       unsigned short myshort, forty_two, byte_order;
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-      blocksize = byteswap2(blocksize);
+      if (!arch_big_endian)
+	blocksize = byteswap2(blocksize);
       printf("APP Block size is %d %04x\n", blocksize, blocksize);
       iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
       if (iRV != 1) 
         throw(-2);
-      if (magic != 0x66697845) // 'Exif'
+      if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
+      if (magic != 0x45786966) // 'Exif'
         throw(-6);
       iRV = fread(&myshort, sizeof(unsigned short), 1, pFile);
       if (myshort != 0) throw(-4);
@@ -95,7 +98,6 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       if (iRV != 1) 
         throw(-2);
       bool big_endian = false;
-      bool arch_big_endian = ArchBigEndian();
       printf("EXIF byte_order: %04x\n", byte_order);
       if (byte_order == 0x4d4d) // "Motorola"
         big_endian = true;
@@ -283,15 +285,15 @@ int Jpeg::Save(const char * const filename) {
   if (write_exif && ifds_.size() !=0) {
     std::vector<unsigned int> pending_pointers;  // Pairs of Where/What
     unsigned short marker = jpeg_app + 1;
-    /*if (!arch_big_endian)*/ ByteSwapInPlace(&marker, 1);
+    if (!arch_big_endian) ByteSwapInPlace(&marker, 1);
     rv = fwrite(&marker, sizeof(unsigned short), 1, pFile);
     unsigned short exiflength = 0;
     // TODO save the correct length.
     int exif_len_pos = ftell(pFile);
     rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);
     printf("Saving %d Exif IFDs\n", ifds_.size());
-    unsigned int exifmarker = 0x66697845;
-    /*if (!arch_big_endian) ByteSwapInPlace(&exifmarker, 1);*/
+    unsigned int exifmarker = 0x45786966;
+    if (!arch_big_endian) ByteSwapInPlace(&exifmarker, 1);
     rv = fwrite(&exifmarker, sizeof(unsigned int), 1, pFile);
     unsigned short pad = 0;
     rv = fwrite(&pad, sizeof(unsigned short), 1, pFile);
@@ -299,11 +301,10 @@ int Jpeg::Save(const char * const filename) {
     unsigned int forty_two = 0x002a;
     unsigned int byte_order = 0x4949;
     if (arch_big_endian) byte_order = 0x4d4d;
-    rv = fwrite(&forty_two, sizeof(unsigned short), 1, pFile);
     rv = fwrite(&byte_order, sizeof(unsigned short), 1, pFile);
+    rv = fwrite(&forty_two, sizeof(unsigned short), 1, pFile);
     unsigned int exifoffset = ftell(pFile);
     pending_pointers.push_back(exifoffset); // Where
-    //    if (!arch_big_endian) ByteSwapInPlace(&exifoffset, 1);
     rv = fwrite(&exifoffset, sizeof(unsigned int), 1, pFile);
     unsigned int zero = 0x00000000;
     for (int i = 0 ; i < 1 && i < ifds_.size(); ++i) {
@@ -318,13 +319,16 @@ int Jpeg::Save(const char * const filename) {
     // Finally fill in the unresolved pointers.
     exiflength = ftell(pFile) - exif_len_pos;
     fseek(pFile, exif_len_pos, SEEK_SET); // Where 
-    //    if (ArchBigEndian()) ByteSwapInPlace(&exiflength, 1);
+    if (!arch_big_endian) ByteSwapInPlace(&exiflength, 1);
     rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);  
     for(int j = 0; j < pending_pointers.size(); j+=2) {
-      printf("IFD Locs Where: %d What: %d\n", pending_pointers[j], pending_pointers[j + 1]);
+      printf("IFD Locs Where: %d What: %d\n",
+	     pending_pointers[j], pending_pointers[j + 1]);
       fseek(pFile, pending_pointers[j], SEEK_SET); // Where 
-      const unsigned int ifdloc = pending_pointers[j + 1];  // What
-      rv = fwrite(&ifdloc, sizeof(unsigned int), 1, pFile);  
+      unsigned int ifdloc = pending_pointers[j + 1];  // What
+      // Pending pointers are written in native byte order.
+      //      if (!arch_big_endian) ByteSwapInPlace(&ifdloc, 1);
+      rv = fwrite(&ifdloc, sizeof(ifdloc), 1, pFile);  
     }
     rv = fseek(pFile, 0, SEEK_END);
   }

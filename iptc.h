@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <vector>
-#include "byteswapping.h"
+#include "byte_swapping.h"
 
 using std::vector;
 

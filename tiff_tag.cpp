@@ -63,8 +63,9 @@ TiffTag::~TiffTag() {
     delete [] data_;
 }
 
-// Write out with dummies for pointers, but return the offset
-// if a pointer has to be written later.
+// Write out return 0 if the tag contains the data.
+// If a pointer must be written, write a dummy, but return the offset
+// so it can be corrected later.
 int TiffTag::Write(FILE *pFile) const {
   int pointer_location = 0;
   int iRV = fwrite(&tagid_, sizeof(short), 1, pFile);
@@ -120,7 +121,7 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     throw("NULL file");
   int position = valpointer_ + subfileoffset;
   if (TagIsSubIFD()) {
-    if (tagid_ = tag_makernote)
+    if (tagid_ == tag_makernote)
       position = valpointer_;
     printf("Loading SUB IFD %0x at %d (%d + %d)", tagid_, position,
 	  valpointer_, subfileoffset);
@@ -144,8 +145,7 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
   }
 }
 
-void TiffTag::SetValOut(unsigned int val)
-{
+void TiffTag::SetValOut(unsigned int val) {
   valpointerout_ = val;
 }
 

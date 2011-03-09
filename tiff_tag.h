@@ -22,20 +22,20 @@ public:
   void Print() const;
   TiffIfd *GetExif() {
   }
-	void SetValOut(unsigned int val);
-	enum tag_types {tiff_unknown=0,
-			tiff_uint8 = 1,
-			tiff_string=2,
-			tiff_uint16=3,
-			tiff_uint32 =4,
-			tiff_urational=5,
-			tiff_int8=6,
-			tiff_bytes=7,
-			tiff_int16=8,
-			tiff_int32=9,
-			tiff_rational=10,
-			tiff_float=11,
-			tiff_double=12};
+  void SetValOut(unsigned int val);
+  enum tag_types {tiff_unknown=0,
+		  tiff_uint8 = 1,
+		  tiff_string=2,
+		  tiff_uint16=3,
+		  tiff_uint32 =4,
+		  tiff_urational=5,
+		  tiff_int8=6,
+		  tiff_bytes=7,
+		  tiff_int16=8,
+		  tiff_int32=9,
+		  tiff_rational=10,
+		  tiff_float=11,
+		  tiff_double=12};
   enum tag_names {tag_width = 0x100,
 		  tag_height=0x101,
 		  tag_bitspersample = 0x102,

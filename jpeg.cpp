@@ -120,16 +120,18 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       unsigned int exifloc = ftell(pFile);
       printf("Exifloc %d/0x%x Offset %d/0x%x\n",
 	     exifloc, exifloc, exifoffset, exifoffset);
+      // Absolute location of IFD:
       unsigned int ifdoffset = exifloc;
       while (ifdoffset > 0) {
-        printf("Loading IFD %u @%d swap %d ",
-	      ifds_.size(), ifdoffset, byte_swapping);
+	unsigned int subfileoffset = blockloc + 10;
+        printf("Loading IFD %u @%u subfileoffset %u swap %d ",
+	       ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
         TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
-					   loadall, blockloc+10, byte_swapping);
+				       loadall, subfileoffset, byte_swapping);
         ifds_.push_back(tempifd);
         ifdoffset = tempifd->GetNextIfdOffset();
         if (ifdoffset != 0) 
-          ifdoffset += blockloc+10;
+          ifdoffset += subfileoffset;
 	printf("Next offset %d\n", ifdoffset);
       }
 //      exif_ = new TiffIfd(pFile, exifloc, true, blockloc + 10); // Need to pass the baseline.
@@ -281,6 +283,7 @@ int Jpeg::Save(const char * const filename) {
   //  if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
   int rv = fwrite(&magic, sizeof(unsigned short), 1, pFile);
   bool write_exif = true;
+
   // write the EXIF IFDs  Code based on CR2.cpp
   if (write_exif && ifds_.size() !=0) {
     std::vector<unsigned int> pending_pointers;  // Pairs of Where/What
@@ -303,18 +306,21 @@ int Jpeg::Save(const char * const filename) {
     if (arch_big_endian) byte_order = 0x4d4d;
     rv = fwrite(&byte_order, sizeof(unsigned short), 1, pFile);
     rv = fwrite(&forty_two, sizeof(unsigned short), 1, pFile);
-    unsigned int exifoffset = ftell(pFile);
-    pending_pointers.push_back(exifoffset); // Where
+    unsigned int exifoffset_location = ftell(pFile);
+    pending_pointers.push_back(exifoffset_location); // Where
+
+    unsigned int exifoffset = 0; // Dummy
     rv = fwrite(&exifoffset, sizeof(unsigned int), 1, pFile);
     unsigned int zero = 0x00000000;
-    for (int i = 0 ; i < 1 && i < ifds_.size(); ++i) {
+    for (int i = 0 ; i < ifds_.size(); ++i) {
       unsigned int ifdloc = ifds_[i]->Write(pFile, zero, subfileoffset);
       // "What":  Where we wrote this ifd (to be put in the previous "where")
-      pending_pointers.push_back(ifdloc);
+      pending_pointers.push_back(ifdloc -12*i);
       // "Where" we write the pointer to the next ifd.
       pending_pointers.push_back(ifdloc + 2 + 12*ifds_[i]->GetNTags());
     }
     pending_pointers.push_back(0);  // What: After last IFD we put 00000
+
     rv = fseek(pFile, 0, SEEK_END);
     // Finally fill in the unresolved pointers.
     exiflength = ftell(pFile) - exif_len_pos;

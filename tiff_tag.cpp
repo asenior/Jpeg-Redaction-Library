@@ -92,13 +92,13 @@ int TiffTag::Write(FILE *pFile) const {
 }
 
 // Write out datablocks, returning the pointer. Return if no datablock.
-int TiffTag::WriteDataBlock(FILE *pFile) {
+int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
   int totallength = count_ * LengthOfType(type_);
-  int subfileoffset = 0; // TODO(aws) should this be non-zero?
+  //  int subfileoffset = 0; // TODO(aws) should this be non-zero?
   if (TagIsSubIFD()) {
     unsigned int zero = 0;
     valpointerout_ = subifd_->Write(pFile, zero, subfileoffset);
-    return valpointerout_;
+    return valpointerout_ + subfileoffset; // Will get subtracted later.
   }
 
   if (totallength > 4) {
@@ -121,9 +121,10 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     throw("NULL file");
   int position = valpointer_ + subfileoffset;
   if (TagIsSubIFD()) {
+    // IFDs use absolute position, normal tags are relative to subfileoffset.
     //if (tagid_ == tag_makernote)
     position = valpointer_;
-    printf("Loading SUB IFD %0x at %d (%d ##+ %d)", tagid_, position,
+    printf("Loading SUB IFD %0x at %d (%d + %d)", tagid_, position,
 	  valpointer_, subfileoffset);
     
     subifd_ = new TiffIfd(pFile, position, true,

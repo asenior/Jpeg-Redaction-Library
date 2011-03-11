@@ -60,7 +60,7 @@ public:
   // Must call WriteDataBlock first to set valpointerout_ and write the data block if appropriate.
   int Write(FILE *pFile) const;
   // Call this first to write out the data block and set the valpointerout_
-  int WriteDataBlock(FILE *pFile);
+  int WriteDataBlock(FILE *pFile, int subfileoffset);
 
   // Load a type that didn't fit in the 4 bytes
   int Load(FILE *pFile, unsigned int subfileoffset, bool byte_swapping);

@@ -1,52 +1,18 @@
 # makefile for building JPEG/EXIF tests under cygwin
-DEPENDFILE=depends.mak
-MAKEDEPEND = makedepend -o.o -f$(DEPENDFILE)
-MKDEP_CMD = $(MAKEDEPEND) $(CPP_DEFINE_FLAGS) $(CC_INCLUDEDIR_FLAGS) -a
+include Makefile.common
 
-CXXOFLAGS =  $(INCLUDES) -O3
-CXXDFLAGS =  $(INCLUDES) -g -DDEBUG
-CXXFLAGS = $(CXXDFLAGS)
-CFLAGS=$(CXXFLAGS)
-LIBS = -lm 
-MKLIB = $(AR) $(ARFLAGS) $@ $?; ranlib $@
-# cr2.cpp exif_data.cpp  iptc.cpp iptc_tag.cpp 
+.PHONY: clean test depend
 
-SRCS  =  iptc.cpp jpeg.cpp  tiff_ifd.cpp tiff_tag.cpp jpeg_decoder.cpp \
-	byte_swapping.cpp
-# Photoshop3Block.cpp PhotoshopBIM.cpp
+test: 
+	cd test; $(MAKE) test
 
-OBJS    = $(SRCS:.cpp=.o)
-
-CC = g++ 
-
-LOCALLIB=mylibjpeg.a
-
-BINARY = jpegtest
-
-test: $(BINARY)
-
-$(LOCALLIB): $(OBJS)
-	$(MKLIB)
-
-$(BINARY): mylibjpeg.a jpegtest.cpp
-	$(CC) $(CXXFLAGS) jpegtest.cpp $(LIBPATH) mylibjpeg.a  -o $@
-
-
-# 	$(CC) $(OBJS) $(LIBPATH) --enable-stdcall-fixup  ..\\orcha\\utils\\libutils.a $(CAIRO)\\lib\\libcairo.dll.a  $(SDLLIB)\\libSDL.dll.a -lgdi32 -lopengl32 -lglu32 -lsdl -o $@
-
-$(OBJS): $(SRCS:.cpp=.h)
-
-.PHONY: clean test
-
+lib: 
+	cd lib; $(MAKE) lib
 
 clean:
-	rm -f $(OBJS) $(BINARY) $(LOCALLIB)
+	cd lib; $(MAKE) clean
+	cd test; $(MAKE) clean
 
 depend: 
-	$(MAKE) dependlocal
-
-
-zipfile: gauss-mingw.zip-dummyext
-
-gauss-mingw.zip-dummyext: gauss.exe
-	cygcheck gauss.exe | grep -v Found| sed -e 's/^ *//g'|  sort | uniq | zip -@ $@
+	cd lib; $(MAKE) dependlocal
+	cd test; $(MAKE) dependlocal

@@ -1,0 +1,7 @@
+*~
+*.o
+*.a
+tags
+*.exe
+rawgrey.pgm
+backup*/*

@@ -1,2 +1,3 @@
-simple_output.log
-windows_output.log
+rawgrey.pgm
+testoutput.jpg
+testout/*

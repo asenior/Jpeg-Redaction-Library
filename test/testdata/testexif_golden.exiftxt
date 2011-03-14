@@ -1,0 +1,17 @@
+ExifTool Version Number         : 8.24
+Directory                       : test/testdata
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.01
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Image Description               : Hello
+X Resolution                    : 1
+Y Resolution                    : 1
+Resolution Unit                 : None
+Y Cb Cr Positioning             : Centered
+Image Width                     : 648
+Image Height                    : 486
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 648x486

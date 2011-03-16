@@ -1,7 +1,13 @@
 # makefile for building JPEG/EXIF tests under cygwin
 include Makefile.common
 
-.PHONY: clean test depend
+.PHONY: clean test depend test testbin
+
+testbin:
+	cd test; $(MAKE) jpegtest
+
+run:
+	test/jpegtest test/testdata/windows.jpg
 
 test: 
 	cd test; $(MAKE) test

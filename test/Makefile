@@ -3,12 +3,13 @@
 
 include ../Makefile.common
 
-BINARY = jpegtest
+BINARY = ./jpegtest
+IFDTESTBINARY = ./ifdtest
 EXIFTOOL = exiftool
 
 LIB = ../lib/libredact.a
 
-test: $(BINARY) test_exif test_simple test_windows
+test: $(BINARY) test_ifd test_simple test_windows
 
 $(LIB): 
 	cd ../lib; $(MAKE) lib
@@ -16,8 +17,12 @@ $(LIB):
 $(BINARY): $(LIB) jpegtest.cpp
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp $(LIBPATH) $(LIB)  -o $@
 
+$(IFDTESTBINARY): $(LIB) ifdtest.cpp
+	$(CC) $(CXXFLAGS) -I../lib ifdtest.cpp $(LIBPATH) $(LIB)  -o $@
+
 .PHONY: clean test clean_rawgrey clean_test \
-	test_exif test_simple test_windows
+	test_exif test_simple test_windows test_ifd \
+	$(LIB)
 
 clean_test: clean_rawgrey
 	rm -f testout/windows_output.log
@@ -25,10 +30,10 @@ clean_test: clean_rawgrey
 	rm -f testout/testexif_output.log testout/testexif.exiftxt
 
 clean_rawgrey:
-	rm -f rawgrey.pgm
+	@rm -f rawgrey.pgm
 
 clean:
-	rm -f $(BINARY)
+	rm -f $(BINARY) $(IFDTESTBINARY)
 	rm -rf testout
 
 depend: 
@@ -37,11 +42,17 @@ depend:
 testout: 
 	@mkdir testout
 
+test_ifd: $(IFDTESTBINARY) testout
+	 $(IFDTESTBINARY) > testout/ifdtest.log
+	@cmp testdata/ifdtest_golden.log testout/ifdtest.log
+	@echo "== " $@ " passed"
+
 test_simple: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/simple.jpg > testout/simple_output.log
 	@cmp  testdata/simple_output_golden.log testout/simple_output.log 
 	@cmp  testdata/simple_rawgrey_golden.pgm rawgrey.pgm 
-	@echo ""
+	@echo "== " $@ " passed"
+
 
 test_windows: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/windows.jpg > testout/windows_output.log

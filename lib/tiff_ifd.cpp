@@ -12,14 +12,13 @@
 
 TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
 		     bool loadall, unsigned int subfileoffset,
-		     bool byte_swapping) : 
+		     bool byte_swapping) :
   data_(NULL), subfileoffset_(subfileoffset), byte_swapping_(byte_swapping) {
-  
+
   if (pFile == NULL)
     return;
   int iRV= fseek(pFile, ifdoffset, SEEK_SET);
-  if (iRV != 0)
-  { 
+  if (iRV != 0) {
     printf("Failed seek");
     fclose(pFile);
     return;
@@ -41,7 +40,7 @@ TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
     throw("Couldn't read nextifdoffset");
   }
   if (byte_swapping) ByteSwapInPlace(&nextifdoffset_, 1);
-  
+
   // This disrupts the file pointer.
   LoadImageData(pFile, loadall);
   printf("Loaded Image data\n");

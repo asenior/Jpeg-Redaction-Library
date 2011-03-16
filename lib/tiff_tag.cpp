@@ -12,7 +12,7 @@
 
 TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
 {
-    if (pFile == NULL) 
+    if (pFile == NULL)
       throw("NULL file");
     int iRV = fread(&tagid_, sizeof(short), 1, pFile);
     if (iRV != 1) throw("Can't read file");
@@ -113,20 +113,20 @@ int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
 }
 
 // Load a type that didn't fit in the 4 bytes
-int TiffTag::Load(FILE *pFile, unsigned int subfileoffset, 
+int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
 		   bool byte_swapping) {
   if (loaded_)
     return 0;
-  if (pFile == NULL) 
+  if (pFile == NULL)
     throw("NULL file");
   int position = valpointer_ + subfileoffset;
   if (TagIsSubIFD()) {
     // IFDs use absolute position, normal tags are relative to subfileoffset.
     //if (tagid_ == tag_makernote)
-    position = valpointer_;
+    //    position = valpointer_;
     printf("Loading SUB IFD %0x at %d (%d + %d)", tagid_, position,
 	  valpointer_, subfileoffset);
-    
+
     subifd_ = new TiffIfd(pFile, position, true,
 			    subfileoffset, byte_swapping);
     loaded_ = true;
@@ -152,8 +152,8 @@ void TiffTag::SetValOut(unsigned int val) {
 
 bool TiffTag::TagIsSubIFD() const
 {
-  return(tagid_ == tag_exif || tagid_ == tag_gps || tagid_ == tag_gps || 
-         tagid_ == tag_makernote || tagid_ == tag_interoperability);
+  return(tagid_ == tag_exif || tagid_ == tag_gps || tagid_ == tag_gps ||
+         /* tagid_ == tag_makernote || */ tagid_ == tag_interoperability);
 }
 
 void TiffTag::Print() const
@@ -176,23 +176,23 @@ void TiffTag::TraceValue(int maxvals) const
     case tiff_string:
       if (loaded_)
 	printf("\"%s\"", GetStringValue());
-      else 
+      else
 	printf("\"NOT LOADED\"");
       return;
-      
+
     case tiff_float:
     case tiff_double:
     case tiff_rational:
     case tiff_urational:
       if (loaded_)
 	printf("%f", GetFloatValue(i));
-      else 
+      else
 	printf("Float not loaded");
       break;
     case tiff_bytes:
       if (loaded_)
 	printf("0x%02x", GetUIntValue(i));
-      else 
+      else
 	printf("bytes not loaded");
       break;
     case tiff_uint8:
@@ -200,7 +200,7 @@ void TiffTag::TraceValue(int maxvals) const
     case tiff_uint32:
       if (loaded_)
 	printf("%u", GetUIntValue(i));
-      else 
+      else
 	printf("Uint not loaded");
       break;
     case tiff_int8:
@@ -208,7 +208,7 @@ void TiffTag::TraceValue(int maxvals) const
     case tiff_int32:
       if (loaded_)
 	printf("%d", GetIntValue(i));
-      else 
+      else
 	printf("int not loaded");
       break;
     }

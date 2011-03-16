@@ -150,7 +150,7 @@ protected:
   mutable unsigned int valpointerout_;
   TiffIfd *subifd_; // Makernote or Exif
 private:
-	bool TagIsSubIFD() const;
+  bool TagIsSubIFD() const;
 };
 
 #endif // INCLUDE_TIFF_TAG

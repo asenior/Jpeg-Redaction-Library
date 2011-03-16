@@ -153,3 +153,25 @@ AC 6-6 Zrun 0 len 2 sym 1
 inserting 2 bits: 10000100010000100100100100011100
 LUTDecoding 100010 as 1
 inserting 2 bits: 1000100001001001001000111000
+
+
+03/16/11 
+Seem to have Exif & IFD reading sorted out (read makernote as a block
+now). Not currently writing them out properly. (Exiftool says bad
+IFD1)
+
+Some unit tests. 
+
+todo: 
+
+Need to put namespace
+Need to fill in API:
+  Load only.
+  Write current
+  Redact
+  Erase EXIF
+  Modify EXIF. (add tag, remove tag, remove all GPS, set tag, add EXIF)
+
+Put in GitHub
+Bigger test suite (images from other cameras etc.)
+    

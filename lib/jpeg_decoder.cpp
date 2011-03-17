@@ -3,9 +3,10 @@
 #include "jpeg.h"
 #include "jpeg_dht.h"
 
-JpegDecoder::JpegDecoder(int w, int h, 
-			 unsigned char *data, 
-			 int length, 
+namespace jpeg_redaction {
+JpegDecoder::JpegDecoder(int w, int h,
+			 unsigned char *data,
+			 int length,
 			 const std::vector<JpegDHT *> &dhts,
 			 const std::vector<Jpeg::JpegComponent*> *components) :
   height_(h), width_(w), components_(components) {
@@ -32,7 +33,7 @@ JpegDecoder::JpegDecoder(int w, int h,
 		 comp, (dhts[i]->class_? "AC":"DC"), i);
 	if (dhts[i]->class_ == 0)
 	  dc_dht = dhts[i];
-	else 
+	else
 	  ac_dht = dhts[i];
       }
     }
@@ -94,7 +95,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redaction) {
   }
   if (redaction == 1 || redaction == 3)
     CopyBits(dc_length);
-  if (redaction == 2) { // Write out zero. 
+  if (redaction == 2) { // Write out zero.
     // printf("Writing zero %d\n", comp);
     WriteZeroLength(2 * dht);
   }
@@ -118,7 +119,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redaction) {
   }
   if (debug > 0)
     printf("DCValue is %d\n", dc_value);
-  int coeffs = 1; // DC is the first 
+  int coeffs = 1; // DC is the first
   // If we're redacting, have no AC
   if (redaction == 2 || redaction == 3) {
     WriteZeroLength(2 * dht + 1);
@@ -136,7 +137,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redaction) {
     if (redaction == 1 || redaction == 5) CopyBits(ac_length);
     DropBits(ac_length);
     // If symbol is (15,0) there's no  value, but we skip 16.
-    coeffs += zero_run_length; 
+    coeffs += zero_run_length;
     coeffs++;
     if (debug >=2)
       printf("AC %d-%d Zrun %d len %d sym %u\n",
@@ -149,7 +150,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redaction) {
   }
   if (debug >=2 && coeffs >= 63) printf("EOB64\n");
   if (debug > 0)
-    printf("MCU %d data %d. %d coeffs\n", 
+    printf("MCU %d data %d. %d coeffs\n",
 	   mcus_, data_pointer_, coeffs);
   return dc_value;
 }
@@ -163,6 +164,7 @@ int JpegDecoder::NextValue(int len) {
   unsigned int mask = 1<< (len-1);
   if (val & mask) // Top bit set: positive number.
     return val;
-  else 
+  else
     return (-(mask << 1) + val + 1);
 }
+}  // namespace jpeg_redaction

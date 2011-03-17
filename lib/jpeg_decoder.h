@@ -7,6 +7,7 @@
 #include "jpeg_dht.h"
 
 extern int debug;
+namespace jpeg_redaction {
 class JpegDHT;
 class Jpeg;
 class JpegDecoder {
@@ -17,8 +18,8 @@ class JpegDecoder {
     int l_, r_, t_, b_;
   };
   JpegDecoder(int w, int h,
-	      unsigned char *data, 
-	      int length, 
+	      unsigned char *data,
+	      int length,
 	      const std::vector<JpegDHT *> &dhts,
 	      const std::vector<Jpeg::JpegComponent*> *components);
 
@@ -99,7 +100,7 @@ class JpegDecoder {
   void WriteImageData(const char *const filename) {
     FILE *pFile = fopen(filename, "wb");
     fprintf(pFile, "P5\n%d %d %d\n", w_blocks_, h_blocks_, 255);
-    printf("Saving Image %d, %d = %d pixels. %d bytes\n", 
+    printf("Saving Image %d, %d = %d pixels. %lu bytes\n",
 	   w_blocks_, h_blocks_, w_blocks_*h_blocks_, image_data_.size());
     fwrite(&image_data_[0], sizeof(unsigned char), image_data_.size(), pFile);
     fclose(pFile);
@@ -111,8 +112,9 @@ class JpegDecoder {
   void ReorderImageData() {
     int hf = (*components_)[0]->h_factor_;
     int vf = (*components_)[0]->v_factor_;
-    printf("Reordering Image %d, %d = %d pixels. %d bytes. h,v %d,%d\n", 
-	   w_blocks_, h_blocks_, w_blocks_ * h_blocks_, image_data_.size(), hf, vf);
+    printf("Reordering Image %d, %d = %d pixels. %lu bytes. h,v %d,%d\n",
+	   w_blocks_, h_blocks_, w_blocks_ * h_blocks_,
+           image_data_.size(), hf, vf);
     int block_size = vf * hf;
     std::vector<unsigned char> c(w_blocks_ * h_blocks_, 0);
     for (int i = 0 ; i < w_blocks_ * h_blocks_; ++i) {
@@ -121,7 +123,7 @@ class JpegDecoder {
       int x = hf * (block % (w_blocks_/hf)) + (sub % hf);
       int y = vf * (block / (w_blocks_/hf)) + (sub / hf);
       int newpos = x + y* w_blocks_;
-      if (x > w_blocks_ || y > h_blocks_) 
+      if (x > w_blocks_ || y > h_blocks_)
 	printf("Reordered Data from %d: %d,%d out of bounds\n",
 	       i, x, y);
       c[newpos] = image_data_[i];
@@ -259,9 +261,9 @@ class JpegDecoder {
     int mcu_y = mcus_ / mcu_width;
 
     for (int i = 0; i < redaction_regions_.size(); ++i)
-      if (mcu_x * hq     < redaction_regions_[i].r_ && 
-	  (mcu_x+1) * hq > redaction_regions_[i].l_ && 
-	  mcu_y * vq     < redaction_regions_[i].b_ && 
+      if (mcu_x * hq     < redaction_regions_[i].r_ &&
+	  (mcu_x+1) * hq > redaction_regions_[i].l_ &&
+	  mcu_y * vq     < redaction_regions_[i].b_ &&
 	  (mcu_y+1) * vq > redaction_regions_[i].t_) {
 	return true;
       }
@@ -279,7 +281,7 @@ class JpegDecoder {
   int num_mcus_;  // How many we expect.
   int mcus_; // How many we've found
   //bits in JpegDecoder::current_bits_);
-  static const int word_size_  = 8 * sizeof(unsigned int); 
+  static const int word_size_  = 8 * sizeof(unsigned int);
   int mcu_h_;
   int mcu_v_;
   int width_;
@@ -287,9 +289,9 @@ class JpegDecoder {
   int w_blocks_;  // Width of the image in MCUs
   int h_blocks_;  // Height of the image in MCUs
   int dct_gain_;
-  int redacting_; // Are we redacting this image (1 or 2) this MCU (2)? 
+  int redacting_; // Are we redacting this image (1 or 2) this MCU (2)?
   int y_value_; // The most recent decoded brightness value.
-  
+
   int redaction_dc_[3];
   std::vector<unsigned char> image_data_;
   // These are pointers into the Jpeg's table of DHTs
@@ -302,5 +304,6 @@ class JpegDecoder {
   std::vector<Rect> redaction_regions_;
   std::vector<unsigned char> redacted_data_;
 };
+}  // namespace jpeg_redaction
 
 #endif // INCLUDE_JPEGDECODER

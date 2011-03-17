@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
   // Jpeg j(filename.c_str(), false);
   printf("Testing with loadall=true\n");
   try {
-    Jpeg j2(filename.c_str(), true);
+    jpeg_redaction::Jpeg j2(filename.c_str(), true);
     j2.Save("testout/testoutput.jpg");
   } catch (const char *error) {
     fprintf(stderr, "Error: <%s> at outer level\n", error);

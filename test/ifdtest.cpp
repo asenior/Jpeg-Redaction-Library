@@ -23,7 +23,9 @@ int main(int argc, char **argv) {
       fprintf(stderr, "Can't open file %s\n", filename.c_str());
       exit(1);
     }
-    TiffIfd ifd(pFile, ifd_loc, true, tiff_offset, byte_swapping);
+    bool load_all = true;
+    jpeg_redaction::TiffIfd ifd(pFile, ifd_loc, load_all,
+                                tiff_offset, byte_swapping);
   } catch (const char *error) {
     fprintf(stderr, "Error: <%s> at outer level\n", error);
     exit(1);

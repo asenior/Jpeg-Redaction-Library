@@ -10,6 +10,8 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
+
+namespace jpeg_redaction {
 TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
 		     bool loadall, unsigned int subfileoffset,
 		     bool byte_swapping) :
@@ -203,3 +205,4 @@ int TiffIfd::AddTag(TiffTag *tag, bool allowmultiple) {
   tags_.push_back(tag);
   return 1;
 }
+}; // namespace redaction

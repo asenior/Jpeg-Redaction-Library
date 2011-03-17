@@ -3,6 +3,7 @@
 
 #include <string>
 
+namespace jpeg_redaction {
 extern int debug;
 inline std::string Binary(unsigned int b, int length) {
   if (debug == 0)
@@ -38,7 +39,7 @@ class JpegDHT {
 	printf("Length %2d, %3d symbols: ", i, num_symbols_[i-1]);
 	for (int n = 0; n < num_symbols_[i-1]; ++n, ++sym) {
 	  if (0) {
-	    printf("length %d code %d sym %d\n", 
+	    printf("length %d code %d sym %d\n",
 		   codes_[sym], lengths_[sym], symbols_[sym]);
 	    std::string binary = Binary(codes_[sym], lengths_[sym]);
 	    printf("%s,%x ", binary.c_str(), symbols_[sym]);
@@ -75,7 +76,7 @@ class JpegDHT {
   }
   // Build one DHT from a block of data.
   int Build(unsigned char *data, int bytes_left) {
-    // Get the class and ID of this table. 
+    // Get the class and ID of this table.
     int bytes_used = 0;
     int lut_len = 0;
     const int max_lut_len = 10;
@@ -93,7 +94,7 @@ class JpegDHT {
     std::vector<unsigned int> prefixes;
     prefixes.push_back(0);
     for (int length = 1; length <= 16; ++length) {
-      // For each prefix pop and assign or 
+      // For each prefix pop and assign or
       std::vector<unsigned int> new_prefixes;
       int symbols_used = 0;
       if (num_symbols_[length-1] > 0 && length <= max_lut_len)
@@ -130,7 +131,7 @@ class JpegDHT {
     return bytes_used;
   }
 
-  int Decode(unsigned int current_bits, 
+  int Decode(unsigned int current_bits,
 	     const int bits_available,
 	     unsigned int *symbol) {
     if (debug > 3) {
@@ -138,7 +139,7 @@ class JpegDHT {
       printf("Decoding from %s\n", allbits.c_str());
     }
     if (bits_available <= 0 || bits_available > 32) {
-      printf("Only %d bits left\n", bits_available); 
+      printf("Only %d bits left\n", bits_available);
       throw("Bad number of bits left");
     }
     unsigned int lut_code = current_bits >> (32 - lut_len_);
@@ -199,5 +200,6 @@ class JpegDHT {
   int lut_len_;
   std::vector<int> lut_;
 };
+} // namespace redaction
 
 #endif // INCLUDE_JPEGDHT

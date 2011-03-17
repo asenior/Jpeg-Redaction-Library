@@ -10,6 +10,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
+namespace jpeg_redaction {
 TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
 {
     if (pFile == NULL)
@@ -35,8 +36,8 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
       ByteSwapInPlace(&value, 1);
 #ifdef DEBUG
     printf("Read tag %d/%x, type %d count %d value %d/%0x "
-	    "totallength %d\n", 
-	    tagid_, tagid_, type_, count_, 
+	    "totallength %d\n",
+	    tagid_, tagid_, type_, count_,
 	   value, value, totallength);
 #endif
     if (totallength < 0 || totallength > 1e8) {
@@ -55,10 +56,10 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
       loaded_ = false;
       valpointer_ = value;
       // Too long to fit in the tag.
-    }    
+    }
 }
 
-TiffTag::~TiffTag() { 
+TiffTag::~TiffTag() {
     delete subifd_;
     delete [] data_;
 }
@@ -74,7 +75,7 @@ int TiffTag::Write(FILE *pFile) const {
   if (iRV != 1) throw("Can't write file");
   iRV = fwrite(&count_, sizeof(unsigned int), 1, pFile);
   if (iRV != 1) throw("Can't write file");
-  
+
   const int totallength = GetDataLength();
   pointer_location = ftell(pFile);
   unsigned char raw[4];
@@ -86,7 +87,7 @@ int TiffTag::Write(FILE *pFile) const {
   if (totallength > 4 || TagIsSubIFD() ||
       tagid_ == tag_stripoffset|| tagid_ == tag_thumbnailoffset) {
     return pointer_location;
-  } else { 
+  } else {
     return 0;
   }
 }
@@ -108,7 +109,7 @@ int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
     fwrite(data_, sizeof(unsigned char), totallength, pFile);
     return valpointerout_;
   }
-  
+
   return 0;
 }
 
@@ -221,3 +222,4 @@ int TiffTag::GetDataLength() const
 {
   return (count_ * LengthOfType(type_));
 }
+}  // namespace jpeg_redaction

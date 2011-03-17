@@ -8,10 +8,12 @@
 #include "photoshop_3block.h"
 #include "byte_swapping.h"
 
-int debug = 0;
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
+
+namespace jpeg_redaction {
+int debug = 0;
 
 void DumpHex(unsigned char *data, int len) {
   for (int i = 0; i < len; ++i) {
@@ -57,7 +59,7 @@ const char *Jpeg::MarkerName(int marker) const {
 int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
   unsigned short marker = 0;
   int iRV = fread(&marker, sizeof(unsigned short), 1, pFile);
-  if (iRV != 1) 
+  if (iRV != 1)
     throw(-2);
   if (marker != 0xd8ff) throw("Bad JPEG start marker");
       unsigned short blocksize;
@@ -65,7 +67,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
   while(!feof(pFile)) {
     unsigned int blockloc = ftell(pFile);
     int iRV = fread(&marker, sizeof(unsigned short), 1, pFile);
-    if (iRV != 1) 
+    if (iRV != 1)
       throw(-1);
     marker = byteswap2(marker);
     printf("Got marker %x %s at %d\n", marker, MarkerName(marker), blockloc);
@@ -86,7 +88,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
 	blocksize = byteswap2(blocksize);
       printf("APP Block size is %d %04x\n", blocksize, blocksize);
       iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
-      if (iRV != 1) 
+      if (iRV != 1)
         throw(-2);
       if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
       if (magic != 0x45786966) // 'Exif'
@@ -95,7 +97,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       if (myshort != 0) throw(-4);
 
       iRV = fread(&byte_order, sizeof(unsigned short), 1, pFile);
-      if (iRV != 1) 
+      if (iRV != 1)
         throw(-2);
       bool big_endian = false;
       printf("EXIF byte_order: %04x\n", byte_order);
@@ -108,13 +110,13 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
 	     (arch_big_endian ? "big" : "little"), arch_big_endian);
       bool byte_swapping = (big_endian != arch_big_endian);
       iRV = fread(&forty_two, sizeof(unsigned short), 1, pFile);
-      if (iRV != 1) 
+      if (iRV != 1)
         throw(-2);
       if (byte_swapping) ByteSwapInPlace(&forty_two, 1);
-      if (forty_two != 42) 
+      if (forty_two != 42)
         throw(-2);
       iRV = fread(&exifoffset, sizeof(unsigned int), 1, pFile);
-      if (iRV != 1) 
+      if (iRV != 1)
         throw(-2);
       if (byte_swapping) ByteSwapInPlace(&exifoffset, 1);
       unsigned int exifloc = ftell(pFile);
@@ -124,13 +126,13 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       unsigned int ifdoffset = exifloc;
       while (ifdoffset > 0) {
 	unsigned int subfileoffset = blockloc + 10;
-        printf("Loading IFD %u @%u subfileoffset %u swap %d ",
+        printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
 	       ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
         TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
 				       loadall, subfileoffset, byte_swapping);
         ifds_.push_back(tempifd);
         ifdoffset = tempifd->GetNextIfdOffset();
-        if (ifdoffset != 0) 
+        if (ifdoffset != 0)
           ifdoffset += subfileoffset;
 	printf("Next offset %d\n", ifdoffset);
       }
@@ -174,8 +176,8 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
 	DumpHex(data, blocksize);
       }
       const int bits_per_sample = data[0];
-      height_ = data[1]*256 + data[2];
-      width_ = data[3]*256 + data[4];
+      height_ = data[1] * 256 + data[2];
+      width_ = data[3] * 256 + data[4];
       int components = data[5];
       if (blocksize != 8 + 3 * components) {
 	printf("Error - wrong blocksize ins SOF\n");
@@ -214,8 +216,8 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       printf("SOS slice %d\n", slice);
       int dataloc = blockloc + sizeof(marker);
       unsigned int buf = 0;
-      int datalen = 0; 
-     
+      int datalen = 0;
+
       while (1) { // Read the data looking for markers
         buf <<= 8;
         iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
@@ -237,10 +239,10 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
       JpegMarker *somarker =
 	AddSOMarker(marker, blockloc, datalen, pFile, loadall, slice);
-      //      assert(*(unsigned short*)somarker->data_[datalen_-2] == jpeg_sos);
-      if (loadall) ParseImage(somarker);
+      if (loadall) {
+        ParseImage();
+      }
       return 0;
-      //continue;
     }
     throw("Unknown marker found in JPEG");
   }
@@ -265,10 +267,10 @@ Jpeg::~Jpeg() {
 }
 
 Iptc *Jpeg::GetIptc() {
-  if (photoshop3_) 
-    return photoshop3_->GetIptc(); 
+  if (photoshop3_)
+    return photoshop3_->GetIptc();
   else
-    return NULL; 
+    return NULL;
 }
 
 
@@ -278,7 +280,7 @@ int Jpeg::Save(const char * const filename) {
   FILE *pFile = fopen(filename, "w");
   if (pFile == NULL)
     return 0;
-  // Write the header, 
+  // Write the header,
   unsigned short magic = 0xd8ff;
   //  if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
   int rv = fwrite(&magic, sizeof(unsigned short), 1, pFile);
@@ -294,7 +296,7 @@ int Jpeg::Save(const char * const filename) {
     // TODO save the correct length.
     int exif_len_pos = ftell(pFile);
     rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);
-    printf("Saving %d Exif IFDs\n", ifds_.size());
+    printf("Saving %lu Exif IFDs\n", ifds_.size());
     unsigned int exifmarker = 0x45786966;
     if (!arch_big_endian) ByteSwapInPlace(&exifmarker, 1);
     rv = fwrite(&exifmarker, sizeof(unsigned int), 1, pFile);
@@ -324,22 +326,22 @@ int Jpeg::Save(const char * const filename) {
     rv = fseek(pFile, 0, SEEK_END);
     // Finally fill in the unresolved pointers.
     exiflength = ftell(pFile) - exif_len_pos;
-    fseek(pFile, exif_len_pos, SEEK_SET); // Where 
+    fseek(pFile, exif_len_pos, SEEK_SET); // Where
     if (!arch_big_endian) ByteSwapInPlace(&exiflength, 1);
-    rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);  
+    rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);
     for(int j = 0; j < pending_pointers.size(); j+=2) {
       printf("IFD Locs Where: %d What: %d\n",
 	     pending_pointers[j], pending_pointers[j + 1]);
-      fseek(pFile, pending_pointers[j], SEEK_SET); // Where 
+      fseek(pFile, pending_pointers[j], SEEK_SET); // Where
       unsigned int ifdloc = pending_pointers[j + 1];  // What
       // Pending pointers are written in native byte order.
       //      if (!arch_big_endian) ByteSwapInPlace(&ifdloc, 1);
-      rv = fwrite(&ifdloc, sizeof(ifdloc), 1, pFile);  
+      rv = fwrite(&ifdloc, sizeof(ifdloc), 1, pFile);
     }
     rv = fseek(pFile, 0, SEEK_END);
   }
   // Write the other markers.
-  printf("Saving : %d markers\n", markers_.size());
+  printf("Saving : %lu markers\n", markers_.size());
   for (int i = 0 ; i < markers_.size(); ++i) {
     if (markers_[i]->Save(pFile)==0)
       printf("Failed with marker %d\n", i);;
@@ -357,26 +359,27 @@ void Jpeg::BuildDHTs(const JpegMarker *dht_block) {
     JpegDHT *dht = new JpegDHT;
     int bytes = dht->Build(data + bytes_used, length-bytes_used);
     bytes_used += bytes;
-    printf("DHT %d %d%d. Bytes=%d total = %d length = %d\n", 
+    printf("DHT %d %d%d. Bytes=%d total = %d length = %d\n",
 	   table, dht->class_, dht->id_, bytes, bytes_used, length);
     dhts_.push_back(dht);
     ++table;
   }
 }
 
-void Jpeg::ParseImage(JpegMarker *sos_block) {
+void Jpeg::ParseImage() {
+  JpegMarker *sos_block = GetMarker(jpeg_sos);
   unsigned char *data = (unsigned char *)(&sos_block->data_[0]);
   int data_length = sos_block->length_ - 2;
-  // First 2 bytes are slice, 00 0c 03 01 00 02 11 03 11 00 3f 00 
+  // First 2 bytes are slice, 00 0c 03 01 00 02 11 03 11 00 3f 00
   // then 03
   // then addl info 9 more bytes.
   // Then huffman bits.
   int check_offset = 0;
   int check_len = 64;
   data += 10;
-  
+
   JpegDecoder decoder(width_, height_, data, data_length - 12, dhts_, &components_);
-  printf("\n\nDecoding %d\n", sos_block->data_.size());
+  printf("\n\nDecoding %lu\n", sos_block->data_.size());
   //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
   try {
     JpegDecoder::Rect rect(50, 300, 50, 200);
@@ -389,12 +392,12 @@ void Jpeg::ParseImage(JpegMarker *sos_block) {
   decoder.ReorderImageData();
   decoder.WriteImageData("rawgrey.pgm");
   // Keep the 10 byte header.
-  printf("Redacted data length %d\n", decoder.redacted_data_.size());
+  printf("Redacted data length %lu\n", decoder.redacted_data_.size());
   sos_block->data_.erase(sos_block->data_.begin() + 10, sos_block->data_.end());
   sos_block->data_.insert(sos_block->data_.end(),
 			  decoder.redacted_data_.begin(),
 			  decoder.redacted_data_.end());
-  // Add the EOI 
+  // Add the EOI
   sos_block->data_.push_back(0xff);
   sos_block->data_.push_back(0xd9);
   // Now keep on dumping data out.
@@ -418,12 +421,4 @@ int JpegMarker::Save(FILE *pFile) {
   printf("Saved marker %04x length %u\n", marker_, length_);
   return 1;
 }
-
-
-// Currently extremely slow (36s to parse 12MP image) in debug. 
-// 28 in O3.
-/* Speedups: 
-   1) Faster bit pulling.
-   2) 8-bit lookup tables.
-
- */
+} // namespace redaction

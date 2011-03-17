@@ -13,11 +13,10 @@ int main(int argc, char **argv) {
   printf("Testing with loadall=true\n");
   try {
     jpeg_redaction::Jpeg j2(filename.c_str(), true);
+    j2.ParseImage("testout/rawgrey.pgm");
     j2.Save("testout/testoutput.jpg");
   } catch (const char *error) {
     fprintf(stderr, "Error: <%s> at outer level\n", error);
     exit(1);
   }
-  // j2.Corrupt(0,0,100);
-  // j2.Save("testcorrupted.jpg");
 }

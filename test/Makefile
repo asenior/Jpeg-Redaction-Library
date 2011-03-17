@@ -30,7 +30,7 @@ clean_test: clean_rawgrey
 	rm -f testout/testexif_output.log testout/testexif.exiftxt
 
 clean_rawgrey:
-	@rm -f rawgrey.pgm
+	@rm -f testout/rawgrey.pgm
 
 clean:
 	rm -f $(BINARY) $(IFDTESTBINARY)
@@ -50,14 +50,14 @@ test_ifd: $(IFDTESTBINARY) testout
 test_simple: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/simple.jpg > testout/simple_output.log
 	@diff  testdata/simple_output_golden.log testout/simple_output.log 
-	@cmp  testdata/simple_rawgrey_golden.pgm rawgrey.pgm 
+	@cmp  testdata/simple_rawgrey_golden.pgm testout/rawgrey.pgm 
 	@echo "== " $@ " passed"
 
 
 test_windows: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/windows.jpg > testout/windows_output.log
 	@diff  testdata/windows_output_golden.log testout/windows_output.log
-	@cmp  testdata/windows_rawgrey_golden.pgm rawgrey.pgm
+	@cmp  testdata/windows_rawgrey_golden.pgm testout/rawgrey.pgm
 	@echo ""
 
 

@@ -239,9 +239,6 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
       JpegMarker *somarker =
 	AddSOMarker(marker, blockloc, datalen, pFile, loadall, slice);
-      if (loadall) {
-        ParseImage();
-      }
       return 0;
     }
     throw("Unknown marker found in JPEG");
@@ -366,19 +363,20 @@ void Jpeg::BuildDHTs(const JpegMarker *dht_block) {
   }
 }
 
-void Jpeg::ParseImage() {
+void Jpeg::ParseImage(const char *pgmout) {
   JpegMarker *sos_block = GetMarker(jpeg_sos);
   unsigned char *data = (unsigned char *)(&sos_block->data_[0]);
-  int data_length = sos_block->length_ - 2;
+  const int data_length = sos_block->length_ - 2;
   // First 2 bytes are slice, 00 0c 03 01 00 02 11 03 11 00 3f 00
   // then 03
   // then addl info 9 more bytes.
   // Then huffman bits.
-  int check_offset = 0;
-  int check_len = 64;
+  // const int check_offset = 0;
+  // const int check_len = 64;
   data += 10;
 
-  JpegDecoder decoder(width_, height_, data, data_length - 12, dhts_, &components_);
+  JpegDecoder decoder(width_, height_, data, data_length - 12,
+                      dhts_, &components_);
   printf("\n\nDecoding %lu\n", sos_block->data_.size());
   //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
   try {
@@ -390,7 +388,8 @@ void Jpeg::ParseImage() {
     //    throw(text);
   }
   decoder.ReorderImageData();
-  decoder.WriteImageData("rawgrey.pgm");
+  if (pgmout != NULL)
+    decoder.WriteImageData(pgmout);
   // Keep the 10 byte header.
   printf("Redacted data length %lu\n", decoder.redacted_data_.size());
   sos_block->data_.erase(sos_block->data_.begin() + 10, sos_block->data_.end());

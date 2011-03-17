@@ -142,7 +142,7 @@ public:
     return markerptr;
   }
   void BuildDHTs(const JpegMarker *dht_block);
-  void ParseImage();
+  void ParseImage(const char *pgmout);
 
   int width_;
   int height_;

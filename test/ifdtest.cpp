@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #include <string>
-#include "jpeg.h"
+#include "tiff_ifd.h"
 
 int main(int argc, char **argv) {
   std::string filename("testdata/windows.jpg");
@@ -14,7 +14,6 @@ int main(int argc, char **argv) {
     filename = argv[1];
   if (argc > 2)
     ifd_loc = atoi(argv[2]);
-  //  ifd_loc -= tiff_offset;
   printf("Dumping IFD in %s at position %u byteswapping %s\n",
          filename.c_str(), ifd_loc, (byte_swapping ? "on" : "off"));
   try {

@@ -44,19 +44,19 @@ testout:
 
 test_ifd: $(IFDTESTBINARY) testout
 	 $(IFDTESTBINARY) > testout/ifdtest.log
-	@cmp testdata/ifdtest_golden.log testout/ifdtest.log
+	@diff testdata/ifdtest_golden.log testout/ifdtest.log
 	@echo "== " $@ " passed"
 
 test_simple: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/simple.jpg > testout/simple_output.log
-	@cmp  testdata/simple_output_golden.log testout/simple_output.log 
+	@diff  testdata/simple_output_golden.log testout/simple_output.log 
 	@cmp  testdata/simple_rawgrey_golden.pgm rawgrey.pgm 
 	@echo "== " $@ " passed"
 
 
 test_windows: $(BINARY) testout clean_rawgrey
 	$(BINARY) testdata/windows.jpg > testout/windows_output.log
-	@cmp  testdata/windows_output_golden.log testout/windows_output.log
+	@diff  testdata/windows_output_golden.log testout/windows_output.log
 	@cmp  testdata/windows_rawgrey_golden.pgm rawgrey.pgm
 	@echo ""
 

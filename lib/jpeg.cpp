@@ -363,7 +363,7 @@ void Jpeg::BuildDHTs(const JpegMarker *dht_block) {
   }
 }
 
-void Jpeg::ParseImage(const char *pgmout) {
+void Jpeg::ParseImage(const Redaction &redact, const char *pgmout) {
   JpegMarker *sos_block = GetMarker(jpeg_sos);
   unsigned char *data = (unsigned char *)(&sos_block->data_[0]);
   const int data_length = sos_block->length_ - 2;

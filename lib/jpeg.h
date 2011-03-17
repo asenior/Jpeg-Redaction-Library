@@ -5,22 +5,18 @@
 #ifndef INCLUDE_JPEG
 #define INCLUDE_JPEG
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
 #include <vector>
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
 #include "tiff_ifd.h"
 
-
 namespace jpeg_redaction {
 extern int debug;
 
 class Iptc;
 class JpegDHT;
+class Redaction;
 class JpegMarker {
  public:
   // Length is payload size- includes storage for length itself.
@@ -142,7 +138,7 @@ public:
     return markerptr;
   }
   void BuildDHTs(const JpegMarker *dht_block);
-  void ParseImage(const char *pgmout);
+  void ParseImage(const Redaction &redact, const char *pgmout);
 
   int width_;
   int height_;

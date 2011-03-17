@@ -5,6 +5,7 @@
 #include "jpeg.h"
 #include "jpeg_dht.h"
 #include "jpeg_decoder.h"
+#include "redaction.h"
 #include "photoshop_3block.h"
 #include "byte_swapping.h"
 
@@ -245,7 +246,6 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
   }
   return 0;
 }
-
 
 Jpeg::~Jpeg() {
   for(int i = 0; i < ifds_.size(); ++i)

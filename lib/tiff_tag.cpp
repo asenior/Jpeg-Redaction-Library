@@ -98,7 +98,7 @@ int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
   if (TagIsSubIFD()) {
     unsigned int zero = 0;
     valpointerout_ = subifd_->Write(pFile, zero, subfileoffset);
-    return valpointerout_ + subfileoffset; // Will get subtracted later.
+    return valpointerout_; // Will get subtracted later.
   }
 
   if (totallength > 4) {

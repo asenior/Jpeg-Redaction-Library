@@ -9,6 +9,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
+namespace jpeg_redaction {
 Photoshop3Block::Photoshop3Block(FILE *pFile)
 {
   char c;
@@ -40,10 +41,11 @@ int Photoshop3Block::Write(FILE *pFile)
   if (iRV != headerlen + 1)
     throw("Can't write");
   length += iRV;
-  
+
   for (int i = 0; i < tags_.size(); ++i) {
     iRV = tags_[i]->Write(pFile);
     length += iRV;
   }
   return length;
 }
+}  // namespace jpeg_redaction

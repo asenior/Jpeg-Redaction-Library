@@ -11,15 +11,16 @@
 
 using std::vector;
 
-// Parse an IPTC block from a file. 
+// Parse an IPTC block from a file.
 // e.g. within a photoshop 3 block
 // See http://www.fileformat.info/format/psd/egff.htm
 
-class Iptc  
+namespace jpeg_redaction {
+class Iptc
 {
-  
+
 public:
-  class IptcTag  
+  class IptcTag
   {
   public:
   /*  typedef enum {
@@ -33,8 +34,8 @@ public:
         iptc_format_date = 8,
         iptc_format_time =9
     } iptc_format; */
-    
-    
+
+
     typedef enum {
       iptc_tag_model_version		= 0,	/* begin record 1 tags */
         iptc_tag_destination		= 5,
@@ -108,16 +109,16 @@ public:
         iptc_tag_preview_format		= 200,
         iptc_tag_preview_format_ver	= 201,
         iptc_tag_preview_data		= 202,	/* end record 2 tags */
-        
+
         iptc_tag_size_mode		= 10,	/* begin record 7 tags */
         iptc_tag_max_subfile_size	= 20,
         iptc_tag_size_announced		= 90,
         iptc_tag_max_object_size	= 95,	/* end record 7 tags */
-        
+
         iptc_tag_subfile		= 10,	/* record 8 tags */
         iptc_tag_confirmed_data_size	= 10	/* record 9 tags */
     } iptc_tag;
-    
+
     IptcTag(FILE *pFile)
     {
       unsigned char datasetmarker;
@@ -127,10 +128,10 @@ public:
 
       iRV = fread(&record_, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) throw("IPTC read fail");
-      
+
       iRV = fread(&tag_, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) throw("IPTC read fail");
-      
+
       unsigned long length = 0;
       unsigned short shortlength;
       iRV = fread(&shortlength, sizeof(unsigned short), 1, pFile);
@@ -152,12 +153,12 @@ public:
 
       data_.resize(length);
       iRV = fread(&data_[0], sizeof(unsigned char), length, pFile);
-      
+
       if (iRV != length) throw("IPTC read fail length");
       printf("IPTC dataset %d,%d\n", record_, tag_);
     }
 
-    
+
     virtual ~IptcTag() {  }
 
 
@@ -172,21 +173,21 @@ public:
       if (iRV != 1) throw("IPTC write fail");
       iRV = fwrite(&record_, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) throw("IPTC write fail");
-      
+
       iRV = fwrite(&tag_, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) throw("IPTC write fail");
-      
+
       unsigned short length = data_.size();
       iRV = fwrite(&length, sizeof(unsigned short), 1, pFile);
       if (iRV != 1) throw("IPTC write fail");
-      
+
       iRV = fwrite(&data_[0], sizeof(unsigned char), length, pFile);
-      
+
       if (iRV != length) throw("IPTC write fail length");
-      
+
       return 5 + length;
     }
-    
+
     unsigned char tag_;
     std::vector<unsigned char> data_;
     unsigned char record_;
@@ -209,7 +210,7 @@ Iptc(FILE *pFile, unsigned int totallength)
     if (thistaglength > remaininglength) throw("IPTC tag too long");
     remaininglength -= thistaglength;
   }
-  if (remaininglength != 0) 
+  if (remaininglength != 0)
     throw("IPTC block length error");
 
   if (totallength %2 == 1) // Length is rounded to be even.
@@ -234,10 +235,11 @@ int Write(FILE *pFile)
   return length;
 }
 static const unsigned char tag_marker_;
-static const unsigned int tag_bim_;  
-static const unsigned short tag_bim_iptc_;  
+static const unsigned int tag_bim_;
+static const unsigned short tag_bim_iptc_;
 
 std::vector<IptcTag *> tags_;
 };
+}  // namespace jpeg_redaction
 
 #endif // INCLUDE_IPTC

@@ -11,14 +11,16 @@
 #include <vector>
 
 #include "tiff_tag.h"
+
+namespace jpeg_redaction {
 class TiffTag;
 class Jpeg;
 class ExifIfd;
 
-class TiffIfd  
+class TiffIfd
 {
 public:
-  TiffIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false, 
+  TiffIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false,
 	    unsigned int subfileoffset=0, bool byte_swapping = false);
   TiffIfd() {  }
   virtual ~TiffIfd() {
@@ -38,7 +40,7 @@ public:
       if (tags_[tagindex]->GetTag() == tagno)
         return(tags_[tagindex]);
     }
-    return NULL;  
+    return NULL;
   }
 
   // For anything referenced by a pointer, then seek to it and load it into data_blocks_
@@ -49,7 +51,7 @@ public:
     if (tagindex < 0 || tagindex >= tags_.size())
       return NULL;
     return(tags_[tagindex]);
-  }  
+  }
   int GetNTags() const { return tags_.size(); }
   void  ListTags() const;
 protected:
@@ -67,8 +69,9 @@ protected:
 // Subclass if it is an exif block
 class ExifIfd : public TiffIfd {
  public:
- ExifIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false, unsigned int subfileoffset=0): 
+ ExifIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false, unsigned int subfileoffset=0):
   TiffIfd(pFile, ifdoffset, loadall, subfileoffset) {
   }
 };
+}// namespace jpeg_redaction
 #endif // !defined(AFX_TIFFIIFD_H__669C3A6A_A035_418B_A615_B78E8E1467E3__INCLUDED_)

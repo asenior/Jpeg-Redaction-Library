@@ -9,8 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include <stdio.h> 
-#include <stdlib.h>   
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <vector>
 
@@ -23,32 +23,33 @@ using std::string;
 using std::vector;
 
 // const unsigned short Iptc::tag_bim_iptc_ = 0x0404; // The bim type for IPTC data
-// 
+//
 #define tag_8bim 0x4d494238 // "8BIM"
 #define tag_bim_iptc_ 0x0404 // The bim type for IPTC data
 
-class Photoshop3Block  
+namespace jpeg_redaction {
+class Photoshop3Block
 {
   public:
-  class BIM  
+  class BIM
   {
   public:
 //    static const unsigned int tag_bim_ = 0x4d494238; // "8BIM"
     BIM(FILE *pFile) : iptc_(NULL) {
       int iRV = fread(&magic_, sizeof(magic_), 1, pFile);
-      
+
       if (magic_ != tag_8bim)
         printf("BIM was 0x%x not 0x %x\n", magic_, tag_8bim);
       iRV = fread(&bim_type_, sizeof(bim_type_), 1, pFile);
-      
+
       iRV = fread(&pascalstringlength_, sizeof(pascalstringlength_), 1, pFile);
 
       // The pascal string storage (including the length byte) must be even.
-      // How many more bytes do we have to read? 
+      // How many more bytes do we have to read?
       unsigned char pascalstringlengthrounded = pascalstringlength_ + (1-(pascalstringlength_%2));
       pascalstring_.resize(pascalstringlengthrounded);
       iRV = fread(&pascalstring_[0], sizeof(unsigned char), pascalstringlengthrounded, pFile);
-      
+
       iRV = fread(&bim_length_, sizeof(bim_length_), 1, pFile);
 
       bim_length_ = byteswap4(bim_length_);
@@ -63,12 +64,12 @@ class Photoshop3Block
       }
 //      throw("Got an unsupported BIM");
     }
-    
+
     virtual ~BIM() { }
 
     int Length() const { return bim_length_; }
     // BIM data (rounded) , Bimlength (4) , Bim type (2) , pascal string (length + rounded)
-    int TotalLength() const { return sizeof(bim_type_) + sizeof(magic_) + bim_length_  + (bim_length_%2) + sizeof(bim_length_) + 
+    int TotalLength() const { return sizeof(bim_type_) + sizeof(magic_) + bim_length_  + (bim_length_%2) + sizeof(bim_length_) +
         pascalstringlength_ +  sizeof(pascalstringlength_) + 1  - (pascalstringlength_%2);}
 
     int Write(FILE *pFile) {
@@ -77,24 +78,24 @@ class Photoshop3Block
       iRV = fwrite(&magic_, sizeof(magic_), 1, pFile);
       unsigned int bim_tag = tag_8bim;
       iRV = fwrite(&bim_tag, sizeof(unsigned int), 1, pFile);
-      
+
       iRV = fwrite(&bim_type_, sizeof(unsigned short), 1, pFile);
-      
+
       iRV = fwrite(&pascalstringlength_, sizeof(unsigned char), 1, pFile);
 
       // Number of bytes to write out - to make the (length + string) structure even length.
       unsigned char pascalstringlengthrounded = pascalstringlength_ + (1-(pascalstringlength_%2));
       iRV = fwrite(&pascalstring_[0], sizeof(unsigned char), pascalstringlengthrounded, pFile);
-      
+
       unsigned int bim_length_rounded = bim_length_ + (bim_length_%2); // Rounded to be even.
       bim_length_rounded = byteswap4(bim_length_rounded);
 
       iRV = fwrite(&bim_length_rounded, sizeof(unsigned int), 1, pFile);
       iRV = fwrite(&data_[0], sizeof(unsigned char), bim_length_rounded, pFile);
-      
+
       return length;
     }
-    
+
     unsigned short type() const { return bim_type_;}
     unsigned char pascalstringlength_;
     unsigned short bim_type_;
@@ -121,19 +122,19 @@ class Photoshop3Block
         unsigned int magic;
         BIM *bim = new BIM(pFile);
         int bimlength = bim->TotalLength();
-        bims_.push_back(bim); 
+        bims_.push_back(bim);
         remaininglength -= (bimlength);
       }
       if (remaininglength != 0) throw("Photoshop block length mismatch");
     }
-    
+
     virtual ~Photoshop3Block() {
       for(int i = 0; i < bims_.size(); ++i) {
         delete bims_[i];
       }
       bims_.clear();
     }
-    
+
     int Write(FILE *pFile) {
       int length = 0;
       int headerlen = headerstring_.length();
@@ -141,7 +142,7 @@ class Photoshop3Block
       if (iRV != headerlen + 1)
         throw("Can't write");
       length += iRV;
-      
+
       for (int i = 0; i < bims_.size(); ++i) {
         iRV = bims_[i]->Write(pFile);
         length += iRV;
@@ -151,14 +152,15 @@ class Photoshop3Block
 
     Iptc *GetIptc() {
       throw("This bit unimplemented\n");
-      // for (int i = 0; i< bims_.size(); ++i) 
-      //   if (bims_[i]->GetIptc()) 
+      // for (int i = 0; i< bims_.size(); ++i)
+      //   if (bims_[i]->GetIptc())
       //     return bims_[i]->GetIptc();
         return NULL;
     }
-    
+
     std::string headerstring_;
-    
+
     vector<BIM *> bims_;
 };
+}  // namespace jpeg_redaction
 #endif // INCLUDE_PHOTOSHOP_3BLOCK

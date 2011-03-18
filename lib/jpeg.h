@@ -5,22 +5,20 @@
 #ifndef INCLUDE_JPEG
 #define INCLUDE_JPEG
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
 #include <vector>
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
 #include "tiff_ifd.h"
 
+namespace jpeg_redaction {
 extern int debug;
+
 class Iptc;
 class JpegDHT;
-
+class Redaction;
 class JpegMarker {
- public: 
+ public:
   // Length is payload size- includes storage for length itself.
   JpegMarker(unsigned short marker, unsigned int location,
 	     int length) {
@@ -95,15 +93,15 @@ public:
     const int datalen = sos->data_.size();
     char *data = &sos->data_[0];
     float bpp = datalen / (float)(width_ * height_);
-    printf("Image is %dx%d. data is %d. Bytes/pixel = %.3f\n", 
+    printf("Image is %dx%d. data is %d. Bytes/pixel = %.3f\n",
 	  width_, height_, datalen, bpp);
     int offs = (int)((x + y*height_) * bpp);
-    for(int i = 0 ;  i< length; ++i) 
+    for(int i = 0 ;  i< length; ++i)
       data[offs+i]=rand() % 255;
   }
-    
+
   ExifIfd *GetExif() {
-    for (int i=0; i< ifds_.size(); ++i)
+    for (int i=0; i < ifds_.size(); ++i)
       if (ifds_[i]->GetExif())
 	return ifds_[i]->GetExif();
     return NULL;
@@ -130,17 +128,17 @@ public:
   }
   // The length is the length from the file, including the storage for length.
   JpegMarker *AddMarker(int marker, int location, int length,
-		 FILE *pFile, bool loadall) {
+                        FILE *pFile, bool loadall) {
     JpegMarker *markerptr = new JpegMarker(marker, location, length);
     if (loadall)
       markerptr->LoadHere(pFile);
-    else 
+    else
       fseek(pFile, location + length + 2, SEEK_SET);
     markers_.push_back(markerptr);
     return markerptr;
   }
   void BuildDHTs(const JpegMarker *dht_block);
-  void ParseImage(JpegMarker *sos_block);
+  void ParseImage(const Redaction &redact, const char *pgmout);
 
   int width_;
   int height_;
@@ -155,5 +153,6 @@ public:
   std::vector<JpegDHT*> dhts_;
   std::vector<JpegComponent*> components_;
 };
+} // namespace redaction
 
 #endif // INCLUDE_JPEG

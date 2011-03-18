@@ -5,16 +5,17 @@
 #ifndef INCLUDE_TIFF_TAG
 #define INCLUDE_TIFF_TAG
 
-#include <stdio.h> 
-#include <stdlib.h>   
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // 0x8769 EXIF
 // 0x8825  GPS
 // 0x927c Makernote
 
+namespace jpeg_redaction {
 class TiffIfd;
-class TiffTag  
+class TiffTag
 {
 public:
   int GetDataLength() const;
@@ -67,9 +68,9 @@ public:
   tag_types GetType() const { return (tag_types)type_; }
   int GetTag() const { return tagid_; }
   int GetCount() const { return count_; }
-  double GetFloatValue(unsigned int pos = 0) const { 
-    if (!loaded_) throw("Not loaded"); 
-    if (!data_) throw("No data"); 
+  double GetFloatValue(unsigned int pos = 0) const {
+    if (!loaded_) throw("Not loaded");
+    if (!data_) throw("No data");
     if (pos >= count_)
       throw("Index too high");
     switch (type_) {
@@ -85,9 +86,9 @@ public:
     throw("wrong type not float/double/rational");
   }
 
-  unsigned int GetUIntValue(unsigned int pos) const { 
-    if (!loaded_) throw("Not loaded"); 
-    if (!data_) throw("No data"); 
+  unsigned int GetUIntValue(unsigned int pos) const {
+    if (!loaded_) throw("Not loaded");
+    if (!data_) throw("No data");
     if (pos >= count_)
       throw("Index too high");
     switch (type_) {
@@ -101,9 +102,9 @@ public:
     }
     throw("wrong type not UInt");
   }
-  int GetIntValue(unsigned int pos) const { 
-    if (!loaded_) throw("Not loaded"); 
-    if (!data_) throw("No data"); 
+  int GetIntValue(unsigned int pos) const {
+    if (!loaded_) throw("Not loaded");
+    if (!data_) throw("No data");
     if (pos >= count_)
       throw("Index too high");
     switch (type_) {
@@ -116,14 +117,14 @@ public:
     }
     throw("wrong type not Int");
   }
-  const char * GetStringValue() const { 
-    if (!loaded_) throw("Not loaded"); 
-    if (!data_) throw("No data"); 
+  const char * GetStringValue() const {
+    if (!loaded_) throw("Not loaded");
+    if (!data_) throw("No data");
     if (type_!= tiff_string)
       throw("Not a string");
       return((const char *)data_);
   }
-  const unsigned char * GetData() const { 
+  const unsigned char * GetData() const {
       return(data_);
   }
 
@@ -152,5 +153,5 @@ protected:
 private:
   bool TagIsSubIFD() const;
 };
-
+}  // namespace jpeg_redaction
 #endif // INCLUDE_TIFF_TAG

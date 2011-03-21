@@ -3,8 +3,8 @@
 
 include ../Makefile.common
 
-BINARY = ./jpegtest
-IFDTESTBINARY = ./ifdtest
+BINARY = jpegtest
+IFDTESTBINARY = ifdtest
 EXIFTOOL = exiftool
 
 LIB = ../lib/libredact.a
@@ -46,27 +46,27 @@ testout_dir:
 	@mkdir -p testout
 
 test_ifd: $(IFDTESTBINARY) testout_dir
-	$(IFDTESTBINARY) > testout/ifdtest.log
+	./$(IFDTESTBINARY) > testout/ifdtest.log
 	diff testdata/ifdtest_golden.log testout/ifdtest.log
 	@echo "== " $@ " passed"
 
 test_simple: $(BINARY) testout_dir clean_rawgrey
-	$(BINARY) testdata/simple.jpg > testout/simple_output.log
+	./$(BINARY) testdata/simple.jpg > testout/simple_output.log
 	diff  testdata/simple_output_golden.log testout/simple_output.log 
 	@cmp  testdata/simple_rawgrey_golden.pgm testout/rawgrey.pgm 
 	@echo "== " $@ " passed"
 
 
 test_windows: $(BINARY) testout_dir clean_rawgrey
-	$(BINARY) testdata/windows.jpg > testout/windows_output.log
+	./$(BINARY) testdata/windows.jpg > testout/windows_output.log
 	diff  testdata/windows_output_golden.log testout/windows_output.log
-#	@cmp  testdata/windows_out_redacted.jpg testout/testoutput.jpg
+	@cmp  testdata/windows_out_redacted.jpg testout/testoutput.jpg
 	@cmp  testdata/windows_rawgrey_golden.pgm testout/rawgrey.pgm
 	@echo "== " $@ " passed"
 
 
 test_exif:  $(BINARY) testout_dir clean_rawgrey
-	$(BINARY) testdata/testexif.jpg > testout/testexif_output.log
+	./$(BINARY) testdata/testexif.jpg > testout/testexif_output.log
 	$(EXIFTOOL) testoutput.jpg | grep -v "^File"  > testout/testexif.exiftxt
 	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt
 	@echo "== " $@ " passed"

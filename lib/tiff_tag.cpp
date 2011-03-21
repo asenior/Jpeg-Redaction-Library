@@ -45,9 +45,9 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
     }
     // Some types are pointers that will be stored in an ifd.
     if (totallength <= 4 && ! (TagIsSubIFD()) ) {
-    if (byte_swapping)
-      ByteSwapInPlace((unsigned char *)&value,
-		      4/LengthOfType(type_), LengthOfType(type_));
+      if (byte_swapping)
+        ByteSwapInPlace((unsigned char *)&value,
+                        4/LengthOfType(type_), LengthOfType(type_));
       loaded_ = true;
       data_ = new unsigned char [totallength];
       memcpy(data_, &value, totallength);
@@ -78,7 +78,8 @@ int TiffTag::Write(FILE *pFile) const {
 
   const int totallength = GetDataLength();
   pointer_location = ftell(pFile);
-  unsigned char raw[4];
+  // Pad with zeros so output is consistent even for outputs < 4 bytes.
+  unsigned char raw[4] = {0,0,0,0};
   if (totallength <= 4 && data_)
     memcpy(raw, data_, totallength);
   iRV = fwrite(&raw, sizeof(unsigned char), 4, pFile);

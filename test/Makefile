@@ -60,6 +60,7 @@ test_simple: $(BINARY) testout_dir clean_rawgrey
 test_windows: $(BINARY) testout_dir clean_rawgrey
 	$(BINARY) testdata/windows.jpg > testout/windows_output.log
 	diff  testdata/windows_output_golden.log testout/windows_output.log
+#	@cmp  testdata/windows_out_redacted.jpg testout/testoutput.jpg
 	@cmp  testdata/windows_rawgrey_golden.pgm testout/rawgrey.pgm
 	@echo "== " $@ " passed"
 

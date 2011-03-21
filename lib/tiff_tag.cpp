@@ -152,22 +152,18 @@ void TiffTag::SetValOut(unsigned int val) {
   valpointerout_ = val;
 }
 
-bool TiffTag::TagIsSubIFD() const
-{
+bool TiffTag::TagIsSubIFD() const {
   return(tagid_ == tag_exif || tagid_ == tag_gps || tagid_ == tag_gps ||
          /* tagid_ == tag_makernote || */ tagid_ == tag_interoperability);
 }
 
-void TiffTag::Print() const
-{
-      printf("0x%0x %dx%d (", tagid_, count_, LengthOfType(type_));
-    TraceValue(4);
-    printf(") ");
-
+void TiffTag::Print() const {
+  printf("0x%0x %dx%d (", tagid_, count_, LengthOfType(type_));
+  TraceValue(4);
+  printf(") ");
 }
 
-void TiffTag::TraceValue(int maxvals) const
-{
+void TiffTag::TraceValue(int maxvals) const {
   if (TagIsSubIFD()) {
     printf("IFD %d", valpointer_);
     return;

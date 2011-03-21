@@ -66,7 +66,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       unsigned short blocksize;
 
   while(!feof(pFile)) {
-    unsigned int blockloc = ftell(pFile);
+    const unsigned int blockloc = ftell(pFile);
     int iRV = fread(&marker, sizeof(unsigned short), 1, pFile);
     if (iRV != 1)
       throw(-1);
@@ -126,7 +126,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       // Absolute location of IFD:
       unsigned int ifdoffset = exifloc;
       while (ifdoffset > 0) {
-	unsigned int subfileoffset = blockloc + 10;
+	const unsigned int subfileoffset = blockloc + 10;
         printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
 	       ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
         TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
@@ -169,7 +169,8 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
     if (marker == jpeg_sof0 || marker == jpeg_sof2) {
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = byteswap2(blocksize);
-      printf("SOF sz %u nextloc %ld\n", blocksize, blockloc + blocksize + sizeof(marker));
+      printf("SOF sz %u nextloc %ld\n",
+	     blocksize, blockloc + blocksize + sizeof(marker));
       JpegMarker *sof = AddMarker(marker, blockloc, blocksize, pFile, true);
       softype_ = (marker == jpeg_sof0) ? 0:2;
       unsigned char *data = (unsigned char*)(&sof->data_[0]);
@@ -210,42 +211,46 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       printf("Restart interval %d\n", restartinterval_);
       continue;
     }
-    if (marker == jpeg_sos ) { // Start of scan
-      short slice = 0;
-      iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
-      slice = byteswap2(slice);
-      printf("SOS slice %d\n", slice);
-      int dataloc = blockloc + sizeof(marker);
-      unsigned int buf = 0;
-      int datalen = 0;
-
-      while (1) { // Read the data looking for markers
-        buf <<= 8;
-        iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
-        if (iRV != 1) {
-	  printf("Failed to load byte at %d (datalen %d)\n",
-		blockloc + 4 + datalen, datalen);
-          throw(-10);
-	}
-        datalen++;
-        if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
-          printf("In scan found marker 0x%x\n", (buf & 0xffff));
-        if ((buf & 0xffff) == jpeg_eoi) {
-	  printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
-	  break;
-	}
-	if (feof(pFile))
-	  throw("Got to end of file in JPEG SOS\n");
-      }
-      if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
-      JpegMarker *somarker =
-	AddSOMarker(marker, blockloc, datalen, pFile, loadall, slice);
-      return 0;
+    if (marker == jpeg_sos) { // Start of scan
+      return ReadSOSMarker(pFile, blockloc, loadall);
     }
     throw("Unknown marker found in JPEG");
   }
   return 0;
 }
+
+  int Jpeg::ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall) {
+    short slice = 0;
+    int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
+    slice = byteswap2(slice);
+    printf("SOS slice %d\n", slice);
+    int dataloc = blockloc + sizeof(unsigned short); // marker's size
+    unsigned int buf = 0;
+    int datalen = 0;
+
+    while (1) { // Read the data looking for markers
+      buf <<= 8;
+      iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
+      if (iRV != 1) {
+	printf("Failed to load byte at %d (datalen %d)\n",
+	       blockloc + 4 + datalen, datalen);
+	throw(-10);
+      }
+      datalen++;
+      if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
+	printf("In scan found marker 0x%x\n", (buf & 0xffff));
+      if ((buf & 0xffff) == jpeg_eoi) {
+	printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
+	break;
+      }
+      if (feof(pFile))
+	throw("Got to end of file in JPEG SOS\n");
+    }
+    if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
+    JpegMarker *somarker =
+      AddSOMarker(blockloc, datalen, pFile, loadall, slice);
+    return 0;
+  }
 
 Jpeg::~Jpeg() {
   for(int i = 0; i < ifds_.size(); ++i)

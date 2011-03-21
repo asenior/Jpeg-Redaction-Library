@@ -46,6 +46,7 @@ class JpegMarker {
   unsigned short marker_;
   std::vector<char> data_;
 };
+
 class Photoshop3Block;
 class Jpeg {
 public:
@@ -66,7 +67,7 @@ public:
     int v_factor_;
     int table_;
   };
- Jpeg() :filename_(""), width_(0), height_(0), photoshop3_(NULL) {};
+ Jpeg() : filename_(""), width_(0), height_(0), photoshop3_(NULL) {};
   enum markers { jpeg_soi = 0xFFD8,
 		 jpeg_sof0 = 0xFFC0,
 		 jpeg_sof2 = 0xFFC2,
@@ -117,11 +118,11 @@ public:
     return NULL;
   }
   // If its a SOF or SOS we pass a slice.
-  JpegMarker *AddSOMarker(int marker, int location, int length,
+  JpegMarker *AddSOMarker(int location, int length,
 			  FILE *pFile, bool loadall, int slice) {
     // We have true byte length here, but AddMarker needs
     // payload length which assumes there were 2 bytes of length.
-    JpegMarker *markerptr = AddMarker(marker, location, length+2,
+    JpegMarker *markerptr = AddMarker(jpeg_sos, location, length+2,
 				      pFile, loadall);
     markerptr->slice_ = slice;
     return markerptr;
@@ -139,6 +140,7 @@ public:
   }
   void BuildDHTs(const JpegMarker *dht_block);
   void ParseImage(const Redaction &redact, const char *pgmout);
+  int ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall);
 
   int width_;
   int height_;

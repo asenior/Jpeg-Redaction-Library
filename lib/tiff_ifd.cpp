@@ -80,9 +80,11 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   std::vector<unsigned int> pending_pointers_what;
 
   int iRV = fseek(pFile, 0, SEEK_END);
+  if (iRV != 0 )
+    fprintf(stderr, "Failed to fseek in TiffIfd::Write\n");
 
   // Write the ifd block out.
-  unsigned int ifdstart = ftell(pFile);
+  const unsigned int ifdstart = ftell(pFile);
   // Write out the IFD with dummies for pointers.
   short nr = tags_.size();
   iRV = fwrite(&nr, sizeof(short), 1, pFile);
@@ -99,7 +101,7 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   iRV = fwrite(&nextifdoffset, sizeof(unsigned int), 1, pFile);
 
   unsigned int datastart = 0;
-  // Write the image or thumbnail data. 
+  // Write the image or thumbnail data.
   if (data_) {
     TiffTag *tagdatabytes = FindTag(TiffTag::tag_stripbytes);
     if (tagdatabytes == NULL)
@@ -109,7 +111,7 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
 		 pFile);
   }
 
-  // Write all the subsidiary data. 
+  // Write all the subsidiary data.
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
     if (datastart && pending_pointers_what.size() == whereisdata)
       pending_pointers_what.push_back(datastart);  // "Where" we wrote the datablock.
@@ -125,24 +127,24 @@ unsigned int TiffIfd::Write(FILE *pFile, unsigned int nextifdoffset,
   for(int i = 0; i < pending_pointers_what.size(); ++i) {
     printf("Write TiffIfd Locs Where: %d What: %d-%d\n",
 	   pending_pointers_where[i], pending_pointers_what[i], subfileoffset);
-    fseek(pFile, pending_pointers_where[i], SEEK_SET); // Where 
+    fseek(pFile, pending_pointers_where[i], SEEK_SET); // Where
     const unsigned int ifdloc = pending_pointers_what[i]-subfileoffset;  // What
-    iRV = fwrite(&ifdloc, sizeof(unsigned int), 1, pFile);  
+    iRV = fwrite(&ifdloc, sizeof(unsigned int), 1, pFile);
   }
   iRV = fseek(pFile, 0, SEEK_END);
-  // Return the location of this ifdstart (from which we can calculate 
+  // Return the location of this ifdstart (from which we can calculate
   // where we have to write the nextifdoffset if we hadn't precalculated it)
   return ifdstart;
 }
 
 int TiffIfd::LoadAll(FILE *pFile) {
   for(int tagindex=0; tagindex<tags_.size(); ++tagindex) {
-    tags_[tagindex]->Load(pFile, subfileoffset_, byte_swapping_);      
+    tags_[tagindex]->Load(pFile, subfileoffset_, byte_swapping_);
   }
   return 1;
 }
 
-void TiffIfd::Reset() {  
+void TiffIfd::Reset() {
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
     delete tags_[tagindex];
   }

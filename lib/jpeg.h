@@ -92,13 +92,26 @@ public:
 	return ifds_[i]->GetExif();
     return NULL;
   }
-  int RemoveExif() {
+  int RemoveTag(int tag) {
     int removed = 0;
     for (int i=0; i < ifds_.size(); ++i) {
-      bool removed_this = ifds_[i]->RemoveTag(TiffTag::tag_exif);
+      bool removed_this = ifds_[i]->RemoveTag(tag);
       if (removed_this) ++removed;
     }
     return removed;
+  }
+  // Add here a list of all the tags that are considered sensitive.
+  int RemoveAllSensitive() {
+    RemoveTag(TiffTag::tag_exif);
+    RemoveTag(TiffTag::tag_gps);
+    RemoveTag(TiffTag::tag_makernote);
+    RemoveTag(TiffTag::tag_make);
+    RemoveTag(TiffTag::tag_model);
+    // e.g. times, owner, IPTC etc.
+  }
+  // Invert the redaction by pasting in the strips from redaction.
+  int ReverseRedaction(const Redaction &redaction) {
+    throw("Not yet implemented");
   }
   std::vector<JpegMarker*> markers_;
   JpegMarker *GetMarker(int marker) {

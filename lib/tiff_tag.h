@@ -41,6 +41,8 @@ public:
 		  tag_height=0x101,
 		  tag_bitspersample = 0x102,
 		  tag_compression = 0x103,
+		  tag_make = 0x10f,
+		  tag_model = 0x110,
 		  tag_stripoffset = 0x111,
 		  tag_orientation = 0x112,
 		  tag_stripbytes = 0x117,

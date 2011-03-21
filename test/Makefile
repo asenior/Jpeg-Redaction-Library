@@ -26,6 +26,7 @@ $(IFDTESTBINARY): $(LIB) ifdtest.cpp
 
 .PHONY: clean cleanall clean_rawgrey clean_test \
 	test testout_dir test_exif test_simple test_windows test_ifd \
+	test_exif_removal \
 	$(LIB)
 
 clean_test: clean_rawgrey
@@ -77,5 +78,8 @@ test_exif:  $(BINARY) testout_dir clean_rawgrey
 
 test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	./$(EXIF_REMOVE) testdata/windows.jpg > testout/testexif_removal_output.log
+	@cmp testout/test_noexif.jpg testdata/test_noexif_golden.jpg
+	@cmp testout/test_noexifgps.jpg testdata/test_noexifgps_golden.jpg
+	@cmp testout/test_nosensitive.jpg testdata/test_nosensitive_golden.jpg
 	@echo "== " $@ " passed"
 

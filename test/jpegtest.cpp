@@ -10,7 +10,7 @@ int test_redaction(const char * const filename) {
   printf("Testing with loadall=true\n");
   try {
     Jpeg j2(filename, true);
-    JpegDecoder::Rect rect(50, 300, 50, 200);
+    Redaction::Rect rect(50, 300, 50, 200);
     Redaction redaction;
 
     redaction.AddRegion(rect);

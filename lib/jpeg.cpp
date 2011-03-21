@@ -380,7 +380,7 @@ void Jpeg::ParseImage(const Redaction &redact, const char *pgmout) {
   printf("\n\nDecoding %lu\n", sos_block->data_.size());
   //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
   try {
-    JpegDecoder::Rect rect(50, 300, 50, 200);
+    Redaction::Rect rect(50, 300, 50, 200);
     decoder.AddRedactionRegion(rect);
     decoder.Decode();
   } catch (const char *text) {

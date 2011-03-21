@@ -1,4 +1,5 @@
 JPEG Redaction Library
+======================
 
 This is a C++ library that can parse EXIF format files- that is files in the standard EXIF format for representing JPEG-encoded data. 
 The library can parse JPEG and EXIF contents and is intended to be used to rewrite the files in a modified form.

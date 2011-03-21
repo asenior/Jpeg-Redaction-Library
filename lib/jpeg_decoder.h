@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jpeg.h"
 #include "jpeg_dht.h"
+#include "redaction.h"
 
 extern int debug;
 namespace jpeg_redaction {
@@ -12,11 +13,6 @@ class JpegDHT;
 class Jpeg;
 class JpegDecoder {
  public:
-  class Rect {
-  public:
-  Rect(int l, int r, int t, int b) : l_(l), r_(r), t_(t), b_(b) {}
-    int l_, r_, t_, b_;
-  };
   JpegDecoder(int w, int h,
 	      unsigned char *data,
 	      int length,
@@ -189,9 +185,14 @@ class JpegDecoder {
   void WriteZeroLength(int which_dht);
   void ClearRedactions() {
     redaction_regions_.clear();
+    redaction_.Clear();
   }
-  int AddRedactionRegion(Rect &r) {
+  int AddRedactionRegion(Redaction::Rect &r) {
     redaction_regions_.push_back(r);
+  }
+
+  int AddRedactionRegions(Redaction &r) {
+    redaction_.Add(r);
   }
 
   // Decode all of the blocks from all of the components in a single MCU.
@@ -301,7 +302,8 @@ class JpegDecoder {
 
   int redaction_bit_pointer_;
   // Rectangles in original image coords of where we are redacting.
-  std::vector<Rect> redaction_regions_;
+  std::vector<Redaction::Rect> redaction_regions_;
+  Redaction redaction_;
   std::vector<unsigned char> redacted_data_;
 };
 }  // namespace jpeg_redaction

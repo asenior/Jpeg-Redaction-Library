@@ -381,7 +381,7 @@ void Jpeg::ParseImage(const Redaction &redact, const char *pgmout) {
   //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
   try {
     Redaction::Rect rect(50, 300, 50, 200);
-    decoder.AddRedactionRegion(rect);
+    decoder.AddRedactionRegions(redact);
     decoder.Decode();
   } catch (const char *text) {
     printf("In Decoder: Caught error %s\n", text);

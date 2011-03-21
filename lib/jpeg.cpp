@@ -279,7 +279,7 @@ int Jpeg::Save(const char * const filename) {
     return 0;
   // Write the header,
   unsigned short magic = 0xd8ff;
-  //  if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
+  if (arch_big_endian) ByteSwapInPlace(&magic, 1);
   int rv = fwrite(&magic, sizeof(unsigned short), 1, pFile);
   bool write_exif = true;
 
@@ -306,6 +306,7 @@ int Jpeg::Save(const char * const filename) {
     rv = fwrite(&byte_order, sizeof(unsigned short), 1, pFile);
     rv = fwrite(&forty_two, sizeof(unsigned short), 1, pFile);
     unsigned int exifoffset_location = ftell(pFile);
+    //    unsigned int subfile_offset = exifoffset_location;
     pending_pointers.push_back(exifoffset_location); // Where
 
     unsigned int exifoffset = 0; // Dummy
@@ -314,7 +315,7 @@ int Jpeg::Save(const char * const filename) {
     for (int i = 0 ; i < ifds_.size(); ++i) {
       unsigned int ifdloc = ifds_[i]->Write(pFile, zero, subfileoffset);
       // "What":  Where we wrote this ifd (to be put in the previous "where")
-      pending_pointers.push_back(ifdloc -12*i);
+      pending_pointers.push_back(ifdloc - subfileoffset);
       // "Where" we write the pointer to the next ifd.
       pending_pointers.push_back(ifdloc + 2 + 12*ifds_[i]->GetNTags());
     }

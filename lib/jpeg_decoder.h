@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jpeg.h"
 #include "jpeg_dht.h"
+#include "redaction.h"
 
 extern int debug;
 namespace jpeg_redaction {
@@ -12,11 +13,6 @@ class JpegDHT;
 class Jpeg;
 class JpegDecoder {
  public:
-  class Rect {
-  public:
-  Rect(int l, int r, int t, int b) : l_(l), r_(r), t_(t), b_(b) {}
-    int l_, r_, t_, b_;
-  };
   JpegDecoder(int w, int h,
 	      unsigned char *data,
 	      int length,
@@ -29,7 +25,7 @@ class JpegDecoder {
     // Reserve space for the redacted data- should be smaller than the original.
     //    redacting_ = (redact ? 1 : 0);
 
-    if (redaction_regions_.size() > 0)
+    if (redaction_.NumRegions() > 0)
       redacting_ = 1;
 
     if (redacting_) {
@@ -187,11 +183,11 @@ class JpegDecoder {
 
   void WriteValue(int which_dht, int value);
   void WriteZeroLength(int which_dht);
-  void ClearRedactions() {
-    redaction_regions_.clear();
+  void ClearRedactionRegions() {
+    redaction_.Clear();
   }
-  int AddRedactionRegion(Rect &r) {
-    redaction_regions_.push_back(r);
+  int AddRedactionRegions(const Redaction &redaction) {
+    redaction_.Add(redaction);
   }
 
   // Decode all of the blocks from all of the components in a single MCU.
@@ -259,15 +255,7 @@ class JpegDecoder {
     const int vq = 8 * mcu_v_;
     int mcu_x = mcus_ % mcu_width;
     int mcu_y = mcus_ / mcu_width;
-
-    for (int i = 0; i < redaction_regions_.size(); ++i)
-      if (mcu_x * hq     < redaction_regions_[i].r_ &&
-	  (mcu_x+1) * hq > redaction_regions_[i].l_ &&
-	  mcu_y * vq     < redaction_regions_[i].b_ &&
-	  (mcu_y+1) * vq > redaction_regions_[i].t_) {
-	return true;
-      }
-    return false;
+    return redaction_.InRegion(mcu_x * hq, mcu_y * vq, hq, vq);
   }
   // Decoding information:
   unsigned char *data_;
@@ -301,7 +289,7 @@ class JpegDecoder {
 
   int redaction_bit_pointer_;
   // Rectangles in original image coords of where we are redacting.
-  std::vector<Rect> redaction_regions_;
+  Redaction redaction_;
   std::vector<unsigned char> redacted_data_;
 };
 }  // namespace jpeg_redaction

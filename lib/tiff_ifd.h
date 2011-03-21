@@ -35,27 +35,49 @@ public:
   ExifIfd *GetExif() { return (ExifIfd*)FindTag(TiffTag::tag_exif); }
 
     // Find a tag with a particular number. Return -1 if not in this IFD.
-  TiffTag * FindTag(const int tagno) const {
-    for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
-      if (tags_[tagindex]->GetTag() == tagno)
-        return(tags_[tagindex]);
-    }
-    return NULL;
+  TiffTag *FindTag(const int tagno) const {
+    const int tagindex = FindTagIndex(tagno);
+    return (tagindex < 0) ? NULL : tags_[tagindex];
   }
 
-  // For anything referenced by a pointer, then seek to it and load it into data_blocks_
+  int FindTagIndex(const int tagno) const {
+    for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
+      if (tags_[tagindex]->GetTag() == tagno)
+        return tagindex;
+    }
+    return -1;
+  }
+
+  // Remove one tag of type tagno. If all is specified delete all of them
+  // e.g. for keywords.
+  bool RemoveTag(const int tagno, bool all = false) {
+    bool found = false;
+    for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
+      if (tags_[tagindex]->GetTag() == tagno) {
+        delete tags_[tagindex];
+	tags_.erase(tags_.begin() + tagindex);
+	found = true;
+	if (!all)
+	  return found;
+      }
+    }
+    return found;
+  }
+
+  // For anything referenced by a pointer, then seek to it and load it
+  // into data_blocks_
   int LoadAll(FILE *pFile);
   int GetNextIfdOffset() const {return nextifdoffset_;}
 
-  TiffTag *  GetTag(int tagindex) const {
+  TiffTag *GetTag(int tagindex) const {
     if (tagindex < 0 || tagindex >= tags_.size())
       return NULL;
     return(tags_[tagindex]);
   }
   int GetNTags() const { return tags_.size(); }
-  void  ListTags() const;
-protected:
+  void ListTags() const;
 
+protected:
   void Reset();
 
   bool byte_swapping_;
@@ -69,9 +91,10 @@ protected:
 // Subclass if it is an exif block
 class ExifIfd : public TiffIfd {
  public:
- ExifIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false, unsigned int subfileoffset=0):
+ ExifIfd(FILE *pFile, unsigned int ifdoffset, bool loadall = false,
+	 unsigned int subfileoffset=0):
   TiffIfd(pFile, ifdoffset, loadall, subfileoffset) {
   }
 };
-}// namespace jpeg_redaction
+}  // namespace jpeg_redaction
 #endif // !defined(AFX_TIFFIIFD_H__669C3A6A_A035_418B_A615_B78E8E1467E3__INCLUDED_)

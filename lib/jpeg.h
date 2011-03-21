@@ -80,32 +80,25 @@ public:
 		 jpeg_app = 0xFFE0};
   Jpeg(char const * const pczFilename, bool loadall);
   int LoadFromFile(FILE *pFile, bool loadall, int offset);
+  void ParseImage(const Redaction &redact, const char *pgmout);
 
   int Save(const char * const filename);
   virtual ~Jpeg();
   const char *MarkerName(int marker) const;
   Iptc *GetIptc();
-  // Try to wipe out some of the data.
-  // Doesn't work yet.
-  void Corrupt(int x, int y, int length) {
-    JpegMarker *sos = GetMarker(jpeg_sos);
-    if (sos == NULL)
-      printf("sos is null\n");
-    const int datalen = sos->data_.size();
-    char *data = &sos->data_[0];
-    float bpp = datalen / (float)(width_ * height_);
-    printf("Image is %dx%d. data is %d. Bytes/pixel = %.3f\n",
-	  width_, height_, datalen, bpp);
-    int offs = (int)((x + y*height_) * bpp);
-    for(int i = 0 ;  i< length; ++i)
-      data[offs+i]=rand() % 255;
-  }
-
   ExifIfd *GetExif() {
     for (int i=0; i < ifds_.size(); ++i)
       if (ifds_[i]->GetExif())
 	return ifds_[i]->GetExif();
     return NULL;
+  }
+  int RemoveExif() {
+    int removed = 0;
+    for (int i=0; i < ifds_.size(); ++i) {
+      bool removed_this = ifds_[i]->RemoveTag(TiffTag::tag_exif);
+      if (removed_this) ++removed;
+    }
+    return removed;
   }
   std::vector<JpegMarker*> markers_;
   JpegMarker *GetMarker(int marker) {
@@ -138,9 +131,10 @@ public:
     markers_.push_back(markerptr);
     return markerptr;
   }
+protected:
   void BuildDHTs(const JpegMarker *dht_block);
-  void ParseImage(const Redaction &redact, const char *pgmout);
   int ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall);
+  int LoadExif(FILE *pFile, unsigned int blockloc, bool loadall);
 
   int width_;
   int height_;

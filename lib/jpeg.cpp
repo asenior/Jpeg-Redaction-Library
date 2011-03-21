@@ -63,7 +63,6 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
   if (iRV != 1)
     throw(-2);
   if (marker != 0xd8ff) throw("Bad JPEG start marker");
-      unsigned short blocksize;
 
   while(!feof(pFile)) {
     const unsigned int blockloc = ftell(pFile);
@@ -81,69 +80,13 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
     //   continue;
     // }
     if (marker == jpeg_app + 1) { // App1 is EXIF
-      bool arch_big_endian = ArchBigEndian();
-      unsigned int magic = 0, exifoffset = 0;
-      unsigned short myshort, forty_two, byte_order;
-      iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-      if (!arch_big_endian)
-	blocksize = byteswap2(blocksize);
-      printf("APP Block size is %d %04x\n", blocksize, blocksize);
-      iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
-      if (iRV != 1)
-        throw(-2);
-      if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
-      if (magic != 0x45786966) // 'Exif'
-        throw(-6);
-      iRV = fread(&myshort, sizeof(unsigned short), 1, pFile);
-      if (myshort != 0) throw(-4);
-
-      iRV = fread(&byte_order, sizeof(unsigned short), 1, pFile);
-      if (iRV != 1)
-        throw(-2);
-      bool big_endian = false;
-      printf("EXIF byte_order: %04x\n", byte_order);
-      if (byte_order == 0x4d4d) // "Motorola"
-        big_endian = true;
-      else if (byte_order != 0x4949) // "Intel"
-	throw("Don't recognize EXIF tag");
-      printf("EXIF tag is %s endian %d, arch is %s %d\n",
-	     (big_endian ? "big" : "little"), big_endian,
-	     (arch_big_endian ? "big" : "little"), arch_big_endian);
-      bool byte_swapping = (big_endian != arch_big_endian);
-      iRV = fread(&forty_two, sizeof(unsigned short), 1, pFile);
-      if (iRV != 1)
-        throw(-2);
-      if (byte_swapping) ByteSwapInPlace(&forty_two, 1);
-      if (forty_two != 42)
-        throw(-2);
-      iRV = fread(&exifoffset, sizeof(unsigned int), 1, pFile);
-      if (iRV != 1)
-        throw(-2);
-      if (byte_swapping) ByteSwapInPlace(&exifoffset, 1);
-      unsigned int exifloc = ftell(pFile);
-      printf("Exifloc %d/0x%x Offset %d/0x%x\n",
-	     exifloc, exifloc, exifoffset, exifoffset);
-      // Absolute location of IFD:
-      unsigned int ifdoffset = exifloc;
-      while (ifdoffset > 0) {
-	const unsigned int subfileoffset = blockloc + 10;
-        printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
-	       ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
-        TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
-				       loadall, subfileoffset, byte_swapping);
-        ifds_.push_back(tempifd);
-        ifdoffset = tempifd->GetNextIfdOffset();
-        if (ifdoffset != 0)
-          ifdoffset += subfileoffset;
-	printf("Next offset %d\n", ifdoffset);
-      }
-//      exif_ = new TiffIfd(pFile, exifloc, true, blockloc + 10); // Need to pass the baseline.
-      fseek(pFile, blockloc + blocksize + sizeof(marker), SEEK_SET);
+      LoadExif(pFile, blockloc, loadall);
       continue;
     }
 
     if (marker == jpeg_app + 0xd) { // App13 is Photoshop/IPTC
       printf("Photoshop\n");
+      unsigned short blocksize;
       unsigned int magic = 0, exifoffset = 0;
      // unsigned short myshort;
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
@@ -158,6 +101,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       continue;
     }
     if (marker >= jpeg_app && marker < jpeg_app + 16) {
+      unsigned short blocksize;
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = byteswap2(blocksize);
       AddMarker(marker, blockloc, blocksize, pFile, loadall);
@@ -167,6 +111,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
     }
     // http://www.bsdg.org/swag/GRAPHICS/0143.PAS.html
     if (marker == jpeg_sof0 || marker == jpeg_sof2) {
+      unsigned short blocksize;
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = byteswap2(blocksize);
       printf("SOF sz %u nextloc %ld\n",
@@ -193,6 +138,7 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       continue;
     }
     if (marker == jpeg_dqt || marker == jpeg_dht) {
+      unsigned short blocksize;
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = byteswap2(blocksize);
       printf(" sz %d nextloc %d\n", blocksize, blockloc + blocksize + 2);
@@ -203,6 +149,8 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
       continue;
     }
     if (marker ==  jpeg_dri ) {
+      unsigned short blocksize;
+
       iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = byteswap2(blocksize);
       JpegMarker *dri = AddMarker(marker, blockloc, blocksize, pFile, true);
@@ -219,38 +167,103 @@ int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
   return 0;
 }
 
-  int Jpeg::ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall) {
-    short slice = 0;
-    int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
-    slice = byteswap2(slice);
-    printf("SOS slice %d\n", slice);
-    int dataloc = blockloc + sizeof(unsigned short); // marker's size
-    unsigned int buf = 0;
-    int datalen = 0;
+int Jpeg::LoadExif(FILE *pFile, unsigned int blockloc, bool loadall) {
+  unsigned short blocksize;
 
-    while (1) { // Read the data looking for markers
-      buf <<= 8;
-      iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
-      if (iRV != 1) {
-	printf("Failed to load byte at %d (datalen %d)\n",
-	       blockloc + 4 + datalen, datalen);
-	throw(-10);
-      }
-      datalen++;
-      if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
-	printf("In scan found marker 0x%x\n", (buf & 0xffff));
-      if ((buf & 0xffff) == jpeg_eoi) {
-	printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
-	break;
-      }
-      if (feof(pFile))
-	throw("Got to end of file in JPEG SOS\n");
-    }
-    if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
-    JpegMarker *somarker =
-      AddSOMarker(blockloc, datalen, pFile, loadall, slice);
-    return 0;
+  bool arch_big_endian = ArchBigEndian();
+  unsigned int magic = 0, exifoffset = 0;
+  unsigned short myshort, forty_two, byte_order;
+  int iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
+  if (!arch_big_endian)
+    blocksize = byteswap2(blocksize);
+  printf("APP Block size is %d %04x\n", blocksize, blocksize);
+  iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
+  if (iRV != 1)
+    throw(-2);
+  if (!arch_big_endian) ByteSwapInPlace(&magic, 1);
+  if (magic != 0x45786966) // 'Exif'
+    throw(-6);
+  iRV = fread(&myshort, sizeof(unsigned short), 1, pFile);
+  if (myshort != 0) throw(-4);
+
+  iRV = fread(&byte_order, sizeof(unsigned short), 1, pFile);
+  if (iRV != 1)
+    throw(-2);
+  bool big_endian = false;
+  printf("EXIF byte_order: %04x\n", byte_order);
+  if (byte_order == 0x4d4d) // "Motorola"
+    big_endian = true;
+  else if (byte_order != 0x4949) // "Intel"
+    throw("Don't recognize EXIF tag");
+  printf("EXIF tag is %s endian %d, arch is %s %d\n",
+	 (big_endian ? "big" : "little"), big_endian,
+	 (arch_big_endian ? "big" : "little"), arch_big_endian);
+  bool byte_swapping = (big_endian != arch_big_endian);
+  iRV = fread(&forty_two, sizeof(unsigned short), 1, pFile);
+  if (iRV != 1)
+    throw(-2);
+  if (byte_swapping) ByteSwapInPlace(&forty_two, 1);
+  if (forty_two != 42)
+    throw(-2);
+  iRV = fread(&exifoffset, sizeof(unsigned int), 1, pFile);
+  if (iRV != 1)
+    throw(-2);
+  if (byte_swapping) ByteSwapInPlace(&exifoffset, 1);
+  unsigned int exifloc = ftell(pFile);
+  printf("Exifloc %d/0x%x Offset %d/0x%x\n",
+	 exifloc, exifloc, exifoffset, exifoffset);
+  // Absolute location of IFD:
+  unsigned int ifdoffset = exifloc;
+  while (ifdoffset > 0) {
+    const unsigned int subfileoffset = blockloc + 10;
+    printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
+	   ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
+    TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
+				   loadall, subfileoffset, byte_swapping);
+    ifds_.push_back(tempifd);
+    ifdoffset = tempifd->GetNextIfdOffset();
+    if (ifdoffset != 0)
+      ifdoffset += subfileoffset;
+    printf("Next offset %d\n", ifdoffset);
   }
+  //      exif_ = new TiffIfd(pFile, exifloc, true, blockloc + 10); // Need to pass the baseline.
+  iRV = fseek(pFile, blockloc + blocksize + sizeof(unsigned short),
+	      SEEK_SET);
+  return 0;
+}
+
+int Jpeg::ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall) {
+  short slice = 0;
+  int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
+  slice = byteswap2(slice);
+  printf("SOS slice %d\n", slice);
+  int dataloc = blockloc + sizeof(unsigned short); // marker's size
+  unsigned int buf = 0;
+  int datalen = 0;
+
+  while (1) { // Read the data looking for markers
+    buf <<= 8;
+    iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
+    if (iRV != 1) {
+      printf("Failed to load byte at %d (datalen %d)\n",
+	     blockloc + 4 + datalen, datalen);
+      throw(-10);
+    }
+    datalen++;
+    if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
+      printf("In scan found marker 0x%x\n", (buf & 0xffff));
+    if ((buf & 0xffff) == jpeg_eoi) {
+      printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
+      break;
+    }
+    if (feof(pFile))
+      throw("Got to end of file in JPEG SOS\n");
+  }
+  if (loadall) fseek(pFile, blockloc + 4, SEEK_SET);
+  JpegMarker *somarker =
+    AddSOMarker(blockloc, datalen, pFile, loadall, slice);
+  return 0;
+}
 
 Jpeg::~Jpeg() {
   for(int i = 0; i < ifds_.size(); ++i)

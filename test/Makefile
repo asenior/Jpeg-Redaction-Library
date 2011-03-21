@@ -5,17 +5,21 @@ include ../Makefile.common
 
 BINARY = jpegtest
 IFDTESTBINARY = ifdtest
+EXIF_REMOVE = exiftest
 EXIFTOOL = exiftool
 
 LIB = ../lib/libredact.a
 
-test: $(BINARY) test_ifd test_simple test_windows
+test: $(BINARY) test_ifd test_simple test_windows test_exif_removal
 
 $(LIB): 
 	cd ../lib; $(MAKE) lib
 
 $(BINARY): $(LIB) jpegtest.cpp
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(EXIF_REMOVE): $(LIB) exiftest.cpp
+	$(CC) $(CXXFLAGS) -I../lib exiftest.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(IFDTESTBINARY): $(LIB) ifdtest.cpp
 	$(CC) $(CXXFLAGS) -I../lib ifdtest.cpp $(LIBPATH) $(LIB)  -o $@
@@ -69,5 +73,9 @@ test_exif:  $(BINARY) testout_dir clean_rawgrey
 	./$(BINARY) testdata/testexif.jpg > testout/testexif_output.log
 	$(EXIFTOOL) testoutput.jpg | grep -v "^File"  > testout/testexif.exiftxt
 	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt
+	@echo "== " $@ " passed"
+
+test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
+	./$(EXIF_REMOVE) testdata/windows.jpg > testout/testexif_removal_output.log
 	@echo "== " $@ " passed"
 

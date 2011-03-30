@@ -17,6 +17,7 @@ int test_exif_removal(const char * const filename) {
   }
   return 0;
 }
+
 int test_sensitive_removal(const char * const filename) {
   try {
     Jpeg j2(filename, true);

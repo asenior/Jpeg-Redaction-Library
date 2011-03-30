@@ -41,6 +41,8 @@ clean:
 	rm -f $(BINARY) $(IFDTESTBINARY)
 	rm -rf testout
 
+veryclean: cleanall
+
 cleanall: clean
 	cd ../lib; $(MAKE) clean
 

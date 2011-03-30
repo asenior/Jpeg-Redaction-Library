@@ -1,3 +1,28 @@
+Testing with loadall=false
+Got marker ffe0 APPn at 2
+APP ffe0 unsupported
+Got marker ffdb DQT at 20
+ sz 67 nextloc 89
+Got marker ffdb DQT at 89
+ sz 67 nextloc 158
+Got marker ffc0 SOF0 at 158
+SOF sz 17 nextloc 177
+Component 1 H 2 V 2, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 648 x 486
+Got marker ffc4 DHT at 177
+ sz 31 nextloc 210
+Got marker ffc4 DHT at 210
+ sz 181 nextloc 393
+Got marker ffc4 DHT at 393
+ sz 31 nextloc 426
+Got marker ffc4 DHT at 426
+ sz 181 nextloc 609
+Got marker ffda SOS at 609
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 65719 (len 65106)
 Testing with loadall=true
 Got marker ffe0 APPn at 2
 APP ffe0 unsupported
@@ -31,16 +56,16 @@ Got marker ffda SOS at 609
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
+Removed 934 stuff_bytes in 65104 now 64170
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
-Decoding 65106
+Decoding 64170
 MCU 0 dc_value -72 y_value_ -147. Doubling gain to 1
 MCU 5 dc_value 221 y_value_ 322. Doubling gain to 2
 Got to 1271 mcus. 0 bits left.
 Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
 Saving Image 82, 62 = 5084 pixels. 5084 bytes
-Redacted data length 55376
 H 648 W 486
 Saving : 9 markers
 Saved marker ffe0 length 16
@@ -51,4 +76,71 @@ Saved marker ffc4 length 31
 Saved marker ffc4 length 181
 Saved marker ffc4 length 31
 Saved marker ffc4 length 181
-Saved marker ffda length 65108
+Inserted 934 stuff_bytes in 64170 now 65104
+Saved marker ffda length 64172
+Testing redaction
+Got marker ffe0 APPn at 2
+APP ffe0 unsupported
+Got marker ffdb DQT at 20
+ sz 67 nextloc 89
+Got marker ffdb DQT at 89
+ sz 67 nextloc 158
+Got marker ffc0 SOF0 at 158
+SOF sz 17 nextloc 177
+Component 1 H 2 V 2, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 648 x 486
+Got marker ffc4 DHT at 177
+ sz 31 nextloc 210
+Didn't find 1
+DHT 0 00. Bytes=29 total = 29 length = 29
+Got marker ffc4 DHT at 210
+ sz 181 nextloc 393
+Didn't find 5
+DHT 0 10. Bytes=179 total = 179 length = 179
+Got marker ffc4 DHT at 393
+ sz 31 nextloc 426
+Didn't find 1
+DHT 0 01. Bytes=29 total = 29 length = 29
+Got marker ffc4 DHT at 426
+ sz 181 nextloc 609
+Didn't find 5
+DHT 0 11. Bytes=179 total = 179 length = 179
+Got marker ffda SOS at 609
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 65719 (len 65106)
+Removed 934 stuff_bytes in 65104 now 64170
+Expect 1271 MCUS. 82x62 blocks h:2 v:2
+
+
+Decoding 64170
+MCU 0 dc_value -72 y_value_ -147. Doubling gain to 1
+MCU 5 dc_value 221 y_value_ 322. Doubling gain to 2
+Got to 1271 mcus. 0 bits left.
+Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
+Redacted data length 54504
+H 648 W 486
+Redaction::10 strips
+Strip (48,48: 143 MCUs) has 8020 bits (rep 1055), src 40095 dest 40095 diff 0 offset 0.
+Strip (48,64: 184 MCUs) has 7977 bits (rep 1022), src 58844 dest 51879 diff 6965 offset 6965.
+Strip (48,80: 225 MCUs) has 8693 bits (rep 1075), src 75715 dest 61795 diff 13920 offset 13920.
+Strip (48,96: 266 MCUs) has 8296 bits (rep 1002), src 95764 dest 74226 diff 21538 offset 21538.
+Strip (48,112: 307 MCUs) has 7224 bits (rep 978), src 115403 dest 86571 diff 28832 offset 28832.
+Strip (48,128: 348 MCUs) has 7275 bits (rep 946), src 132502 dest 97424 diff 35078 offset 35078.
+Strip (48,144: 389 MCUs) has 8228 bits (rep 997), src 149126 dest 107719 diff 41407 offset 41407.
+Strip (48,160: 430 MCUs) has 11197 bits (rep 971), src 166433 dest 117795 diff 48638 offset 48638.
+Strip (48,176: 471 MCUs) has 9666 bits (rep 950), src 187637 dest 128773 diff 58864 offset 58864.
+Strip (48,192: 512 MCUs) has 10832 bits (rep 1163), src 209291 dest 141711 diff 67580 offset 67580.
+Saving : 9 markers
+Saved marker ffe0 length 16
+Saved marker ffdb length 67
+Saved marker ffdb length 67
+Saved marker ffc0 length 17
+Saved marker ffc4 length 31
+Saved marker ffc4 length 181
+Saved marker ffc4 length 31
+Saved marker ffc4 length 181
+Inserted 872 stuff_bytes in 54514 now 55386
+Saved marker ffda length 64172

@@ -1,160 +1,3 @@
-keep bits coming. 
-Get HUFF_LOOKAHEAD (8) bits & look it up in a lookup table. 
-look_nbits tells us how many bits to take
-look_sym tells us what the symbol is. 
-
-
-The table is constructed in jdhuff.c : jpeg_make_d_derived_tbl
-Huffman table in my sample image is 418-2 bytes.
-
-
-
-1) Determine MCU
-2) Hence interleaving of color planes
-3) Which HT is used for which plane & AC/DC
-4) How do I know what is the end-of-block marker? 
-
-My SOF
-08 0b b8 0f a0 03 01 21 00 02 11 01 03 11 01 00 00
-Simple JPEG 
-08 00 08 00 10 03 01 11 00 02 11 01 03 11 01 00 00
-
-Handle stuffing bytes, END-of-table
-
-Expect e.g. Y Y Y Y Cb Cb Cr
-Each 1x DC + (up to 63) x AC
-
-From huff_simple0.jpg
-Tables are preceded by Class << 4 + ID in paren
-0000320 ff c4 01 a2 
-	           (00)00 00 07 01 01 01 01 01 00 00 00 Luminance DC
-0000340 00 00 00 00 00 
-                       04 05 03 02 06 01 00 07 08 09 0a Luminance lengths.
-0000360 0b 
-          (01)00 02 02 03 01 01 01 01 01 00 00 00 00 00 Chrom DC
-0000400 00 00 
-              01 00 02 03 04 05 06 07 08 09 0a 0b|(10)00 Chrom DC lengths
-0000420 02 01 03 03 02 04 02 06 07 03 04 02 06 02 73  // total of 162
-						     01  //Start of luminance AC
-0000440 02 03 11 04 00 05 21 12 31 41 51 06 13 61 22 71
-0000460 81 14 32 91 a1 07 15 b1 42 23 c1 52 d1 e1 33 16
-0000500 62 f0 24 72 82 f1 25 43 34 53 92 a2 b2 63 73 c2
-0000520 35 44 27 93 a3 b3 36 17 54 64 74 c3 d2 e2 08 26
-0000540 83 09 0a 18 19 84 94 45 46 a4 b4 56 d3 55 28 1a
-0000560 f2 e3 f3 c4 d4 e4 f4 65 75 85 95 a5 b5 c5 d5 e5
-0000600 f5 66 76 86 96 a6 b6 c6 d6 e6 f6 37 47 57 67 77
-0000620 87 97 a7 b7 c7 d7 e7 f7 38 48 58 68 78 88 98 a8
-0000640 b8 c8 d8 e8 f8 29 39 49 59 69 79 89 99 a9 b9 c9
-0000660 d9 e9 f9 2a 3a 4a 5a 6a 7a 8a 9a aa ba ca da ea
-0000700 fa 
-          (11)00 02 02 01 02 03 05 05 04 05 06 04 08 03 Chrom AC
-0000720 03 6d 
-	      01 00 02 11 03 04 21 12 31 41 05 51 13 61
-0000740 22 06 71 81 91 32 a1 b1 f0 14 c1 d1 e1 23 42 15
-0000760 52 62 72 f1 33 24 34 43 82 16 92 53 25 a2 63 b2
-0001000 c2 07 73 d2 35 e2 44 83 17 54 93 08 09 0a 18 19
-0001020 26 36 45 1a 27 64 74 55 37 f2 a3 b3 c3 28 29 d3
-0001040 e3 f3 84 94 a4 b4 c4 d4 e4 f4 65 75 85 95 a5 b5
-0001060 c5 d5 e5 f5 46 56 66 76 86 96 a6 b6 c6 d6 e6 f6
-0001100 47 57 67 77 87 97 a7 b7 c7 d7 e7 f7 38 48 58 68
-0001120 78 88 98 a8 b8 c8 d8 e8 f8 39 49 59 69 79 89 99
-0001140 a9 b9 c9 d9 e9 f9 2a 3a 4a 5a 6a 7a 8a 9a aa ba
-0001160 ca da ea fa ff da 00 0c 03 01 00 02 11 03 11 00
-
-DHT: 
-FFC4 then length (418) 
-DC table.
-Then 17 bytes with number of items of each bit length 0-16 bits. 
-Then the codes represented by each of the appropriate huffman bit sequences.
-These codes are the lengths of the symbols in the DC signal. 
-Symbol of 00 is EOB.
-DC signal itself is decoded by using the implicit encoding. 
-"Huffman DC Value Encoding"
-
-
-
-02/07/11 
-
-Block 246 Hit Zrun 10, Zrun 15 then we terminate with 63 but snoop does one more to get to 63.
-Lum (Tbl #0), MCU=[0,6]
-      [0x0000313F.0]: ZRL=[ 0] Val=[   18] Coef=[00= DC] Data=[0x D2 16 E6 58 = 0b (11010010 -------- -------- --------)] 
-      [0x00003140.0]: ZRL=[ 0] Val=[   -1] Coef=[01..01] Data=[0x 16 E6 58 CE = 0b (000----- -------- -------- --------)] 
-      [0x00003140.3]: ZRL=[ 0] Val=[   -8] Coef=[02..02] Data=[0x 16 E6 58 CE = 0b (---10110 111----- -------- --------)] 
-      [0x00003141.3]: ZRL=[ 0] Val=[    1] Coef=[03..03] Data=[0x E6 58 CE CC = 0b (---001-- -------- -------- --------)] 
-      [0x00003141.6]: ZRL=[ 0] Val=[    5] Coef=[04..04] Data=[0x E6 58 CE CC = 0b (------10 0101---- -------- --------)] 
-      [0x00003142.4]: ZRL=[ 0] Val=[   -4] Coef=[05..05] Data=[0x 58 CE CC 6E = 0b (----1000 11------ -------- --------)] 
-      [0x00003143.2]: ZRL=[ 0] Val=[    1] Coef=[06..06] Data=[0x CE CC 6E 60 = 0b (--001--- -------- -------- --------)] 
-      [0x00003143.5]: ZRL=[ 1] Val=[   -3] Coef=[07..08] Data=[0x CE CC 6E 60 = 0b (-----110 1100---- -------- --------)] 
-      [0x00003144.4]: ZRL=[ 1] Val=[   -1] Coef=[09..10] Data=[0x CC 6E 60 48 = 0b (----1100 0------- -------- --------)] 
-      [0x00003145.1]: ZRL=[ 1] Val=[    2] Coef=[11..12] Data=[0x 6E 60 48 90 = 0b (-1101110 -------- -------- --------)] 
-      [0x00003146.0]: ZRL=[ 0] Val=[    2] Coef=[13..13] Data=[0x 60 48 90 80 = 0b (0110---- -------- -------- --------)] 
-      [0x00003146.4]: ZRL=[ 0] Val=[   -1] Coef=[14..14] Data=[0x 60 48 90 80 = 0b (----000- -------- -------- --------)] 
-      [0x00003146.7]: ZRL=[ 0] Val=[    1] Coef=[15..15] Data=[0x 60 48 90 80 = 0b (-------0 01------ -------- --------)] 
-      [0x00003147.2]: ZRL=[ 0] Val=[    1] Coef=[16..16] Data=[0x 48 90 80 BB = 0b (--001--- -------- -------- --------)] 
-      [0x00003147.5]: ZRL=[ 0] Val=[   -1] Coef=[17..17] Data=[0x 48 90 80 BB = 0b (-----000 -------- -------- --------)] 
-      [0x00003148.0]: ZRL=[ 0] Val=[    4] Coef=[18..18] Data=[0x 90 80 BB B8 = 0b (100100-- -------- -------- --------)] 
-      [0x00003148.6]: ZRL=[ 0] Val=[    1] Coef=[19..19] Data=[0x 90 80 BB B8 = 0b (------00 1------- -------- --------)] 
-      [0x00003149.1]: ZRL=[ 0] Val=[   -1] Coef=[20..20] Data=[0x 80 BB B8 19 = 0b (-000---- -------- -------- --------)] 
-      [0x00003149.4]: ZRL=[ 0] Val=[   -1] Coef=[21..21] Data=[0x 80 BB B8 19 = 0b (----000- -------- -------- --------)] 
-      [0x00003149.7]: ZRL=[ 0] Val=[   -2] Coef=[22..22] Data=[0x 80 BB B8 19 = 0b (-------0 101----- -------- --------)] 
-      [0x0000314A.3]: ZRL=[ 1] Val=[    2] Coef=[23..24] Data=[0x BB B8 19 19 = 0b (---11011 10------ -------- --------)] 
-      [0x0000314B.2]: ZRL=[ 2] Val=[   -1] Coef=[25..27] Data=[0x B8 19 19 C7 = 0b (--111000 -------- -------- --------)] 
-      [0x0000314C.0]: ZRL=[ 0] Val=[   -1] Coef=[28..28] Data=[0x 19 19 C7 E9 = 0b (000----- -------- -------- --------)] 
-      [0x0000314C.3]: ZRL=[ 1] Val=[    1] Coef=[29..30] Data=[0x 19 19 C7 E9 = 0b (---11001 -------- -------- --------)] 
-      [0x0000314D.0]: ZRL=[ 0] Val=[   -1] Coef=[31..31] Data=[0x 19 C7 E9 FE = 0b (000----- -------- -------- --------)] 
-      [0x0000314D.3]: ZRL=[ 1] Val=[    1] Coef=[32..33] Data=[0x 19 C7 E9 FE = 0b (---11001 -------- -------- --------)] 
-      [0x0000314E.0]: ZRL=[ 1] Val=[   -1] Coef=[34..35] Data=[0x C7 E9 FE 49 = 0b (11000--- -------- -------- --------)] 
-      [0x0000314E.5]: ZRL=[10] Val=[   -1] Coef=[36..46] Data=[0x C7 E9 FE 49 = 0b (-----111 1110100- -------- --------)] 
-      [0x0000314F.7]: ZRL=[15] Val=[    0] Coef=[47..62] Data=[0x E9 FE 49 75 = 0b (-------1 11111110 01------ --------)] 
-      [0x00003151.2]: ZRL=[ 0] Val=[    1] Coef=[63..63] Data=[0x 49 75 19 8C = 0b (--001--- -------- -------- --------)] EOB64
-
-My copy: 
-H 648 W 486
-03 01 00 02 11 03 11 00 3f 00 e0 2d 86 38 a2 21 
-04 26 26 1e 73 03 3f f3 a7 bf c7 e1 fc 29 a9 43 
-54 3e 17 73 19 00 07 1f 4f 6f 7f 67 7f 4f 7f 7d 
-fe 3f 97 f1 a0 6f 1f c8 a2 16 d4 8b 33 be ce ec 
-
-
-Original:
-Decoding 65106
-03 01 00 02 11 03 11 00 3f 00 e0 6d c4 71 44 42 
-21 24 8e 70 3a f4 ff 00 3f 85 38 5d 0f 2b 98 c0 
-04 64 e7 38 3d 3d bf cf f3 a0 2f 23 89 5b 73 0c 
-71 9c 9c 67 a7 b7 f9 fe 7e 6f e2 ff 00 88 46 e1 
-Decoding MCU 0,0 DHT: 0 2x2
-LUTDecoding 111000000 as 6
-inserting 4 bits: 11100000011011011100010001110001
-inserting 6 bits: 110110111000100011100010000
-DCValue is -62
-LUTDecoding 1011011100 as 4
-inserting 4 bits: 10110111000100011100010000000000
-AC 1-1 Zrun 0 len 4 sym 4
-inserting 4 bits: 1110001000111000100000000000000
-LUTDecoding 1000111 as 1
-inserting 2 bits: 10001110001010001000100001000
-AC 2-2 Zrun 0 len 2 sym 1
-inserting 2 bits: 1000111000101000100010000100000
-LUTDecoding 1000111000 as 3
-inserting 3 bits: 10001110001010001000100001000000
-AC 3-3 Zrun 0 len 3 sym 3
-inserting 3 bits: 1110001010001000100001000000000
-LUTDecoding 1000101000 as 3
-inserting 3 bits: 10001010001000100001000000000000
-AC 4-4 Zrun 0 len 3 sym 3
-inserting 3 bits: 1010001000100001000000000000000
-LUTDecoding 1000100010 as 3
-inserting 3 bits: 10001000100001000000000000000000
-AC 5-5 Zrun 0 len 3 sym 3
-inserting 3 bits: 1000100001000000000000000000000
-LUTDecoding 10000100 as 1
-inserting 2 bits: 100001000100001001001001000111
-AC 6-6 Zrun 0 len 2 sym 1
-inserting 2 bits: 10000100010000100100100100011100
-LUTDecoding 100010 as 1
-inserting 2 bits: 1000100001001001001000111000
-
-
 03/16/11 
 Seem to have Exif & IFD reading sorted out (read makernote as a block
 now). Not currently writing them out properly. (Exiftool says bad
@@ -164,14 +7,14 @@ Some unit tests.
 
 todo: 
 
-Need to put namespace
 Need to fill in API:
   Load only.
   Write current
   Redact
   Erase EXIF
   Modify EXIF. (add tag, remove tag, remove all GPS, set tag, add EXIF)
+  Modify thumbnail too.
+  return data, reinject data.
 
-Put in GitHub
 Bigger test suite (images from other cameras etc.)
     

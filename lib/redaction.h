@@ -5,37 +5,120 @@ namespace jpeg_redaction {
 // Class to store information redacted from a horizontal strip of image.
 class JpegStrip {
 public:
-  JpegStrip(int x, int y) : x_(x), y_(y) {
+  // Create a strip.
+  JpegStrip(int x, int y, int src, int dest) : x_(x), y_(y), src_start_(src),
+					       dest_start_(dest) {
     blocks_ = 0;
     bits_ = 0;
+  }
+  // After finishing a strip, make a copy of the block of data that was removed.
+  void SetSrcEnd(int data_end, int blocks) {
+    bits_ = data_end - src_start_;
+    blocks_ = blocks;
+  }
+  // After finishing a strip, make a copy of the block of data that was removed.
+  void SetDestEnd(const unsigned char* data,
+		  int dest_end) {
+    const int bytes = (bits_ + 7)/8;
+    replaced_by_bits_ = dest_end - dest_start_;
+    data_.resize(bytes);
+    //    printf("Copying %d bytes from %d\n", bytes, src_start_);
+    // copy over bits.
+    const int byteoffs = src_start_ / 8;
+    const int bitoffs = src_start_ % 8;
+    if (bitoffs == 0) {
+      memcpy(&data_[0], data + byteoffs, bytes);
+    } else {
+      // Shift the data by bitoffs bits while copying it.
+      for (int i = 0; i < bytes; ++i) {
+	data_[i] = (data[byteoffs + i] >> bitoffs) +
+	  (data[byteoffs + i + 1] << (8 - bitoffs)) & 0xff;
+      }
+    }
+  }
+  // Patch this strip into a redacted image with a given bit offset.
+  // 0 offset assumes that this is the first strip, or that all previous
+  // strips have been inserted.
+  void PatchIn(int offset, std::vector<unsigned char> *data,
+	       int *data_bits) const {
+    // Actually need to know how many bits we have in data
+    data->resize((*data_bits + bits_ + 7) /8);
+    // Shift up the end bits (check the ending?)
+    // This is Extremely approximate
+    throw(0);
+    for (int i = *data_bits / 8; i >= (src_start_ + replaced_by_bits_)/8; --i) {
+      data[i + bits_/8] = data[i];
+    }
+    // Insert all the new bits. 
+    for(int i = 0; i < bits_;) {
+      int chunk = 8;
+      // copy chunk bits
+      i+= chunk;
+    }
+    *data_bits += bits_;
+  }
+  bool Valid(int *offset) const {
+    if (bits_ < 0) return false;
+    if (data_.size() * 8 < bits_) return false;
+    printf("Strip (%d,%d: %d MCUs) has %d bits (rep %d), src %d dest %d "
+    	   "diff %d offset %d.\n", x_, y_, blocks_,
+    	   bits_, replaced_by_bits_,
+    	   src_start_, dest_start_, src_start_ - dest_start_,
+    	   *offset);
+    *offset += bits_ - replaced_by_bits_;
+    return true;
   }
   int AppendBlock(const unsigned char* data, int bits) {
     data_.resize((bits_ + bits + 7)/8);
     // copy over bits.
-
+    throw(0);
     bits_ += bits;
     return ++blocks_;
   }
+protected:
   std::string data_; // Raw binary encoded data.
   int bits_;
+  // In the original strip at what bit did the strip start.
+  int src_start_;
+  // In the redacted version at what bit does the start correspond to.
+  int dest_start_;
+  // In the redacted version how many bits was this strip replaced by.
+  int replaced_by_bits_;
   int x_; // Coordinate of start (from left)
   int y_; // Coordinate of start (from top)
   int blocks_; // Number of blocks stored.
 };
 
-// Class to define the areas to be redacted, and return the redacted
-// information.
+// Class to define the areas to be redacted, and return the strips of 
+// redacted information.
 class Redaction {
 public:
   // Simple rectangle class for redaction regions.
   class Rect {
    public:
-    Rect(int l, int r, int t, int b) : l_(l), r_(r), t_(t), b_(b) {}
+    // Top left is 0,0 so t<b, l<r.
+    Rect(int l, int r, int t, int b) : l_(l), r_(r), t_(t), b_(b) {
+      if (l >= r || t >= b) throw("Bad rectangle created");
+    }
     int l_, r_, t_, b_;
   };
   Redaction() {};
+  virtual ~Redaction() {
+    for (int i = 0; i < strips_.size(); ++i)
+      delete strips_[i];
+  }
   void AddRegion(const Rect &r) {
     regions_.push_back(r);
+  }
+  // Check that all the strips are consistent.
+  bool ValidateStrips() {
+    int offset = 0;
+    printf("Redaction::%d strips\n", strips_.size());
+    for (int i = 0; i < strips_.size(); ++i) {
+      if (!strips_[i]->Valid(&offset))
+	return false;
+    }
+    return true;
   }
   void Add(const Redaction &red) {
     for (int i = 0; i < red.NumRegions(); ++i)
@@ -50,6 +133,15 @@ public:
   void Clear() {
     regions_.clear();
   }
+  int NumStrips() const {
+    return strips_.size();
+  }
+  const JpegStrip* GetStrip(int strip_index) const {
+    return strips_[strip_index];
+  }
+  void AddStrip(const JpegStrip *strip) {
+    strips_.push_back(strip);
+  }
   // Test if a box of width dx, dy, with top left corner at x,y
   // intersects with any of the rectangular regions.
   bool InRegion(int x, int y, int dx, int dy) const {
@@ -62,8 +154,9 @@ public:
       }
     return false;
   }
+protected:
   // Information redacted.
-  std::vector<JpegStrip> strips_;
+  std::vector<const JpegStrip*> strips_;
   std::vector<Rect> regions_;
 };
 } // namespace jpeg_redaction

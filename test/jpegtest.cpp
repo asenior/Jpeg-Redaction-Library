@@ -7,6 +7,44 @@
 
 namespace jpeg_redaction {
   namespace tests {
+    // return true if files are byte identical.
+    bool compare_to_golden(const char * const filename,
+			   const char * const golden_name) {
+      FILE *output = fopen(filename, "rb");
+      if (output == NULL) throw("Can't open output file");
+      FILE *golden = fopen(golden_name, "rb");
+      if (golden == NULL) throw("Can't open golden file");
+      int count = 0;
+      bool success = false;
+
+      while (1) {
+	unsigned char o_byte, g_byte;
+	fread(&o_byte, sizeof(char), 1, output);
+	fread(&g_byte, sizeof(char), 1, golden);
+	if (feof(output)) {
+	  if (feof(golden))
+	    success = true;
+	  else
+	    fprintf(stderr, "output %s shorter (%d bytes) than golden %s\n",
+		    filename, count, golden_name);
+	  break;
+	} else {
+	  if (feof(golden)) {
+	    fprintf(stderr, "golden %s shorter (%d bytes) than output %s\n",
+		    golden_name, count, filename);
+	    break;
+	  }
+	}
+	if (o_byte != g_byte) {
+	  fprintf(stderr, "golden %s differs from output %s at byte %d\n",
+		    golden_name, filename, count);
+	    break;
+	}
+	++count;
+      }
+      return success;
+    }
+
     int test_loadallfalse(const char * const filename) {
       printf("Testing with loadall=false\n");
       try {

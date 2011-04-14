@@ -72,6 +72,11 @@ class JpegDecoder {
 
 protected:
   // Fill current_bits up to a complete word.
+  // Data bits are "as written" ie first bit is highest order bit of first 
+  // byte. current_bits is a word where the next bit is the highest order
+  // bit. We shuffle in data so that there are at least N (16?) bits
+  // at all times.
+  // Assumes that stuff bytes and tags have already been removed.
   void FillBits() {
     int byte = data_pointer_ >> 3;
     // The remaining bits in this byte.
@@ -80,9 +85,6 @@ protected:
     if (data_pointer_ > (length_ << 3))
       data_pointer_ = length_ << 3;
     while (num_bits_ < word_size_ && byte < length_) {
-      /* if (new_bits == 8 && data_[byte] == 0xff && data_[byte+1] != 0x00) { */
-      /* 	throw("Don't yet handle internal tags"); */
-      /* } */
       unsigned int val = (data_[byte] & ((1<<new_bits)-1));
       const int shift = word_size_ - new_bits - num_bits_;
       if (shift < 0) {
@@ -93,13 +95,6 @@ protected:
       }
       current_bits_ |= (val << shift);
       num_bits_ += new_bits;
-      // Skip a stuff byte - we should have recognized a marker already.
-      // TODO(aws)
-      // if (data_[byte] == 0xff && data_[byte+1] == 0x00) {
-      // 	if (debug >= 2) printf("Stuff byte\n");
-      // 	data_pointer_ += 8;
-      // 	++byte;
-      // }
       ++byte;
       new_bits = 8;
     }

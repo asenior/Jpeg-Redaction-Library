@@ -1,6 +1,9 @@
 #ifndef INCLUDE_REDACTION
 #define INCLUDE_REDACTION
 
+#include <string>
+#include "bit_shifts.h"
+
 namespace jpeg_redaction {
 // Class to store information redacted from a horizontal strip of image.
 class JpegStrip {
@@ -41,21 +44,12 @@ public:
   // strips have been inserted.
   void PatchIn(int offset, std::vector<unsigned char> *data,
 	       int *data_bits) const {
-    // Actually need to know how many bits we have in data
-    data->resize((*data_bits + bits_ + 7) /8);
-    // Shift up the end bits (check the ending?)
-    // This is Extremely approximate
-    throw(0);
-    for (int i = *data_bits / 8; i >= (src_start_ + replaced_by_bits_)/8; --i) {
-      data[i + bits_/8] = data[i];
-    }
-    // Insert all the new bits. 
-    for(int i = 0; i < bits_;) {
-      int chunk = 8;
-      // copy chunk bits
-      i+= chunk;
-    }
-    *data_bits += bits_;
+    // How much we have to shift the trailing region up.
+    const int tail_shift =  bits_ - replaced_by_bits_;
+    BitShifts::ShiftTail(data, data_bits, src_start_ + offset, tail_shift);
+    BitShifts::Overwrite(data, *data_bits,
+			 src_start_ + offset, 
+			 data_, replaced_by_bits_);
   }
   bool Valid(int *offset) const {
     if (bits_ < 0) return false;
@@ -76,7 +70,7 @@ public:
     return ++blocks_;
   }
 protected:
-  std::string data_; // Raw binary encoded data.
+  std::vector<unsigned char> data_; // Raw binary encoded data.
   int bits_;
   // In the original strip at what bit did the strip start.
   int src_start_;
@@ -107,8 +101,18 @@ public:
     for (int i = 0; i < strips_.size(); ++i)
       delete strips_[i];
   }
-  void AddRegion(const Rect &r) {
-    regions_.push_back(r);
+  void AddRegion(const Rect &rect) {
+    if (rect.l_ >= rect.r_ || rect.t_ >= rect.b_)
+      throw("region badly formed l>=r or t>=b");
+    regions_.push_back(rect);
+  }
+  void AddRegion(const std::string &rect_string) {
+    int l, r, t, b;
+    int rv = sscanf("%d,%d,%d,%d", rect_string.c_str());
+    if (rv != 4)
+      throw("Region string badly formed, should be l,r,t,b");
+    Rect rect(l, r, t, b);
+    regions_.push_back(rect);
   }
   // Check that all the strips are consistent.
   bool ValidateStrips() {

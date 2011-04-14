@@ -6,14 +6,19 @@ include ../Makefile.common
 BINARY = jpegtest
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
+BITSHIFTS = bit_shifts_test
 EXIFTOOL = exiftool
 
 LIB = ../lib/libredact.a
 
-test: $(BINARY) test_ifd test_simple test_windows test_exif_removal
+test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
+	test_bit_shifts
 
 $(LIB): 
 	cd ../lib; $(MAKE) lib
+
+$(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h
+	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp $(LIBPATH)  -o $@
 
 $(BINARY): $(LIB) jpegtest.cpp
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp $(LIBPATH) $(LIB)  -o $@
@@ -85,3 +90,5 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@cmp testout/test_nosensitive.jpg testdata/test_nosensitive_golden.jpg
 	@echo "== " $@ " passed"
 
+test_bit_shifts: $(BITSHIFTS)
+	./$(BITSHIFTS)

@@ -176,8 +176,8 @@ protected:
 
     dct_gain_ = 0; // Number of bits to shift.
     y_value_ = 0;
-    current_bits_ = 0;
-    num_bits_ = 0;
+    current_bits_ = 0;  // Buffer of 32 bits.
+    num_bits_ = 0;  // Number of bits remaining in current_bits_
     data_pointer_ = 0;  // Next bit to get into current_bits;
     mcus_ = 0;
   }
@@ -224,7 +224,7 @@ protected:
   unsigned char *data_;
   int length_; // How many bytes in data
 
-  unsigned int current_bits_;
+  unsigned int current_bits_;  // Buffer of up to 32 bits.
   int num_bits_; // How many bits valid in current_bits_
 
   int data_pointer_;  // Next bit to get into current_bits;
@@ -240,7 +240,7 @@ protected:
   int w_blocks_;  // Width of the image in MCUs
   int h_blocks_;  // Height of the image in MCUs
   int dct_gain_;
-  int redacting_; // Are we redacting this image (1 or 2) this MCU (2)?
+  int redacting_; // Are we redacting this image: see kRedacting* flags above.
   int y_value_; // The most recent decoded brightness value.
 
   int redaction_dc_[3];

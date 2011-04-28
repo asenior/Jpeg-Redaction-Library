@@ -3,6 +3,8 @@ include ../Makefile.common
 
 LOCALLIB=libredact.a
 
+default: lib
+
 lib: $(LOCALLIB)
 
 SRCS  =  iptc.cpp jpeg.cpp  tiff_ifd.cpp tiff_tag.cpp jpeg_decoder.cpp \
@@ -26,3 +28,4 @@ clean:
 
 depend: 
 	$(MAKE) dependlocal
+# DO NOT DELETE

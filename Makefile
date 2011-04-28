@@ -18,7 +18,14 @@ lib:
 clean:
 	cd lib; $(MAKE) clean
 	cd test; $(MAKE) clean
+	cd bin; $(MAKE) clean
 
-depend: 
+dependall: 
 	cd lib; $(MAKE) dependlocal
 	cd test; $(MAKE) dependlocal
+	cd bin; $(MAKE) dependlocal
+
+cleandependall: 
+	cd lib; $(MAKE) cleandependlocal
+	cd test; $(MAKE) cleandependlocal
+	cd bin; $(MAKE) cleandependlocal

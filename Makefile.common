@@ -12,3 +12,19 @@ MKLIB = $(AR) $(ARFLAGS) $@ $?; ranlib $@
 # cr2.cpp exif_data.cpp  iptc.cpp iptc_tag.cpp 
 
 CC = g++ 
+
+.PHONY: default globaldefault
+
+globaldefault: default
+
+dependlocal:
+	makedepend $(CFLAGS) -- *.cpp
+
+cleandependlocal:
+	makedepend $(CFLAGS) -- 
+
+dependall:
+	cd ../; $(MAKE) dependall
+
+cleandependall:
+	cd ../; $(MAKE) cleandependall

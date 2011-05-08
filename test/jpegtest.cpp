@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include <string>
+#include <vector>
 #include "jpeg.h"
 #include "redaction.h"
 
@@ -43,6 +44,13 @@ namespace jpeg_redaction {
 	++count;
       }
       return success;
+    }
+
+    void SaveBytes(std::vector<unsigned char> &bytes, const char *const fn) {
+      FILE *file = fopen(fn, "wb");
+      int rv = fwrite(&(bytes[0]), sizeof(unsigned char), bytes.size(), file);
+      if (rv != bytes.size()) throw("can't save bytes");
+      fclose(file);
     }
 
     int test_loadallfalse(const char * const filename) {
@@ -100,14 +108,22 @@ namespace jpeg_redaction {
     int test_reversingredaction(const char * const filename) {
       try {
 	Jpeg j2(filename, true);
-	Redaction::Rect rect(50, 300, 50, 200);  // l,r, t, b
+	JpegMarker *sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	SaveBytes(sos_block->data_, "testout/originalsos");
+	//	Redaction::Rect rect(50, 300, 50, 200);  // l,r, t, b
+	// One strip
+	Redaction::Rect rect(50, 300, 64, 79);  // l,r, t, b
 	Redaction redaction;
 
 	redaction.AddRegion(rect);
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");
+	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	SaveBytes(sos_block->data_, "testout/redactedsos");
 	j2.ReverseRedaction(redaction);
+	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	SaveBytes(sos_block->data_, "testout/unredactedsos");
 	std::string output_filename = "testout/testunredacted.jpg";
 	if (j2.Save(output_filename.c_str()) != 0) {
 	  fprintf(stderr, "Couldn't save %s\n", output_filename.c_str());

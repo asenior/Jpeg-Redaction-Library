@@ -47,7 +47,7 @@ class JpegMarker {
   unsigned int location_;
   unsigned short marker_;
   std::vector<unsigned char> data_;
-};
+};  // JpegMarker
 
 class Photoshop3Block;
 class Jpeg {
@@ -179,7 +179,7 @@ protected:
   Photoshop3Block *photoshop3_;
   std::vector<JpegDHT*> dhts_;
   std::vector<JpegComponent*> components_;
-};
-} // namespace redaction
+};  // Jpeg
+}  // namespace redaction
 
 #endif // INCLUDE_JPEG

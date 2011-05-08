@@ -42,14 +42,15 @@ public:
   // Patch this strip into a redacted image with a given bit offset.
   // 0 offset assumes that this is the first strip, or that all previous
   // strips have been inserted.
-  void PatchIn(int offset, std::vector<unsigned char> *data,
+  // Returns the offset.
+  int PatchIn(int offset, std::vector<unsigned char> *data,
 	       int *data_bits) const {
     // How much we have to shift the trailing region up.
     const int tail_shift =  bits_ - replaced_by_bits_;
+    printf("Patch at %d (%d) %d->%d\n",
+	   src_start_ + offset, offset, replaced_by_bits_, bits_);
     BitShifts::ShiftTail(data, data_bits, src_start_ + offset, tail_shift);
-    BitShifts::Overwrite(data, *data_bits,
-			 src_start_ + offset, 
-			 data_, replaced_by_bits_);
+    return tail_shift;
   }
   bool Valid(int *offset) const {
     if (bits_ < 0) return false;

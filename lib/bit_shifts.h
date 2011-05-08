@@ -3,7 +3,8 @@
 #define INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS
 class BitShifts {
 public:
-  // Shift the block after the  start-th bit up by shift.
+  // Shift the block after the  start-th bit up by shift,
+  // increasing the size of data.
   static bool ShiftTail(std::vector<unsigned char> *data,
 		   int *data_bits, 
 		   int start, 
@@ -11,11 +12,12 @@ public:
     if (shift < 0)
       throw("ShiftTail: shift is negative");
     // Enough space for everything.
-    data->resize((*data_bits + shift + 7) /8);
+    *data_bits += shift;
+    data->resize((*data_bits + 7) /8);
     
     // Shift up the end bits (check the ending?)
     // This is Extremely approximate
-    (*data)[data->size()-1] = 0;
+    //    (*data)[data->size()-1] = 0;
     int bit_shift = shift % 8;
     const unsigned char low_mask = (1 << bit_shift) -1;
     const unsigned char high_mask = 0xff - low_mask;
@@ -23,14 +25,13 @@ public:
     int src_byte = (*data_bits - shift - 1) / 8;
     // Go through all the destination bytes i and pull their bits
     // from the two source bytes.
-    for (int i = (*data_bits - 7) / 8; // The last byte
-	 i >= (start + shift)/8; --i) {
+    for (int i = (*data_bits - 1) / 8; // The last byte
+	 i >= (start + shift)/8; --i, src_byte--) {
       unsigned char byte;
       byte  = ((*data)[src_byte] & high_mask) >> bit_shift;
       byte |= ((*data)[src_byte - 1] & low_mask) << bit_shift;
       (*data)[i] = byte;
     }
-    *data_bits += shift;
     return true;
   }
   // Take the first insert_length bits from insertion

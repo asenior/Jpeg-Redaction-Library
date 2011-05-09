@@ -62,6 +62,7 @@ public:
       else
 	byte = (overwrite[ov-1] << (8 - bit_shift)) & high_mask;
       byte += (overwrite[ov] >> bit_shift);
+      (*data)[i] = byte;
     }
     return true;
   }

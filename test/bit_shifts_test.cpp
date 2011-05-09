@@ -25,8 +25,14 @@ bool VerifyRange(const bitstream &old_bits, int old_start, int old_length,
   if (new_start + length > new_length) throw("New length error");
   for (int i = 0; i < length; ++i) {
     if (BitFromStream(old_bits, old_start + i) != 
-	BitFromStream(new_bits, new_start + i))
-      return false;
+	BitFromStream(new_bits, new_start + i)) {
+      fprintf(stderr, "Can't verify range %d (%d): %d (%d) at "
+	      "bit %d, (byte %d) of %d.\n",
+	      old_start, old_length,
+	      new_start, new_length,
+	      i, i/8, length);
+      throw("Failed to verify range");
+    }
   }
   return true;
 }
@@ -129,7 +135,8 @@ bool TestBitFromStream(int len, unsigned char b) {
   FillStream(&ones, b);
   for (int i = 0; i < len; ++i) {
     if (BitFromStream(ones, i) != (1 & (b >> (7-(i % 8)))) ) {
-      fprintf(stderr, "Bad bit %d from stream.", i);
+      fprintf(stderr, "Bad bit %d from stream. Tested with len %d byte 0x%x.",
+	      i, len, b);
       throw("Fail in TestBitFromStream");
     }
   }

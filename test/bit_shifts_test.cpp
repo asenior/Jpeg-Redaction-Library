@@ -49,10 +49,12 @@ void FillStream(bitstream *stream, unsigned char b) {
 }
 
 bool TestShift(int length, int start, int shift) {
+  printf("Testing Shift %d %d %d\n", length, start, shift);
   int bytes = (length + 7)/8;
   bitstream original(bytes);
   FillRand(&original);
   bitstream test(bytes);
+  test.assign(original.begin(), original.end());
   int new_length = length;
   bool rv = BitShifts::ShiftTail(&test, &new_length, start, shift);
   if (new_length != length + shift) {
@@ -71,7 +73,31 @@ bool TestShift(int length, int start, int shift) {
   return true;
 }
 
+
+// Verify that the Verification works.
+bool TestNoShift(int length) {
+  printf("Testing NoShift\n");
+  int bytes = (length + 7)/8;
+  bitstream original(bytes);
+  FillRand(&original);
+  bitstream test(bytes);
+  test.assign(original.begin(), original.end());
+
+  // Check the start still matches.
+  VerifyRange(test, 0, length,
+	      original, 0, length,
+	      0);
+  VerifyRange(test, 0, length,
+	      original, 0, length,
+	      length/2);
+  VerifyRange(test, length/2, length,
+	      original, length/2, length,
+	      length/2);
+  return true;
+}
+
 bool TestInsert(int length, int start, int shift) {
+  printf("Testing insert %d %d %d\n", length, start, shift);
   int bytes = (length + 7)/8;
   int insert_bytes = (shift + 7)/8;
   bitstream original(bytes);
@@ -79,6 +105,7 @@ bool TestInsert(int length, int start, int shift) {
   FillRand(&original);
   FillRand(&insertion);
   bitstream test(bytes);
+  test.assign(original.begin(), original.end());
   int new_length = length;
   bool rv = BitShifts::Insert(&test, &new_length, start, insertion, shift);
   if (new_length != length + shift) {
@@ -87,14 +114,17 @@ bool TestInsert(int length, int start, int shift) {
     throw("TestSplice length mismatch");
   }
   // Check the start still matches.
+  printf("Check start\n");
   VerifyRange(original, 0, length,
 	      test, 0, new_length,
 	      start);
   // Check the end matches.
+  printf("Check end\n");
   VerifyRange(original, start, length,
 	      test, start + shift, new_length,
-	      length-start);
+	      length - start);
   // Check the insertion matches.
+  printf("Check insertion\n");
   VerifyRange(insertion, 0, shift,
 	      test, start, new_length,
 	      shift);
@@ -102,6 +132,8 @@ bool TestInsert(int length, int start, int shift) {
 }
 
 bool TestOverwrite(int length, int start, int insert_bits) {
+  printf("Testing overwrite startlen %d start %d insert_bits %d\n",
+	 length, start, insert_bits);
   if (start + insert_bits > length)
     throw("Bad specification of TestSplice");
   int bytes = (length + 7)/8;
@@ -111,18 +143,23 @@ bool TestOverwrite(int length, int start, int insert_bits) {
   FillRand(&original);
   FillRand(&insertion);
   bitstream test(bytes);
-  int new_length = length;
+  test.assign(original.begin(), original.end());
+
+  const int new_length = length;
   bool rv = BitShifts::Overwrite(&test, length, start, insertion, insert_bits);
 
   // Check the start still matches.
+  printf("Check start\n");
   VerifyRange(original, 0, length,
 	      test, 0, new_length,
 	      start);
   // Check the end matches.
-  VerifyRange(original, start, length,
+  printf("Check end\n");
+  VerifyRange(original, start + insert_bits, length,
 	      test, start + insert_bits, length,
 	      length - start - insert_bits);
   // Check the insertion matches.
+  printf("Check overwrite\n");
   VerifyRange(insertion, 0, insert_bits,
 	      test, start, length,
 	      insert_bits);
@@ -130,7 +167,7 @@ bool TestOverwrite(int length, int start, int insert_bits) {
 }
 
 bool TestBitFromStream(int len, unsigned char b) {
-  printf("Testing len %d byte %x\n", len, b);
+  printf("TestBitFromStream len %d byte %x\n", len, b);
   bitstream ones(len);
   FillStream(&ones, b);
   for (int i = 0; i < len; ++i) {
@@ -149,11 +186,19 @@ int main(int argc, char **argv) {
     TestBitFromStream(53, 0x00);
     TestBitFromStream(19, 0xca);
 
-    TestShift(100, 50, 25);
+    TestNoShift(100);
+    // Whole byte shifts.
     TestShift(57, 0, 8);
-    TestShift(195, 14, 16);
-    TestShift(299, 80, 5);
+    TestShift(195, 32, 16);
+    
+    // Shift by fractions of a byte.
+    TestShift(100, 50, 25);
+    //    TestShift(299, 80, 5);
+    //  TestShift(299, 3, 5);
 
+    TestOverwrite(227, 16, 16);
+    TestOverwrite(227, 13, 16);
+    TestOverwrite(227, 16, 19);
     TestOverwrite(227, 13, 25);
     TestOverwrite(7, 3, 3);
 

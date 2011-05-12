@@ -6,11 +6,17 @@ public:
   // Shift the block after the  start-th bit up by shift,
   // increasing the size of data.
   static bool ShiftTail(std::vector<unsigned char> *data,
-		   int *data_bits, 
-		   int start, 
-		   int shift) {
+			int *data_bits,
+			int start,
+			int shift) {
     if (shift < 0)
       throw("ShiftTail: shift is negative");
+
+    printf("Shifting data (%d bits in %d bytes) up by %d bits "
+	   "starting at b%d B%d. New length %d\n",
+	   *data_bits, data->size(), shift, start,
+	   start/8, *data_bits + shift);
+
     // Enough space for everything.
     *data_bits += shift;
     data->resize((*data_bits + 7) /8);
@@ -23,15 +29,27 @@ public:
     const unsigned char high_mask = 0xff - low_mask;
     // The byte where the very last bit has to come from.
     int src_byte = (*data_bits - shift - 1) / 8;
+    const int last_byte = (*data_bits - 1) / 8;
+    const int first_byte = (start + shift) / 8;
     // Go through all the destination bytes i and pull their bits
     // from the two source bytes.
-    for (int i = (*data_bits - 1) / 8; // The last byte
-	 i >= (start + shift)/8; --i, src_byte--) {
-      unsigned char byte;
+    unsigned char byte;
+    for (int i = last_byte; i >= first_byte; --i, --src_byte) {
       byte  = ((*data)[src_byte] & high_mask) >> bit_shift;
-      byte |= ((*data)[src_byte - 1] & low_mask) << bit_shift;
-      (*data)[i] = byte;
+      if (i > 0)
+	byte |= ((*data)[src_byte - 1] & low_mask) << (8 - bit_shift);
+      if (i == first_byte) {
+	// Only affect the lowest start_offset bits.
+	const int start_offset = 8 - ((start + shift) % 8);
+	const unsigned char final_low_mask = (1 << start_offset) -1;
+	const unsigned char final_high_mask = 0xff - final_low_mask;
+	printf("fb %d flm %d fhm %d so %d\n", i, final_low_mask, final_high_mask, start_offset);
+	(*data)[i] = ((*data)[i] & final_high_mask) | (byte & final_low_mask);
+      } else {
+	(*data)[i] = byte;
+      }
     }
+    printf("Ended with src_byte %d\n", src_byte);
     return true;
   }
   // Take the first insert_length bits from insertion
@@ -51,17 +69,26 @@ public:
     // Byte with the last bit in it.
     int end_byte = (start + overwrite_length -1) / 8;
     // How much the overwrite has to be shifted up to match the start.
-    int bit_shift = start / 8;
+    int bit_shift = start % 8;
     // The high bit_shift bits.
-    const unsigned char high_mask = ((1 << bit_shift) -1)<< (8 - bit_shift);
+    const unsigned char low_mask = (1 << (8 - bit_shift)) -1;
+    const unsigned char high_mask = 0xff - low_mask;
     int ov = 0;
     for (int i = start_byte; i <= end_byte; ++i, ++ov) {
-      unsigned char byte;
+      unsigned char byte = 0;
       if (i == start_byte)
 	byte = (*data)[i] & high_mask;
       else
 	byte = (overwrite[ov-1] << (8 - bit_shift)) & high_mask;
       byte += (overwrite[ov] >> bit_shift);
+      if (i == end_byte) {
+	const int shift_final = 1 + (start + overwrite_length - 1) % 8;
+	const unsigned char low_mask_final = (1 << (8 - shift_final)) -1;
+	const unsigned char high_mask_final = 0xff - low_mask_final;
+	printf("i %d shift_final %d mask h%0x l%x\n",
+	       i, shift_final, high_mask_final, low_mask_final);
+	byte = (byte & high_mask_final) | ((*data)[i] & low_mask_final);
+      }
       (*data)[i] = byte;
     }
     return true;

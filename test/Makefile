@@ -11,7 +11,9 @@ EXIFTOOL = exiftool
 
 LIB = ../lib/libredact.a
 
-default: $(BINARY)
+default: all
+
+all: $(BINARY) $(BITSHIFTS) $(EXIF_REMOVE) $(IFDTESTBINARY)
 
 test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
 	test_bit_shifts

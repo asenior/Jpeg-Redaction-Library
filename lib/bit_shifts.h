@@ -27,16 +27,17 @@ public:
     int bit_shift = shift % 8;
     const unsigned char low_mask = (1 << bit_shift) -1;
     const unsigned char high_mask = 0xff - low_mask;
-    // The byte where the very last bit has to come from.
-    int src_byte = (*data_bits - shift - 1) / 8;
+    // The byte where the last bit is located.
     const int last_byte = (*data_bits - 1) / 8;
     const int first_byte = (start + shift) / 8;
+    // The byte where the very last bit in the last byte would come from.
+    int src_byte = (last_byte * 8 + 7 - shift) / 8;
     // Go through all the destination bytes i and pull their bits
     // from the two source bytes.
     unsigned char byte;
     for (int i = last_byte; i >= first_byte; --i, --src_byte) {
       byte  = ((*data)[src_byte] & high_mask) >> bit_shift;
-      if (i > 0)
+      if (src_byte > 0)
 	byte |= ((*data)[src_byte - 1] & low_mask) << (8 - bit_shift);
       if (i == first_byte) {
 	// Only affect the lowest start_offset bits.

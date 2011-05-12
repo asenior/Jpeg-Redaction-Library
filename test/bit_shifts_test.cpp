@@ -48,6 +48,28 @@ void FillStream(bitstream *stream, unsigned char b) {
   }
 }
 
+// Verify that the Verification works.
+bool TestNoShift(int length) {
+  printf("Testing NoShift\n");
+  int bytes = (length + 7)/8;
+  bitstream original(bytes);
+  FillRand(&original);
+  bitstream test(bytes);
+  test.assign(original.begin(), original.end());
+
+  // Check the start still matches.
+  VerifyRange(test, 0, length,
+	      original, 0, length,
+	      0);
+  VerifyRange(test, 0, length,
+	      original, 0, length,
+	      length/2);
+  VerifyRange(test, length/2, length,
+	      original, length/2, length,
+	      length/2);
+  return true;
+}
+
 bool TestShift(int length, int start, int shift) {
   printf("Testing Shift %d %d %d\n", length, start, shift);
   int bytes = (length + 7)/8;
@@ -74,28 +96,6 @@ bool TestShift(int length, int start, int shift) {
 }
 
 
-// Verify that the Verification works.
-bool TestNoShift(int length) {
-  printf("Testing NoShift\n");
-  int bytes = (length + 7)/8;
-  bitstream original(bytes);
-  FillRand(&original);
-  bitstream test(bytes);
-  test.assign(original.begin(), original.end());
-
-  // Check the start still matches.
-  VerifyRange(test, 0, length,
-	      original, 0, length,
-	      0);
-  VerifyRange(test, 0, length,
-	      original, 0, length,
-	      length/2);
-  VerifyRange(test, length/2, length,
-	      original, length/2, length,
-	      length/2);
-  return true;
-}
-
 bool TestInsert(int length, int start, int shift) {
   printf("Testing insert %d %d %d\n", length, start, shift);
   int bytes = (length + 7)/8;
@@ -106,8 +106,10 @@ bool TestInsert(int length, int start, int shift) {
   FillRand(&insertion);
   bitstream test(bytes);
   test.assign(original.begin(), original.end());
+
   int new_length = length;
   bool rv = BitShifts::Insert(&test, &new_length, start, insertion, shift);
+
   if (new_length != length + shift) {
     fprintf(stderr, "new_length %d length %d shift %d\n", 
 	    new_length, length, shift);
@@ -195,6 +197,9 @@ int main(int argc, char **argv) {
     TestShift(100, 50, 25);
     //    TestShift(299, 80, 5);
     //  TestShift(299, 3, 5);
+    TestShift(32, 16, 15);
+    TestShift(127, 32, 199);
+    TestShift(27, 8, 199);
 
     TestOverwrite(227, 16, 16);
     TestOverwrite(227, 13, 16);

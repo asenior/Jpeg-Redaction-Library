@@ -427,18 +427,13 @@ namespace jpeg_redaction {
     //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
   }
 
-  // void Jpeg::GetSOS(std::vector<unsigned char> *sos_block) {
-  //   if (sos_block == NULL) return;
-  //   JpegMarker *sos_block = GetMarker(jpeg_sos);
-  //   sos_block->assign(sos_block->data_.begin(), sos_block->data_.end());
-  // }
   int Jpeg::ReverseRedaction(const Redaction &redaction) {
     JpegMarker *sos_block = GetMarker(jpeg_sos);
     // For each strip insert it into the JPEG data.
     int data_bits = 8 * sos_block->data_.size();
     printf("Before patching size %d\n", sos_block->data_.size());
     // We pass the data with the header in it, so start at this bit.
-    int offset = 12 * 8;
+    int offset = 10 * 8;
     for (int i = 0; i < redaction.NumStrips(); ++i) {
       printf("Patching in strip %d\n", i);
       // If we patch all the strips in, they need no offset.

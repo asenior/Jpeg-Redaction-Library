@@ -32,10 +32,10 @@ public:
     if (bitoffs == 0) {
       memcpy(&data_[0], data + byteoffs, bytes);
     } else {
-      // Shift the data by bitoffs bits while copying it.
+      // Shift the data down by bitoffs bits while copying it.
       for (int i = 0; i < bytes; ++i) {
-	data_[i] = (data[byteoffs + i] >> bitoffs) +
-	  (data[byteoffs + i + 1] << (8 - bitoffs)) & 0xff;
+	data_[i] = ((data[byteoffs + i] << bitoffs)  & 0xff) +
+	  (data[byteoffs + i + 1] >> (8 - bitoffs));
       }
     }
   }
@@ -52,7 +52,7 @@ public:
     BitShifts::ShiftTail(data, data_bits, src_start_ + offset, tail_shift);
     BitShifts::Overwrite(data, *data_bits,
     			 src_start_ + offset, 
-    			 data_, replaced_by_bits_);
+    			 data_, bits_);
     return tail_shift;
   }
   bool Valid(int *offset) const {

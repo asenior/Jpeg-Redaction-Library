@@ -48,6 +48,10 @@ namespace jpeg_redaction {
 
     void SaveBytes(std::vector<unsigned char> &bytes, const char *const fn) {
       FILE *file = fopen(fn, "wb");
+      if (file == NULL) {
+	fprintf(stderr, "Can't write to file %s\n", fn);
+	return;
+      }
       int rv = fwrite(&(bytes[0]), sizeof(unsigned char), bytes.size(), file);
       if (rv != bytes.size()) throw("can't save bytes");
       fclose(file);
@@ -121,6 +125,7 @@ namespace jpeg_redaction {
 	  throw("Strips not valid");
 	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
 	SaveBytes(sos_block->data_, "testout/redactedsos");
+	JpegStrip *strip = redaction.GetStrip(0);
 	j2.ReverseRedaction(redaction);
 	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
 	SaveBytes(sos_block->data_, "testout/unredactedsos");
@@ -145,5 +150,5 @@ int main(int argc, char **argv) {
   jpeg_redaction::tests::test_loadallfalse(filename.c_str());
   jpeg_redaction::tests::test_readwrite(filename.c_str());
   jpeg_redaction::tests::test_redaction(filename.c_str());
-  // jpeg_redaction::tests::test_reversingredaction(filename.c_str());
+  jpeg_redaction::tests::test_reversingredaction(filename.c_str());
 }

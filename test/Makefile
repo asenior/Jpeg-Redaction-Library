@@ -95,6 +95,7 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)
-	./$(BITSHIFTS)
+	./$(BITSHIFTS)  > testout/test_bit_shifts_output.log
+	@echo "== " $@ " passed"
 
 # DO NOT DELETE

@@ -605,6 +605,7 @@ MCU 113 dc_value -33 y_value_ -536. Doubling gain to 3
 Got to 62424 mcus. 0 bits left.
 Reordering Image 408, 306 = 124848 pixels. 124848 bytes. h,v 2,1
 Redacted data length 2760827
+sos block now 2760837 bytes
 H 3264 W 2448
 Redaction::19 strips
 Strip (48,48: 1244 MCUs) has 4808 bits (rep 641), src 489074 dest 489074 diff 0 offset 0.
@@ -668,4 +669,716 @@ Saved marker ffc0 length 17
 Saved marker ffc4 length 418
 Saved marker ffdd length 4
 Inserted 8106 stuff_bytes in 2760837 now 2768943
+Saved marker ffda length 2771027
+Got marker ffe1 APPn at 2
+APP Block size is 32156 7d9c
+EXIF byte_order: 4949
+EXIF tag is little endian 0, arch is little 0
+Exifloc 20/0x14 Offset 8/0x8
+Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
+Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
+Read tag 272/110, type 2 count 8 value 194/c2 totallength 8
+Read tag 274/112, type 3 count 1 value 1/1 totallength 2
+Read tag 282/11a, type 5 count 1 value 208/d0 totallength 8
+Read tag 283/11b, type 5 count 1 value 216/d8 totallength 8
+Read tag 296/128, type 3 count 1 value 2/2 totallength 2
+Read tag 305/131, type 2 count 10 value 224/e0 totallength 10
+Read tag 306/132, type 2 count 20 value 234/ea totallength 20
+Read tag 531/213, type 3 count 1 value 2/2 totallength 2
+Read tag 34665/8769, type 4 count 1 value 654/28e totallength 4
+Read tag 34853/8825, type 4 count 1 value 11252/2bf4 totallength 4
+Read tag 50341/c4a5, type 7 count 208 value 254/fe totallength 208
+Read tag 50898/c6d2, type 7 count 64 value 462/1ce totallength 64
+Read tag 50899/c6d3, type 7 count 128 value 526/20e totallength 128
+
+ DIDIFD
+Loaded Image data
+Loading SUB IFD 8769 at 666 (654 + 12)IFDSize: 34 
+Read tag 33434/829a, type 5 count 1 value 1068/42c totallength 8
+Read tag 33437/829d, type 5 count 1 value 1076/434 totallength 8
+Read tag 34850/8822, type 3 count 1 value 3/3 totallength 2
+Read tag 34855/8827, type 3 count 1 value 80/50 totallength 2
+Read tag 36864/9000, type 7 count 4 value 825373232/31323230 totallength 4
+Read tag 36867/9003, type 2 count 20 value 1084/43c totallength 20
+Read tag 36868/9004, type 2 count 20 value 1104/450 totallength 20
+Read tag 37121/9101, type 7 count 4 value 197121/30201 totallength 4
+Read tag 37122/9102, type 5 count 1 value 1124/464 totallength 8
+Read tag 37380/9204, type 10 count 1 value 1132/46c totallength 8
+Read tag 37381/9205, type 5 count 1 value 1140/474 totallength 8
+Read tag 37383/9207, type 3 count 1 value 5/5 totallength 2
+Read tag 37384/9208, type 3 count 1 value 0/0 totallength 2
+Read tag 37385/9209, type 3 count 1 value 16/10 totallength 2
+Read tag 37386/920a, type 5 count 1 value 1148/47c totallength 8
+Read tag 37500/927c, type 7 count 10088 value 1156/484 totallength 10088
+Read tag 40960/a000, type 7 count 4 value 808464688/30303130 totallength 4
+Read tag 40961/a001, type 3 count 1 value 1/1 totallength 2
+Read tag 40962/a002, type 4 count 1 value 3264/cc0 totallength 4
+Read tag 40963/a003, type 4 count 1 value 2448/990 totallength 4
+Read tag 40965/a005, type 4 count 1 value 11516/2cfc totallength 4
+Read tag 41495/a217, type 3 count 1 value 2/2 totallength 2
+Read tag 41728/a300, type 7 count 1 value 3/3 totallength 1
+Read tag 41729/a301, type 7 count 1 value 1/1 totallength 1
+Read tag 41985/a401, type 3 count 1 value 0/0 totallength 2
+Read tag 41986/a402, type 3 count 1 value 0/0 totallength 2
+Read tag 41987/a403, type 3 count 1 value 0/0 totallength 2
+Read tag 41988/a404, type 5 count 1 value 11244/2bec totallength 8
+Read tag 41989/a405, type 3 count 1 value 96/60 totallength 2
+Read tag 41990/a406, type 3 count 1 value 0/0 totallength 2
+Read tag 41991/a407, type 3 count 1 value 0/0 totallength 2
+Read tag 41992/a408, type 3 count 1 value 0/0 totallength 2
+Read tag 41993/a409, type 3 count 1 value 0/0 totallength 2
+Read tag 41994/a40a, type 3 count 1 value 0/0 totallength 2
+
+ DIDIFD
+Loaded Image data
+Loading SUB IFD a005 at 11528 (11516 + 12)IFDSize: 2 
+Read tag 1/1, type 2 count 4 value 3684690/383952 totallength 4
+Read tag 2/2, type 7 count 4 value 808464688/30303130 totallength 4
+
+ DIDIFD
+Loaded Image data
+Listing tags
+0x1 4x1 ("R98") 
+0x2 4x1 (0x30 0x31 0x30 0x30) 
+
+Listing tags
+0x829a 1x8 (0.016667) 
+0x829d 1x8 (4.300000) 
+0x8822 1x2 (3) 
+0x8827 1x2 (80) 
+0x9000 4x1 (0x30 0x32 0x32 0x31) 
+0x9003 20x1 ("2011:03:12 14:45:33") 
+0x9004 20x1 ("2011:03:12 14:45:33") 
+0x9101 4x1 (0x01 0x02 0x03 0x00) 
+0x9102 1x8 (4.000000) 
+0x9204 1x8 (0.000000) 
+0x9205 1x8 (3.440000) 
+0x9207 1x2 (5) 
+0x9208 1x2 (0) 
+0x9209 1x2 (16) 
+0x920a 1x8 (15.800000) 
+0x927c 10088x1 (0x50 0x61 0x6e 0x61 ) 
+0xa000 4x1 (0x30 0x31 0x30 0x30) 
+0xa001 1x2 (1) 
+0xa002 1x4 (3264) 
+0xa003 1x4 (2448) 
+0xa005 1x4 (IFD 11516) 
+0xa217 1x2 (2) 
+0xa300 1x1 (0x03) 
+0xa301 1x1 (0x01) 
+0xa401 1x2 (0) 
+0xa402 1x2 (0) 
+0xa403 1x2 (0) 
+0xa404 1x8 (-nan) 
+0xa405 1x2 (96) 
+0xa406 1x2 (0) 
+0xa407 1x2 (0) 
+0xa408 1x2 (0) 
+0xa409 1x2 (0) 
+0xa40a 1x2 (0) 
+
+Loading SUB IFD 8825 at 11264 (11252 + 12)IFDSize: 13 
+Read tag 0/0, type 1 count 4 value 514/202 totallength 4
+Read tag 1/1, type 2 count 2 value 78/4e totallength 2
+Read tag 2/2, type 5 count 3 value 11414/2c96 totallength 24
+Read tag 3/3, type 2 count 2 value 87/57 totallength 2
+Read tag 4/4, type 5 count 3 value 11438/2cae totallength 24
+Read tag 7/7, type 5 count 3 value 11462/2cc6 totallength 24
+Read tag 8/8, type 2 count 2 value 53/35 totallength 2
+Read tag 9/9, type 2 count 2 value 65/41 totallength 2
+Read tag 10/a, type 2 count 2 value 50/32 totallength 2
+Read tag 11/b, type 5 count 1 value 11486/2cde totallength 8
+Read tag 18/12, type 2 count 10 value 11494/2ce6 totallength 10
+Read tag 27/1b, type 7 count 3 value 5460039/535047 totallength 3
+Read tag 29/1d, type 2 count 11 value 11504/2cf0 totallength 11
+
+ DIDIFD
+Loaded Image data
+Listing tags
+0x0 4x1 (2 2 0 0) 
+0x1 2x1 ("N") 
+0x2 3x8 (51.000000 33.000000 19.350000) 
+0x3 2x1 ("W") 
+0x4 3x8 (0.000000 10.000000 23.980000) 
+0x7 3x8 (21.000000 9.000000 27.000000) 
+0x8 2x1 ("5") 
+0x9 2x1 ("A") 
+0xa 2x1 ("2") 
+0xb 1x8 (2.200000) 
+0x12 10x1 ("WGS-84   ") 
+0x1b 3x1 (0x47 0x50 0x53) 
+0x1d 11x1 ("2011:03:10") 
+
+Listing tags
+0x10f 10x1 ("Panasonic") 
+0x110 8x1 ("DMC-ZS7") 
+0x112 1x2 (1) 
+0x11a 1x8 (180.000000) 
+0x11b 1x8 (180.000000) 
+0x128 1x2 (2) 
+0x131 10x1 ("Ver.1.0  ") 
+0x132 20x1 ("2011:03:12 14:45:33") 
+0x213 1x2 (2) 
+0x8769 1x4 (IFD 654) 
+0x8825 1x4 (IFD 11252) 
+0xc4a5 208x1 (0x50 0x72 0x69 0x6e ) 
+0xc6d2 64x1 (0x00 0x00 0x00 0x00 ) 
+0xc6d3 128x1 (0x00 0x00 0x00 0x00 ) 
+
+Next offset 11558
+Loading IFD 1 @11558 subfileoffset 12 swap 0 IFDSize: 8 
+Read tag 259/103, type 3 count 1 value 6/6 totallength 2
+Read tag 274/112, type 3 count 1 value 1/1 totallength 2
+Read tag 282/11a, type 5 count 1 value 11648/2d80 totallength 8
+Read tag 283/11b, type 5 count 1 value 11656/2d88 totallength 8
+Read tag 296/128, type 3 count 1 value 2/2 totallength 2
+Read tag 513/201, type 4 count 1 value 11764/2df4 totallength 4
+Read tag 514/202, type 4 count 1 value 6716/1a3c totallength 4
+Read tag 531/213, type 3 count 1 value 2/2 totallength 2
+
+ DIDIFD
+Loading internal image data at 11764,6716
+Got marker ffdb DQT at 11778
+ sz 132 nextloc 11912
+Got marker ffc0 SOF0 at 11912
+SOF sz 17 nextloc 11931
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 160 x 120
+Got marker ffc4 DHT at 11931
+ sz 418 nextloc 12351
+Got marker ffda SOS at 12351
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 18492 (len 6137)
+Loading all
+Loaded Image data
+Listing tags
+0x103 1x2 (6) 
+0x112 1x2 (1) 
+0x11a 1x8 (180.000000) 
+0x11b 1x8 (180.000000) 
+0x128 1x2 (2) 
+0x201 1x4 (11764) 
+0x202 1x4 (6716) 
+0x213 1x2 (2) 
+
+Next offset 0
+Got marker ffe2 APPn at 32160
+APP ffe2 unsupported
+Got marker ffdb DQT at 32258
+ sz 132 nextloc 32392
+Got marker ffc0 SOF0 at 32392
+SOF sz 17 nextloc 32411
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 3264 x 2448
+Got marker ffc4 DHT at 32411
+ sz 418 nextloc 32831
+Didn't find 1
+DHT 0 00. Bytes=29 total = 29 length = 416
+Didn't find 5
+DHT 1 10. Bytes=179 total = 208 length = 416
+Didn't find 1
+DHT 2 01. Bytes=29 total = 237 length = 416
+Didn't find 5
+DHT 3 11. Bytes=179 total = 416 length = 416
+Got marker ffdd DRI at 32831
+Restart interval 0
+Got marker ffda SOS at 32837
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 2812114 (len 2779273)
+Removed 8246 stuff_bytes in 2779271 now 2771025
+Expect 62424 MCUS. 408x306 blocks h:2 v:1
+
+
+Decoding 2771025
+MCU 1 dc_value 16 y_value_ 135. Doubling gain to 1
+MCU 7 dc_value 14 y_value_ 261. Doubling gain to 2
+MCU 113 dc_value -33 y_value_ -536. Doubling gain to 3
+Got to 62424 mcus. 0 bits left.
+Reordering Image 408, 306 = 124848 pixels. 124848 bytes. h,v 2,1
+Redacted data length 2769953
+sos block now 2769963 bytes
+H 3264 W 2448
+Redaction::2 strips
+Strip (48,64: 1652 MCUs) has 4640 bits (rep 562), src 642041 dest 642041 diff 0 offset 0.
+Strip (48,72: 1856 MCUs) has 5051 bits (rep 627), src 718990 dest 714912 diff 4078 offset 4078.
+Before patching size 2769963
+Patching in strip 0
+Patch at 642121 (80) 562->4640
+Shifting data (22159704 bits in 2769963 bytes) up by 4078 bits starting at b642121 B80265. New length 22163782
+fb 80774 flm 1 fhm 254 so 1
+Ended with src_byte 80264
+i 80845 shift_final 1 mask h80 l7f
+Patching in strip 1
+Patch at 719070 (80) 627->5051
+Shifting data (22163782 bits in 2770473 bytes) up by 4424 bits starting at b719070 B89883. New length 22168206
+fb 90436 flm 3 fhm 252 so 2
+Ended with src_byte 89882
+i 90515 shift_final 1 mask h80 l7f
+Saving 2 Exif IFDs
+Write TiffIfd Locs Where: 268 What: 672-12
+Write TiffIfd Locs Where: 280 What: 680-12
+Write TiffIfd Locs Where: 328 What: 688-12
+Write TiffIfd Locs Where: 340 What: 708-12
+Write TiffIfd Locs Where: 364 What: 728-12
+Write TiffIfd Locs Where: 376 What: 736-12
+Write TiffIfd Locs Where: 388 What: 744-12
+Write TiffIfd Locs Where: 436 What: 752-12
+Write TiffIfd Locs Where: 448 What: 760-12
+Write TiffIfd Locs Where: 508 What: 10848-12
+Write TiffIfd Locs Where: 592 What: 10878-12
+Write TiffIfd Locs Where: 10920 What: 11048-12
+Write TiffIfd Locs Where: 10944 What: 11072-12
+Write TiffIfd Locs Where: 10956 What: 11096-12
+Write TiffIfd Locs Where: 11004 What: 11120-12
+Write TiffIfd Locs Where: 11016 What: 11128-12
+Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 30 What: 194-12
+Write TiffIfd Locs Where: 42 What: 204-12
+Write TiffIfd Locs Where: 66 What: 212-12
+Write TiffIfd Locs Where: 78 What: 220-12
+Write TiffIfd Locs Where: 102 What: 228-12
+Write TiffIfd Locs Where: 114 What: 238-12
+Write TiffIfd Locs Where: 138 What: 258-12
+Write TiffIfd Locs Where: 150 What: 10886-12
+Write TiffIfd Locs Where: 162 What: 11149-12
+Write TiffIfd Locs Where: 174 What: 11357-12
+Write TiffIfd Locs Where: 186 What: 11421-12
+Write TiffIfd Locs Where: 11583 What: 18367-12
+Write TiffIfd Locs Where: 11595 What: 18375-12
+Write TiffIfd Locs Where: 11619 What: 11651-12
+IFD Locs Where: 16 What: 8
+IFD Locs Where: 190 What: 11537
+IFD Locs Where: 11647 What: 0
+Saving : 6 markers
+Saved marker ffe2 length 96
+Saved marker ffdb length 132
+Saved marker ffc0 length 17
+Saved marker ffc4 length 418
+Saved marker ffdd length 4
+Inserted 8246 stuff_bytes in 2771026 now 2779272
+Saved marker ffda length 2771027
+Got marker ffe1 APPn at 2
+APP Block size is 32156 7d9c
+EXIF byte_order: 4949
+EXIF tag is little endian 0, arch is little 0
+Exifloc 20/0x14 Offset 8/0x8
+Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
+Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
+Read tag 272/110, type 2 count 8 value 194/c2 totallength 8
+Read tag 274/112, type 3 count 1 value 1/1 totallength 2
+Read tag 282/11a, type 5 count 1 value 208/d0 totallength 8
+Read tag 283/11b, type 5 count 1 value 216/d8 totallength 8
+Read tag 296/128, type 3 count 1 value 2/2 totallength 2
+Read tag 305/131, type 2 count 10 value 224/e0 totallength 10
+Read tag 306/132, type 2 count 20 value 234/ea totallength 20
+Read tag 531/213, type 3 count 1 value 2/2 totallength 2
+Read tag 34665/8769, type 4 count 1 value 654/28e totallength 4
+Read tag 34853/8825, type 4 count 1 value 11252/2bf4 totallength 4
+Read tag 50341/c4a5, type 7 count 208 value 254/fe totallength 208
+Read tag 50898/c6d2, type 7 count 64 value 462/1ce totallength 64
+Read tag 50899/c6d3, type 7 count 128 value 526/20e totallength 128
+
+ DIDIFD
+Loaded Image data
+Loading SUB IFD 8769 at 666 (654 + 12)IFDSize: 34 
+Read tag 33434/829a, type 5 count 1 value 1068/42c totallength 8
+Read tag 33437/829d, type 5 count 1 value 1076/434 totallength 8
+Read tag 34850/8822, type 3 count 1 value 3/3 totallength 2
+Read tag 34855/8827, type 3 count 1 value 80/50 totallength 2
+Read tag 36864/9000, type 7 count 4 value 825373232/31323230 totallength 4
+Read tag 36867/9003, type 2 count 20 value 1084/43c totallength 20
+Read tag 36868/9004, type 2 count 20 value 1104/450 totallength 20
+Read tag 37121/9101, type 7 count 4 value 197121/30201 totallength 4
+Read tag 37122/9102, type 5 count 1 value 1124/464 totallength 8
+Read tag 37380/9204, type 10 count 1 value 1132/46c totallength 8
+Read tag 37381/9205, type 5 count 1 value 1140/474 totallength 8
+Read tag 37383/9207, type 3 count 1 value 5/5 totallength 2
+Read tag 37384/9208, type 3 count 1 value 0/0 totallength 2
+Read tag 37385/9209, type 3 count 1 value 16/10 totallength 2
+Read tag 37386/920a, type 5 count 1 value 1148/47c totallength 8
+Read tag 37500/927c, type 7 count 10088 value 1156/484 totallength 10088
+Read tag 40960/a000, type 7 count 4 value 808464688/30303130 totallength 4
+Read tag 40961/a001, type 3 count 1 value 1/1 totallength 2
+Read tag 40962/a002, type 4 count 1 value 3264/cc0 totallength 4
+Read tag 40963/a003, type 4 count 1 value 2448/990 totallength 4
+Read tag 40965/a005, type 4 count 1 value 11516/2cfc totallength 4
+Read tag 41495/a217, type 3 count 1 value 2/2 totallength 2
+Read tag 41728/a300, type 7 count 1 value 3/3 totallength 1
+Read tag 41729/a301, type 7 count 1 value 1/1 totallength 1
+Read tag 41985/a401, type 3 count 1 value 0/0 totallength 2
+Read tag 41986/a402, type 3 count 1 value 0/0 totallength 2
+Read tag 41987/a403, type 3 count 1 value 0/0 totallength 2
+Read tag 41988/a404, type 5 count 1 value 11244/2bec totallength 8
+Read tag 41989/a405, type 3 count 1 value 96/60 totallength 2
+Read tag 41990/a406, type 3 count 1 value 0/0 totallength 2
+Read tag 41991/a407, type 3 count 1 value 0/0 totallength 2
+Read tag 41992/a408, type 3 count 1 value 0/0 totallength 2
+Read tag 41993/a409, type 3 count 1 value 0/0 totallength 2
+Read tag 41994/a40a, type 3 count 1 value 0/0 totallength 2
+
+ DIDIFD
+Loaded Image data
+Loading SUB IFD a005 at 11528 (11516 + 12)IFDSize: 2 
+Read tag 1/1, type 2 count 4 value 3684690/383952 totallength 4
+Read tag 2/2, type 7 count 4 value 808464688/30303130 totallength 4
+
+ DIDIFD
+Loaded Image data
+Listing tags
+0x1 4x1 ("R98") 
+0x2 4x1 (0x30 0x31 0x30 0x30) 
+
+Listing tags
+0x829a 1x8 (0.016667) 
+0x829d 1x8 (4.300000) 
+0x8822 1x2 (3) 
+0x8827 1x2 (80) 
+0x9000 4x1 (0x30 0x32 0x32 0x31) 
+0x9003 20x1 ("2011:03:12 14:45:33") 
+0x9004 20x1 ("2011:03:12 14:45:33") 
+0x9101 4x1 (0x01 0x02 0x03 0x00) 
+0x9102 1x8 (4.000000) 
+0x9204 1x8 (0.000000) 
+0x9205 1x8 (3.440000) 
+0x9207 1x2 (5) 
+0x9208 1x2 (0) 
+0x9209 1x2 (16) 
+0x920a 1x8 (15.800000) 
+0x927c 10088x1 (0x50 0x61 0x6e 0x61 ) 
+0xa000 4x1 (0x30 0x31 0x30 0x30) 
+0xa001 1x2 (1) 
+0xa002 1x4 (3264) 
+0xa003 1x4 (2448) 
+0xa005 1x4 (IFD 11516) 
+0xa217 1x2 (2) 
+0xa300 1x1 (0x03) 
+0xa301 1x1 (0x01) 
+0xa401 1x2 (0) 
+0xa402 1x2 (0) 
+0xa403 1x2 (0) 
+0xa404 1x8 (-nan) 
+0xa405 1x2 (96) 
+0xa406 1x2 (0) 
+0xa407 1x2 (0) 
+0xa408 1x2 (0) 
+0xa409 1x2 (0) 
+0xa40a 1x2 (0) 
+
+Loading SUB IFD 8825 at 11264 (11252 + 12)IFDSize: 13 
+Read tag 0/0, type 1 count 4 value 514/202 totallength 4
+Read tag 1/1, type 2 count 2 value 78/4e totallength 2
+Read tag 2/2, type 5 count 3 value 11414/2c96 totallength 24
+Read tag 3/3, type 2 count 2 value 87/57 totallength 2
+Read tag 4/4, type 5 count 3 value 11438/2cae totallength 24
+Read tag 7/7, type 5 count 3 value 11462/2cc6 totallength 24
+Read tag 8/8, type 2 count 2 value 53/35 totallength 2
+Read tag 9/9, type 2 count 2 value 65/41 totallength 2
+Read tag 10/a, type 2 count 2 value 50/32 totallength 2
+Read tag 11/b, type 5 count 1 value 11486/2cde totallength 8
+Read tag 18/12, type 2 count 10 value 11494/2ce6 totallength 10
+Read tag 27/1b, type 7 count 3 value 5460039/535047 totallength 3
+Read tag 29/1d, type 2 count 11 value 11504/2cf0 totallength 11
+
+ DIDIFD
+Loaded Image data
+Listing tags
+0x0 4x1 (2 2 0 0) 
+0x1 2x1 ("N") 
+0x2 3x8 (51.000000 33.000000 19.350000) 
+0x3 2x1 ("W") 
+0x4 3x8 (0.000000 10.000000 23.980000) 
+0x7 3x8 (21.000000 9.000000 27.000000) 
+0x8 2x1 ("5") 
+0x9 2x1 ("A") 
+0xa 2x1 ("2") 
+0xb 1x8 (2.200000) 
+0x12 10x1 ("WGS-84   ") 
+0x1b 3x1 (0x47 0x50 0x53) 
+0x1d 11x1 ("2011:03:10") 
+
+Listing tags
+0x10f 10x1 ("Panasonic") 
+0x110 8x1 ("DMC-ZS7") 
+0x112 1x2 (1) 
+0x11a 1x8 (180.000000) 
+0x11b 1x8 (180.000000) 
+0x128 1x2 (2) 
+0x131 10x1 ("Ver.1.0  ") 
+0x132 20x1 ("2011:03:12 14:45:33") 
+0x213 1x2 (2) 
+0x8769 1x4 (IFD 654) 
+0x8825 1x4 (IFD 11252) 
+0xc4a5 208x1 (0x50 0x72 0x69 0x6e ) 
+0xc6d2 64x1 (0x00 0x00 0x00 0x00 ) 
+0xc6d3 128x1 (0x00 0x00 0x00 0x00 ) 
+
+Next offset 11558
+Loading IFD 1 @11558 subfileoffset 12 swap 0 IFDSize: 8 
+Read tag 259/103, type 3 count 1 value 6/6 totallength 2
+Read tag 274/112, type 3 count 1 value 1/1 totallength 2
+Read tag 282/11a, type 5 count 1 value 11648/2d80 totallength 8
+Read tag 283/11b, type 5 count 1 value 11656/2d88 totallength 8
+Read tag 296/128, type 3 count 1 value 2/2 totallength 2
+Read tag 513/201, type 4 count 1 value 11764/2df4 totallength 4
+Read tag 514/202, type 4 count 1 value 6716/1a3c totallength 4
+Read tag 531/213, type 3 count 1 value 2/2 totallength 2
+
+ DIDIFD
+Loading internal image data at 11764,6716
+Got marker ffdb DQT at 11778
+ sz 132 nextloc 11912
+Got marker ffc0 SOF0 at 11912
+SOF sz 17 nextloc 11931
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 160 x 120
+Got marker ffc4 DHT at 11931
+ sz 418 nextloc 12351
+Got marker ffda SOS at 12351
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 18492 (len 6137)
+Loading all
+Loaded Image data
+Listing tags
+0x103 1x2 (6) 
+0x112 1x2 (1) 
+0x11a 1x8 (180.000000) 
+0x11b 1x8 (180.000000) 
+0x128 1x2 (2) 
+0x201 1x4 (11764) 
+0x202 1x4 (6716) 
+0x213 1x2 (2) 
+
+Next offset 0
+Got marker ffe2 APPn at 32160
+APP ffe2 unsupported
+Got marker ffdb DQT at 32258
+ sz 132 nextloc 32392
+Got marker ffc0 SOF0 at 32392
+SOF sz 17 nextloc 32411
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+JPEG Image is 3264 x 2448
+Got marker ffc4 DHT at 32411
+ sz 418 nextloc 32831
+Didn't find 1
+DHT 0 00. Bytes=29 total = 29 length = 416
+Didn't find 5
+DHT 1 10. Bytes=179 total = 208 length = 416
+Didn't find 1
+DHT 2 01. Bytes=29 total = 237 length = 416
+Didn't find 5
+DHT 3 11. Bytes=179 total = 416 length = 416
+Got marker ffdd DRI at 32831
+Restart interval 0
+Got marker ffda SOS at 32837
+SOS slice 12
+In scan found marker 0xffd9
+EOI at 2812114 (len 2779273)
+Removed 8246 stuff_bytes in 2779271 now 2771025
+Expect 62424 MCUS. 408x306 blocks h:2 v:1
+
+
+Decoding 2771025
+MCU 1 dc_value 16 y_value_ 135. Doubling gain to 1
+MCU 7 dc_value 14 y_value_ 261. Doubling gain to 2
+MCU 113 dc_value -33 y_value_ -536. Doubling gain to 3
+Got to 62424 mcus. 0 bits left.
+Reordering Image 408, 306 = 124848 pixels. 124848 bytes. h,v 2,1
+Redacted data length 2748905
+sos block now 2748915 bytes
+H 3264 W 2448
+Redaction::20 strips
+Strip (48,88: 2277 MCUs) has 9585 bits (rep 907), src 878392 dest 878392 diff 0 offset 0.
+Strip (48,96: 2481 MCUs) has 9288 bits (rep 920), src 959042 dest 950364 diff 8678 offset 8678.
+Strip (48,104: 2685 MCUs) has 9162 bits (rep 928), src 1041233 dest 1024187 diff 17046 offset 17046.
+Strip (48,112: 2889 MCUs) has 9124 bits (rep 951), src 1124420 dest 1099140 diff 25280 offset 25280.
+Strip (48,120: 3093 MCUs) has 9220 bits (rep 890), src 1208910 dest 1175457 diff 33453 offset 33453.
+Strip (48,128: 3297 MCUs) has 9097 bits (rep 883), src 1293547 dest 1251764 diff 41783 offset 41783.
+Strip (48,136: 3501 MCUs) has 8443 bits (rep 1029), src 1377761 dest 1327764 diff 49997 offset 49997.
+Strip (48,144: 3705 MCUs) has 8999 bits (rep 1145), src 1459834 dest 1402423 diff 57411 offset 57411.
+Strip (48,152: 3909 MCUs) has 9083 bits (rep 941), src 1541907 dest 1476642 diff 65265 offset 65265.
+Strip (48,160: 4113 MCUs) has 9109 bits (rep 933), src 1624494 dest 1551087 diff 73407 offset 73407.
+Strip (48,168: 4317 MCUs) has 9255 bits (rep 1024), src 1708529 dest 1626946 diff 81583 offset 81583.
+Strip (48,176: 4521 MCUs) has 9307 bits (rep 1065), src 1792790 dest 1702976 diff 89814 offset 89814.
+Strip (48,184: 4725 MCUs) has 10082 bits (rep 1091), src 1879896 dest 1781840 diff 98056 offset 98056.
+Strip (48,192: 4929 MCUs) has 10220 bits (rep 1006), src 1968110 dest 1861063 diff 107047 offset 107047.
+Strip (48,200: 5133 MCUs) has 10289 bits (rep 1001), src 2054852 dest 1938591 diff 116261 offset 116261.
+Strip (48,208: 5337 MCUs) has 10889 bits (rep 1228), src 2140875 dest 2015326 diff 125549 offset 125549.
+Strip (48,216: 5541 MCUs) has 11215 bits (rep 1000), src 2224400 dest 2089190 diff 135210 offset 135210.
+Strip (48,224: 5745 MCUs) has 11315 bits (rep 1017), src 2303855 dest 2158430 diff 145425 offset 145425.
+Strip (48,232: 5949 MCUs) has 11463 bits (rep 983), src 2381200 dest 2225477 diff 155723 offset 155723.
+Strip (48,240: 6153 MCUs) has 11712 bits (rep 1032), src 2457783 dest 2291580 diff 166203 offset 166203.
+Before patching size 2748915
+Patching in strip 0
+Patch at 878472 (80) 907->9585
+Shifting data (21991320 bits in 2748915 bytes) up by 8678 bits starting at b878472 B109809. New length 21999998
+fb 110893 flm 3 fhm 252 so 2
+Ended with src_byte 109808
+i 111007 shift_final 1 mask h80 l7f
+Patching in strip 1
+Patch at 959122 (80) 920->9288
+Shifting data (21999998 bits in 2750000 bytes) up by 8368 bits starting at b959122 B119890. New length 22008366
+fb 120936 flm 63 fhm 192 so 6
+Ended with src_byte 119889
+i 121051 shift_final 2 mask hc0 l3f
+Patching in strip 2
+Patch at 1041313 (80) 928->9162
+Shifting data (22008366 bits in 2751046 bytes) up by 8234 bits starting at b1041313 B130164. New length 22016600
+fb 131193 flm 31 fhm 224 so 5
+Ended with src_byte 130163
+i 131309 shift_final 3 mask he0 l1f
+Patching in strip 3
+Patch at 1124500 (80) 951->9124
+Shifting data (22016600 bits in 2752075 bytes) up by 8173 bits starting at b1124500 B140562. New length 22024773
+fb 141584 flm 127 fhm 128 so 7
+Ended with src_byte 140562
+i 141702 shift_final 8 mask hff l0
+Patching in strip 4
+Patch at 1208990 (80) 890->9220
+Shifting data (22024773 bits in 2753097 bytes) up by 8330 bits starting at b1208990 B151123. New length 22033103
+fb 152165 flm 255 fhm 0 so 8
+Ended with src_byte 151123
+i 152276 shift_final 2 mask hc0 l3f
+Patching in strip 5
+Patch at 1293627 (80) 883->9097
+Shifting data (22033103 bits in 2754138 bytes) up by 8214 bits starting at b1293627 B161703. New length 22041317
+fb 162730 flm 127 fhm 128 so 7
+Ended with src_byte 161703
+i 162840 shift_final 4 mask hf0 lf
+Patching in strip 6
+Patch at 1377841 (80) 1029->8443
+Shifting data (22041317 bits in 2755165 bytes) up by 7414 bits starting at b1377841 B172230. New length 22048731
+fb 173156 flm 1 fhm 254 so 1
+Ended with src_byte 172229
+i 173285 shift_final 4 mask hf0 lf
+Patching in strip 7
+Patch at 1459914 (80) 1145->8999
+Shifting data (22048731 bits in 2756092 bytes) up by 7854 bits starting at b1459914 B182489. New length 22056585
+fb 183471 flm 255 fhm 0 so 8
+Ended with src_byte 182489
+i 183614 shift_final 1 mask h80 l7f
+Patching in strip 8
+Patch at 1541987 (80) 941->9083
+Shifting data (22056585 bits in 2757074 bytes) up by 8142 bits starting at b1541987 B192748. New length 22064727
+fb 193766 flm 127 fhm 128 so 7
+Ended with src_byte 192748
+i 193883 shift_final 6 mask hfc l3
+Patching in strip 9
+Patch at 1624574 (80) 933->9109
+Shifting data (22064727 bits in 2758091 bytes) up by 8176 bits starting at b1624574 B203071. New length 22072903
+fb 204093 flm 3 fhm 252 so 2
+Ended with src_byte 203070
+i 204210 shift_final 3 mask he0 l1f
+Patching in strip 10
+Patch at 1708609 (80) 1024->9255
+Shifting data (22072903 bits in 2759113 bytes) up by 8231 bits starting at b1708609 B213576. New length 22081134
+fb 214605 flm 255 fhm 0 so 8
+Ended with src_byte 213576
+i 214732 shift_final 8 mask hff l0
+Patching in strip 11
+Patch at 1792870 (80) 1065->9307
+Shifting data (22081134 bits in 2760142 bytes) up by 8242 bits starting at b1792870 B224108. New length 22089376
+fb 225139 flm 255 fhm 0 so 8
+Ended with src_byte 224108
+i 225272 shift_final 1 mask h80 l7f
+Patching in strip 12
+Patch at 1879976 (80) 1091->10082
+Shifting data (22089376 bits in 2761172 bytes) up by 8991 bits starting at b1879976 B234997. New length 22098367
+fb 236120 flm 1 fhm 254 so 1
+Ended with src_byte 234996
+i 236257 shift_final 2 mask hc0 l3f
+Patching in strip 13
+Patch at 1968190 (80) 1006->10220
+Shifting data (22098367 bits in 2762296 bytes) up by 9214 bits starting at b1968190 B246023. New length 22107581
+fb 247175 flm 15 fhm 240 so 4
+Ended with src_byte 246023
+i 247301 shift_final 2 mask hc0 l3f
+Patching in strip 14
+Patch at 2054932 (80) 1001->10289
+Shifting data (22107581 bits in 2763448 bytes) up by 9288 bits starting at b2054932 B256866. New length 22116869
+fb 258027 flm 15 fhm 240 so 4
+Ended with src_byte 256865
+i 258152 shift_final 5 mask hf8 l7
+Patching in strip 15
+Patch at 2140955 (80) 1228->10889
+Shifting data (22116869 bits in 2764609 bytes) up by 9661 bits starting at b2140955 B267619. New length 22126530
+fb 268827 flm 255 fhm 0 so 8
+Ended with src_byte 267619
+i 268980 shift_final 4 mask hf0 lf
+Patching in strip 16
+Patch at 2224480 (80) 1000->11215
+Shifting data (22126530 bits in 2765817 bytes) up by 10215 bits starting at b2224480 B278060. New length 22136745
+fb 279336 flm 1 fhm 254 so 1
+Ended with src_byte 278059
+i 279461 shift_final 7 mask hfe l1
+Patching in strip 17
+Patch at 2303935 (80) 1017->11315
+Shifting data (22136745 bits in 2767094 bytes) up by 10298 bits starting at b2303935 B287991. New length 22147043
+fb 289279 flm 127 fhm 128 so 7
+Ended with src_byte 287991
+i 289406 shift_final 2 mask hc0 l3f
+Patching in strip 18
+Patch at 2381280 (80) 983->11463
+Shifting data (22147043 bits in 2768381 bytes) up by 10480 bits starting at b2381280 B297660. New length 22157523
+fb 298970 flm 255 fhm 0 so 8
+Ended with src_byte 297659
+i 299092 shift_final 7 mask hfe l1
+Patching in strip 19
+Patch at 2457863 (80) 1032->11712
+Shifting data (22157523 bits in 2769691 bytes) up by 10680 bits starting at b2457863 B307232. New length 22168203
+fb 308567 flm 1 fhm 254 so 1
+Ended with src_byte 307231
+i 308696 shift_final 7 mask hfe l1
+Saving 2 Exif IFDs
+Write TiffIfd Locs Where: 268 What: 672-12
+Write TiffIfd Locs Where: 280 What: 680-12
+Write TiffIfd Locs Where: 328 What: 688-12
+Write TiffIfd Locs Where: 340 What: 708-12
+Write TiffIfd Locs Where: 364 What: 728-12
+Write TiffIfd Locs Where: 376 What: 736-12
+Write TiffIfd Locs Where: 388 What: 744-12
+Write TiffIfd Locs Where: 436 What: 752-12
+Write TiffIfd Locs Where: 448 What: 760-12
+Write TiffIfd Locs Where: 508 What: 10848-12
+Write TiffIfd Locs Where: 592 What: 10878-12
+Write TiffIfd Locs Where: 10920 What: 11048-12
+Write TiffIfd Locs Where: 10944 What: 11072-12
+Write TiffIfd Locs Where: 10956 What: 11096-12
+Write TiffIfd Locs Where: 11004 What: 11120-12
+Write TiffIfd Locs Where: 11016 What: 11128-12
+Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 30 What: 194-12
+Write TiffIfd Locs Where: 42 What: 204-12
+Write TiffIfd Locs Where: 66 What: 212-12
+Write TiffIfd Locs Where: 78 What: 220-12
+Write TiffIfd Locs Where: 102 What: 228-12
+Write TiffIfd Locs Where: 114 What: 238-12
+Write TiffIfd Locs Where: 138 What: 258-12
+Write TiffIfd Locs Where: 150 What: 10886-12
+Write TiffIfd Locs Where: 162 What: 11149-12
+Write TiffIfd Locs Where: 174 What: 11357-12
+Write TiffIfd Locs Where: 186 What: 11421-12
+Write TiffIfd Locs Where: 11583 What: 18367-12
+Write TiffIfd Locs Where: 11595 What: 18375-12
+Write TiffIfd Locs Where: 11619 What: 11651-12
+IFD Locs Where: 16 What: 8
+IFD Locs Where: 190 What: 11537
+IFD Locs Where: 11647 What: 0
+Saving : 6 markers
+Saved marker ffe2 length 96
+Saved marker ffdb length 132
+Saved marker ffc0 length 17
+Saved marker ffc4 length 418
+Saved marker ffdd length 4
+Inserted 8246 stuff_bytes in 2771026 now 2779272
 Saved marker ffda length 2771027

@@ -45,8 +45,23 @@ namespace jpeg_redaction {
       }
       return success;
     }
-
-    void SaveBytes(std::vector<unsigned char> &bytes, const char *const fn) {
+    bool compare_bytes(const std::vector<unsigned char> &orig,
+		       const std::vector<unsigned char> &other) {
+      if (orig.size() > other.size() ||
+	  orig.size() < other.size() - 1) {
+	fprintf(stderr, "Size mismatch: %d vs %d\n", orig.size(), other.size());
+	return false;
+      }
+      for(int i = 0; i < orig.size(); ++i) {
+	if (orig[i] != other[i]) {
+	  fprintf(stderr, "Byte mismatch at %d of %d\n", i, orig.size());
+	  return false;
+	}
+      }
+      return true;
+    }
+    void SaveBytes(const std::vector<unsigned char> &bytes,
+		   const char *const fn) {
       FILE *file = fopen(fn, "wb");
       if (file == NULL) {
 	fprintf(stderr, "Can't write to file %s\n", fn);
@@ -109,25 +124,27 @@ namespace jpeg_redaction {
       return 0;
     }
 
-    int test_reversingredaction(const char * const filename) {
+    int test_reversingredaction(const char * const filename,
+				const Redaction::Rect &rect) {
       try {
 	Jpeg j2(filename, true);
 	JpegMarker *sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	std::vector<unsigned char> original(sos_block->data_);
 	SaveBytes(sos_block->data_, "testout/originalsos");
 	//	Redaction::Rect rect(50, 300, 50, 200);  // l,r, t, b
 	// One strip
-	Redaction::Rect rect(50, 300, 64, 79);  // l,r, t, b
 	Redaction redaction;
-
 	redaction.AddRegion(rect);
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");
-	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
-	SaveBytes(sos_block->data_, "testout/redactedsos");
-	JpegStrip *strip = redaction.GetStrip(0);
+	// sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	//	SaveBytes(sos_block->data_, "testout/redactedsos");
+	const JpegStrip *strip = redaction.GetStrip(0);
 	j2.ReverseRedaction(redaction);
 	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
+	if (! compare_bytes(original, sos_block->data_))
+	  throw("Compare test fail");
 	SaveBytes(sos_block->data_, "testout/unredactedsos");
 	std::string output_filename = "testout/testunredacted.jpg";
 	if (j2.Save(output_filename.c_str()) != 0) {
@@ -140,6 +157,16 @@ namespace jpeg_redaction {
       }
       return 0;
     }
+    int test_reversingredactions_multi(const std::string &filename) {
+      Redaction::Rect rectonestrip(50, 300, 64, 79);  // l,r, t, b
+      int rv = test_reversingredaction(filename.c_str(), rectonestrip);
+      if (rv) return 1;
+      Redaction::Rect rect(50, 500, 89, 245);  // l,r, t, b
+      rv = test_reversingredaction(filename.c_str(), rect);
+      if (rv) return 1;
+      return 0;
+    }
+
   } // namespace tests
 } // namespace jpeg_redaction
 
@@ -150,5 +177,5 @@ int main(int argc, char **argv) {
   jpeg_redaction::tests::test_loadallfalse(filename.c_str());
   jpeg_redaction::tests::test_readwrite(filename.c_str());
   jpeg_redaction::tests::test_redaction(filename.c_str());
-  jpeg_redaction::tests::test_reversingredaction(filename.c_str());
+  jpeg_redaction::tests::test_reversingredactions_multi(filename);
 }

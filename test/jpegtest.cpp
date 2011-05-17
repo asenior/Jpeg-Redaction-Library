@@ -8,6 +8,8 @@
 
 namespace jpeg_redaction {
   namespace tests {
+
+    // Start with several test helper functions.
     // return true if files are byte identical.
     bool compare_to_golden(const char * const filename,
 			   const char * const golden_name) {
@@ -72,6 +74,7 @@ namespace jpeg_redaction {
       fclose(file);
     }
 
+    // Test reading and parsing a jpeg file, without loading all the data.
     int test_loadallfalse(const char * const filename) {
       printf("Testing with loadall=false\n");
       try {
@@ -83,6 +86,7 @@ namespace jpeg_redaction {
       return 0;
     }
 
+    // Test reading a jpeg and writing it out again.
     int test_readwrite(const char * const filename) {
       printf("Testing with loadall=true\n");
       try {
@@ -101,6 +105,7 @@ namespace jpeg_redaction {
       return 0;
     }
 
+    // Test wiping a region from a jpeg file.
     int test_redaction(const char * const filename) {
       printf("Testing redaction\n");
       try {
@@ -124,6 +129,8 @@ namespace jpeg_redaction {
       return 0;
     }
 
+    // Test wiping a region and then restoring it again from
+    // saved redaction data (strips).
     int test_reversingredaction(const char * const filename,
 				const Redaction::Rect &rect) {
       try {

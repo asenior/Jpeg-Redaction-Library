@@ -15,8 +15,8 @@ test:
 $(LIB): 
 	cd ../lib; $(MAKE) lib
 
-$(BINARY): $(LIB) redact.cpp
-	$(CC) $(CXXFLAGS) -I../lib redact.cpp $(LIBPATH) $(LIB)  -o $@
+$(BINARY): $(LIB) redaction_main.cpp
+	$(CC) $(CXXFLAGS) -I../lib redaction_main.cpp $(LIBPATH) $(LIB)  -o $@
 
 .PHONY: clean cleanall clean_rawgrey clean_test \
 	$(LIB)

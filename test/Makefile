@@ -4,6 +4,7 @@
 include ../Makefile.common
 
 BINARY = jpegtest
+READWRITE = testreadwrite
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
 BITSHIFTS = bit_shifts_test
@@ -24,8 +25,11 @@ $(LIB):
 $(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h
 	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp $(LIBPATH)  -o $@
 
-$(BINARY): $(LIB) jpegtest.cpp
-	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp $(LIBPATH) $(LIB)  -o $@
+$(BINARY): $(LIB) jpegtest.cpp test_utils.cpp
+	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(READWRITE): $(LIB) testreadwrite.cpp test_utils.cpp
+	$(CC) $(CXXFLAGS) -I../lib testreadwrite.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(EXIF_REMOVE): $(LIB) exiftest.cpp
 	$(CC) $(CXXFLAGS) -I../lib exiftest.cpp $(LIBPATH) $(LIB)  -o $@

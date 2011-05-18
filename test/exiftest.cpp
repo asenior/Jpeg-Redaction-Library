@@ -8,7 +8,9 @@
 namespace jpeg_redaction {
 int test_exif_removal(const char * const filename) {
   try {
-    Jpeg j2(filename, true);
+    Jpeg j2;
+    bool success = j2.LoadFromFile(filename, true);
+    if (!success) exit(1);
     j2.RemoveTag(TiffTag::tag_exif);
     j2.Save("testout/test_noexif.jpg");
   } catch (const char *error) {
@@ -20,7 +22,9 @@ int test_exif_removal(const char * const filename) {
 
 int test_sensitive_removal(const char * const filename) {
   try {
-    Jpeg j2(filename, true);
+    Jpeg j2;
+    bool success = j2.LoadFromFile(filename, true);
+    if (!success) exit(1);
     j2.RemoveAllSensitive();
     j2.Save("testout/test_nosensitive.jpg");
   } catch (const char *error) {
@@ -32,7 +36,9 @@ int test_sensitive_removal(const char * const filename) {
 
 int test_gps_removal(const char * const filename) {
   try {
-    Jpeg j2(filename, true);
+    Jpeg j2;
+    bool success = j2.LoadFromFile(filename, true);
+    if (!success) exit(1);
     int rem = j2.RemoveTag(TiffTag::tag_exif);
     if (rem != 1) throw("Didn't remove one exif tag");
     rem = j2.RemoveTag(TiffTag::tag_gps);

@@ -25,18 +25,18 @@ namespace jpeg_redaction {
     if (len %16 != 0)
       printf("\n");
   }
-  Jpeg::Jpeg(char const * const pczFilename, bool loadall) :
-    width_(0), height_(0) , softype_(-1), photoshop3_(NULL)
-  {
+  bool Jpeg::LoadFromFile(char const * const pczFilename, bool loadall) {
     filename_ = pczFilename;
     //  exif_ = NULL;
 
     FILE *pFile = fopen(pczFilename, "rb");
-    if (pFile == NULL)
-      return;
-
-    LoadFromFile(pFile, loadall, 0);
+    if (pFile == NULL) {
+      fprintf(stderr, "Couldn't open file %s\n", pczFilename);
+      return false;
+    }
+    int rv = LoadFromFile(pFile, loadall, 0);
     fclose(pFile);
+    return rv == 0;
   }
 
   const char *Jpeg::MarkerName(int marker) const {

@@ -84,7 +84,7 @@ public:
   virtual ~Jpeg();
   // Construct from a file. loadall indicates whether to load all
   // data blocks, or just parse the file and extract metadata.
-  Jpeg(char const * const pczFilename, bool loadall);
+  bool LoadFromFile(char const * const pczFilename, bool loadall);
   int LoadFromFile(FILE *pFile, bool loadall, int offset);
 
   // Parse the JPEG data and redact if Redaction regions are supplied.

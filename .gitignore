@@ -6,3 +6,4 @@ tags
 rawgrey.pgm
 backup*/*
 *.stackdump
+*.bak

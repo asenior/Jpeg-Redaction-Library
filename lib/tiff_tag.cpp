@@ -32,8 +32,10 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
     iRV = fread(&value, sizeof(unsigned int), 1, pFile);
     if (iRV != 1) throw("Can't read file");
     int totallength = GetDataLength();
-    if (totallength > 4 && byte_swapping) // If it's a pointer.
+    if ((totallength > 4 || TagIsSubIFD()) && byte_swapping) {
+      printf("Swapping pointer\n");// If it's a pointer.
       ByteSwapInPlace(&value, 1);
+    }
 #ifdef DEBUG
     printf("Read tag %d/%x, type %d count %d value %d/%0x "
 	    "totallength %d\n",
@@ -45,9 +47,11 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
     }
     // Some types are pointers that will be stored in an ifd.
     if (totallength <= 4 && ! (TagIsSubIFD()) ) {
-      if (byte_swapping)
+      if (byte_swapping) {
+	printf("Swapping non-pointer\n");// If it's a pointer.
         ByteSwapInPlace((unsigned char *)&value,
                         4/LengthOfType(type_), LengthOfType(type_));
+      }
       loaded_ = true;
       data_ = new unsigned char [totallength];
       memcpy(data_, &value, totallength);
@@ -99,6 +103,8 @@ int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
   //  int subfileoffset = 0; // TODO(aws) should this be non-zero?
   if (TagIsSubIFD()) {
     unsigned int zero = 0;
+    if (subifd_ == NULL)
+      throw("subifd is nul in TiffTag::WriteDataBlock");
     valpointerout_ = subifd_->Write(pFile, zero, subfileoffset);
     return valpointerout_; // Will get subtracted later.
   }

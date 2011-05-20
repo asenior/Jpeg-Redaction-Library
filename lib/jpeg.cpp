@@ -292,8 +292,10 @@ namespace jpeg_redaction {
   int Jpeg::Save(const char * const filename) {
     const bool arch_big_endian = ArchBigEndian();
     FILE *pFile = fopen(filename, "wb");
-    if (pFile == NULL)
+    if (pFile == NULL) {
+      fprintf(stderr, "Can't open output file : %s\n", filename);
       return 1;
+    }
     // Write the header,
     unsigned short magic = 0xd8ff;
     if (arch_big_endian) ByteSwapInPlace(&magic, 1);

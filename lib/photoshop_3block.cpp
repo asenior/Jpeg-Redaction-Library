@@ -10,8 +10,7 @@
 //////////////////////////////////////////////////////////////////////
 
 namespace jpeg_redaction {
-Photoshop3Block::Photoshop3Block(FILE *pFile)
-{
+Photoshop3Block::Photoshop3Block(FILE *pFile) {
   char c;
   while((c=fgetc(pFile))!='\0'){
     headerstring_ += c;
@@ -25,16 +24,14 @@ Photoshop3Block::Photoshop3Block(FILE *pFile)
   bims_.push_back(bim);
 }
 
-Photoshop3Block::~Photoshop3Block()
-{
+Photoshop3Block::~Photoshop3Block() {
   for(int i = 0; i < bims_.size(); ++i) {
     delete bims_[i];
   }
   bims_.clear();
 }
 
-int Photoshop3Block::Write(FILE *pFile)
-{
+int Photoshop3Block::Write(FILE *pFile) {
   int length = 0;
   int headerlen = headerstring_.length();
   int iRV = fwrite(headerstring_.c_str(), sizeof(unsigned char), headerlen + 1, pFile);

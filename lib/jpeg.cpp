@@ -58,6 +58,7 @@ namespace jpeg_redaction {
   }
 
   int Jpeg::LoadFromFile(FILE *pFile, bool loadall, int offset) {
+    const bool arch_big_endian = ArchBigEndian();
     unsigned short marker = 0;
     int iRV = fread(&marker, sizeof(unsigned short), 1, pFile);
     if (iRV != 1)
@@ -69,7 +70,8 @@ namespace jpeg_redaction {
       int iRV = fread(&marker, sizeof(unsigned short), 1, pFile);
       if (iRV != 1)
 	throw(-1);
-      marker = byteswap2(marker);
+      if (!arch_big_endian)
+	marker = byteswap2(marker);
       printf("Got marker %x %s at %d\n", marker, MarkerName(marker), blockloc);
 
       if (marker == jpeg_eoi) {
@@ -90,7 +92,8 @@ namespace jpeg_redaction {
 	unsigned int magic = 0, exifoffset = 0;
 	// unsigned short myshort;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-	blocksize = byteswap2(blocksize);
+	if (!arch_big_endian)
+	  blocksize = byteswap2(blocksize);
 	try {
 	  photoshop3_ = new Photoshop3Block(pFile, blocksize-sizeof(blocksize));
 	}  catch (char *ex) {
@@ -103,7 +106,8 @@ namespace jpeg_redaction {
       if (marker >= jpeg_app && marker < jpeg_app + 16) {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-	blocksize = byteswap2(blocksize);
+	if (!arch_big_endian)
+	  blocksize = byteswap2(blocksize);
 	AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	printf("APP %x unsupported\n", marker);
 	//      throw("AppN unsupported");
@@ -113,7 +117,8 @@ namespace jpeg_redaction {
       if (marker == jpeg_sof0 || marker == jpeg_sof2) {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-	blocksize = byteswap2(blocksize);
+	if (!arch_big_endian)
+	  blocksize = byteswap2(blocksize);
 	printf("SOF sz %u nextloc %ld\n",
 	       blocksize, blockloc + blocksize + sizeof(marker));
 	JpegMarker *sof = AddMarker(marker, blockloc, blocksize, pFile, true);
@@ -140,7 +145,8 @@ namespace jpeg_redaction {
       if (marker == jpeg_dqt || marker == jpeg_dht) {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-	blocksize = byteswap2(blocksize);
+	if (!arch_big_endian)
+	  blocksize = byteswap2(blocksize);
 	printf(" sz %d nextloc %d\n", blocksize, blockloc + blocksize + 2);
 	JpegMarker *d = AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	if (marker == jpeg_dht && loadall) {
@@ -152,10 +158,12 @@ namespace jpeg_redaction {
 	unsigned short blocksize;
 
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
-	blocksize = byteswap2(blocksize);
+	if (!arch_big_endian)
+	  blocksize = byteswap2(blocksize);
 	JpegMarker *dri = AddMarker(marker, blockloc, blocksize, pFile, true);
 	restartinterval_ = *(short*)(&dri->data_[0]);
-	restartinterval_ = byteswap2(restartinterval_);
+	if (!arch_big_endian)
+	  restartinterval_ = byteswap2(restartinterval_);
 	printf("Restart interval %d\n", restartinterval_);
 	continue;
       }
@@ -195,7 +203,7 @@ namespace jpeg_redaction {
       big_endian = true;
     else if (byte_order != 0x4949) // "Intel"
       throw("Don't recognize EXIF tag");
-    printf("EXIF tag is %s endian %d, arch is %s %d\n",
+    printf("EXIF tag is: %s endian (%d), arch is: %s (%d)\n",
 	   (big_endian ? "big" : "little"), big_endian,
 	   (arch_big_endian ? "big" : "little"), arch_big_endian);
     bool byte_swapping = (big_endian != arch_big_endian);
@@ -251,7 +259,7 @@ namespace jpeg_redaction {
       }
       datalen++;
       if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
-	printf("In scan found marker 0x%x\n", (buf & 0xffff));
+      	printf("In scan found marker 0x%x\n", (buf & 0xffff));
       if ((buf & 0xffff) == jpeg_eoi) {
 	printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
 	break;

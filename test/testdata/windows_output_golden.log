@@ -2,7 +2,7 @@ Testing with loadall=false
 Got marker ffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
-EXIF tag is little endian 0, arch is little 0
+EXIF tag is: little endian (0), arch is: little (0)
 Exifloc 20/0x14 Offset 8/0x8
 Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
 Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
@@ -99,7 +99,7 @@ Testing with loadall=true
 Got marker ffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
-EXIF tag is little endian 0, arch is little 0
+EXIF tag is: little endian (0), arch is: little (0)
 Exifloc 20/0x14 Offset 8/0x8
 Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
 Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
@@ -376,7 +376,7 @@ Testing redaction
 Got marker ffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
-EXIF tag is little endian 0, arch is little 0
+EXIF tag is: little endian (0), arch is: little (0)
 Exifloc 20/0x14 Offset 8/0x8
 Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
 Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
@@ -673,7 +673,7 @@ Saved marker ffda length 2771027
 Got marker ffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
-EXIF tag is little endian 0, arch is little 0
+EXIF tag is: little endian (0), arch is: little (0)
 Exifloc 20/0x14 Offset 8/0x8
 Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
 Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10
@@ -966,7 +966,7 @@ Saved marker ffda length 2771027
 Got marker ffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
-EXIF tag is little endian 0, arch is little 0
+EXIF tag is: little endian (0), arch is: little (0)
 Exifloc 20/0x14 Offset 8/0x8
 Loading IFD 0 @20 subfileoffset 12 swap 0 IFDSize: 14 
 Read tag 271/10f, type 2 count 10 value 182/b6 totallength 10

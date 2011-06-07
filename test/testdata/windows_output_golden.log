@@ -1,5 +1,5 @@
 Testing with loadall=false
-Got marker ffe1 APPn at 2
+Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
 EXIF tag is: little endian (0), arch is: little (0)
@@ -51,17 +51,17 @@ Read tag 531/213, type 3 count 1 value 2/2 totallength 2
 
  DIDIFD
 Loading internal image data at 11764,6716
-Got marker ffdb DQT at 11778
+Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
-Got marker ffc0 SOF0 at 11912
+Got marker 0xffc0 SOF0 at 11912
 SOF sz 17 nextloc 11931
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 160 x 120
-Got marker ffc4 DHT at 11931
+Got marker 0xffc4 DHT at 11931
  sz 418 nextloc 12351
-Got marker ffda SOS at 12351
+Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
@@ -77,26 +77,26 @@ Listing tags
 0x213 1x2 (2) 
 
 Next offset 0
-Got marker ffe2 APPn at 32160
+Got marker 0xffe2 APPn at 32160
 APP ffe2 unsupported
-Got marker ffdb DQT at 32258
+Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
-Got marker ffc0 SOF0 at 32392
+Got marker 0xffc0 SOF0 at 32392
 SOF sz 17 nextloc 32411
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 3264 x 2448
-Got marker ffc4 DHT at 32411
+Got marker 0xffc4 DHT at 32411
  sz 418 nextloc 32831
-Got marker ffdd DRI at 32831
+Got marker 0xffdd DRI at 32831
 Restart interval 0
-Got marker ffda SOS at 32837
+Got marker 0xffda SOS at 32837
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
 Testing with loadall=true
-Got marker ffe1 APPn at 2
+Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
 EXIF tag is: little endian (0), arch is: little (0)
@@ -264,17 +264,17 @@ Read tag 531/213, type 3 count 1 value 2/2 totallength 2
 
  DIDIFD
 Loading internal image data at 11764,6716
-Got marker ffdb DQT at 11778
+Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
-Got marker ffc0 SOF0 at 11912
+Got marker 0xffc0 SOF0 at 11912
 SOF sz 17 nextloc 11931
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 160 x 120
-Got marker ffc4 DHT at 11931
+Got marker 0xffc4 DHT at 11931
  sz 418 nextloc 12351
-Got marker ffda SOS at 12351
+Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
@@ -291,17 +291,17 @@ Listing tags
 0x213 1x2 (2) 
 
 Next offset 0
-Got marker ffe2 APPn at 32160
+Got marker 0xffe2 APPn at 32160
 APP ffe2 unsupported
-Got marker ffdb DQT at 32258
+Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
-Got marker ffc0 SOF0 at 32392
+Got marker 0xffc0 SOF0 at 32392
 SOF sz 17 nextloc 32411
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 3264 x 2448
-Got marker ffc4 DHT at 32411
+Got marker 0xffc4 DHT at 32411
  sz 418 nextloc 32831
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 416
@@ -311,9 +311,9 @@ Didn't find 1
 DHT 2 01. Bytes=29 total = 237 length = 416
 Didn't find 5
 DHT 3 11. Bytes=179 total = 416 length = 416
-Got marker ffdd DRI at 32831
+Got marker 0xffdd DRI at 32831
 Restart interval 0
-Got marker ffda SOS at 32837
+Got marker 0xffda SOS at 32837
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
@@ -373,7 +373,7 @@ Saved marker ffdd length 4
 Inserted 8246 stuff_bytes in 2771025 now 2779271
 Saved marker ffda length 2771027
 Testing redaction
-Got marker ffe1 APPn at 2
+Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
 EXIF tag is: little endian (0), arch is: little (0)
@@ -541,17 +541,17 @@ Read tag 531/213, type 3 count 1 value 2/2 totallength 2
 
  DIDIFD
 Loading internal image data at 11764,6716
-Got marker ffdb DQT at 11778
+Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
-Got marker ffc0 SOF0 at 11912
+Got marker 0xffc0 SOF0 at 11912
 SOF sz 17 nextloc 11931
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 160 x 120
-Got marker ffc4 DHT at 11931
+Got marker 0xffc4 DHT at 11931
  sz 418 nextloc 12351
-Got marker ffda SOS at 12351
+Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
@@ -568,17 +568,17 @@ Listing tags
 0x213 1x2 (2) 
 
 Next offset 0
-Got marker ffe2 APPn at 32160
+Got marker 0xffe2 APPn at 32160
 APP ffe2 unsupported
-Got marker ffdb DQT at 32258
+Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
-Got marker ffc0 SOF0 at 32392
+Got marker 0xffc0 SOF0 at 32392
 SOF sz 17 nextloc 32411
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 3264 x 2448
-Got marker ffc4 DHT at 32411
+Got marker 0xffc4 DHT at 32411
  sz 418 nextloc 32831
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 416
@@ -588,9 +588,9 @@ Didn't find 1
 DHT 2 01. Bytes=29 total = 237 length = 416
 Didn't find 5
 DHT 3 11. Bytes=179 total = 416 length = 416
-Got marker ffdd DRI at 32831
+Got marker 0xffdd DRI at 32831
 Restart interval 0
-Got marker ffda SOS at 32837
+Got marker 0xffda SOS at 32837
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
@@ -670,7 +670,7 @@ Saved marker ffc4 length 418
 Saved marker ffdd length 4
 Inserted 8106 stuff_bytes in 2760837 now 2768943
 Saved marker ffda length 2771027
-Got marker ffe1 APPn at 2
+Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
 EXIF tag is: little endian (0), arch is: little (0)
@@ -838,17 +838,17 @@ Read tag 531/213, type 3 count 1 value 2/2 totallength 2
 
  DIDIFD
 Loading internal image data at 11764,6716
-Got marker ffdb DQT at 11778
+Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
-Got marker ffc0 SOF0 at 11912
+Got marker 0xffc0 SOF0 at 11912
 SOF sz 17 nextloc 11931
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 160 x 120
-Got marker ffc4 DHT at 11931
+Got marker 0xffc4 DHT at 11931
  sz 418 nextloc 12351
-Got marker ffda SOS at 12351
+Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
@@ -865,17 +865,17 @@ Listing tags
 0x213 1x2 (2) 
 
 Next offset 0
-Got marker ffe2 APPn at 32160
+Got marker 0xffe2 APPn at 32160
 APP ffe2 unsupported
-Got marker ffdb DQT at 32258
+Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
-Got marker ffc0 SOF0 at 32392
+Got marker 0xffc0 SOF0 at 32392
 SOF sz 17 nextloc 32411
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 3264 x 2448
-Got marker ffc4 DHT at 32411
+Got marker 0xffc4 DHT at 32411
  sz 418 nextloc 32831
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 416
@@ -885,9 +885,9 @@ Didn't find 1
 DHT 2 01. Bytes=29 total = 237 length = 416
 Didn't find 5
 DHT 3 11. Bytes=179 total = 416 length = 416
-Got marker ffdd DRI at 32831
+Got marker 0xffdd DRI at 32831
 Restart interval 0
-Got marker ffda SOS at 32837
+Got marker 0xffda SOS at 32837
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
@@ -963,7 +963,7 @@ Saved marker ffc4 length 418
 Saved marker ffdd length 4
 Inserted 8246 stuff_bytes in 2771026 now 2779272
 Saved marker ffda length 2771027
-Got marker ffe1 APPn at 2
+Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
 EXIF tag is: little endian (0), arch is: little (0)
@@ -1131,17 +1131,17 @@ Read tag 531/213, type 3 count 1 value 2/2 totallength 2
 
  DIDIFD
 Loading internal image data at 11764,6716
-Got marker ffdb DQT at 11778
+Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
-Got marker ffc0 SOF0 at 11912
+Got marker 0xffc0 SOF0 at 11912
 SOF sz 17 nextloc 11931
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 160 x 120
-Got marker ffc4 DHT at 11931
+Got marker 0xffc4 DHT at 11931
  sz 418 nextloc 12351
-Got marker ffda SOS at 12351
+Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
@@ -1158,17 +1158,17 @@ Listing tags
 0x213 1x2 (2) 
 
 Next offset 0
-Got marker ffe2 APPn at 32160
+Got marker 0xffe2 APPn at 32160
 APP ffe2 unsupported
-Got marker ffdb DQT at 32258
+Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
-Got marker ffc0 SOF0 at 32392
+Got marker 0xffc0 SOF0 at 32392
 SOF sz 17 nextloc 32411
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 3264 x 2448
-Got marker ffc4 DHT at 32411
+Got marker 0xffc4 DHT at 32411
  sz 418 nextloc 32831
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 416
@@ -1178,9 +1178,9 @@ Didn't find 1
 DHT 2 01. Bytes=29 total = 237 length = 416
 Didn't find 5
 DHT 3 11. Bytes=179 total = 416 length = 416
-Got marker ffdd DRI at 32831
+Got marker 0xffdd DRI at 32831
 Restart interval 0
-Got marker ffda SOS at 32837
+Got marker 0xffda SOS at 32837
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)

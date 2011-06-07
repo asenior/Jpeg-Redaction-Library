@@ -71,8 +71,9 @@ namespace jpeg_redaction {
       if (iRV != 1)
 	throw(-1);
       if (!arch_big_endian)
-	marker = byteswap2(marker);
-      printf("Got marker %x %s at %d\n", marker, MarkerName(marker), blockloc);
+	ByteSwapInPlace(&marker, 1);
+      printf("Got marker 0x%x %s at %d\n",
+	     marker, MarkerName(marker), blockloc);
 
       if (marker == jpeg_eoi) {
 	return 0;
@@ -93,7 +94,7 @@ namespace jpeg_redaction {
 	// unsigned short myshort;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
-	  blocksize = byteswap2(blocksize);
+	  ByteSwapInPlace(&blocksize, 1);
 	try {
 	  photoshop3_ = new Photoshop3Block(pFile, blocksize-sizeof(blocksize));
 	}  catch (char *ex) {
@@ -107,7 +108,7 @@ namespace jpeg_redaction {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
-	  blocksize = byteswap2(blocksize);
+	  ByteSwapInPlace(&blocksize, 1);
 	AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	printf("APP %x unsupported\n", marker);
 	//      throw("AppN unsupported");
@@ -118,7 +119,7 @@ namespace jpeg_redaction {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
-	  blocksize = byteswap2(blocksize);
+	  ByteSwapInPlace(&blocksize, 1);
 	printf("SOF sz %u nextloc %ld\n",
 	       blocksize, blockloc + blocksize + sizeof(marker));
 	JpegMarker *sof = AddMarker(marker, blockloc, blocksize, pFile, true);
@@ -146,7 +147,7 @@ namespace jpeg_redaction {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
-	  blocksize = byteswap2(blocksize);
+	  ByteSwapInPlace(&blocksize, 1);
 	printf(" sz %d nextloc %d\n", blocksize, blockloc + blocksize + 2);
 	JpegMarker *d = AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	if (marker == jpeg_dht && loadall) {
@@ -159,11 +160,11 @@ namespace jpeg_redaction {
 
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
-	  blocksize = byteswap2(blocksize);
+	  ByteSwapInPlace(&blocksize, 1);
 	JpegMarker *dri = AddMarker(marker, blockloc, blocksize, pFile, true);
 	restartinterval_ = *(short*)(&dri->data_[0]);
 	if (!arch_big_endian)
-	  restartinterval_ = byteswap2(restartinterval_);
+	  ByteSwapInPlace(&restartinterval_, 1);
 	printf("Restart interval %d\n", restartinterval_);
 	continue;
       }
@@ -183,7 +184,7 @@ namespace jpeg_redaction {
     unsigned short myshort, forty_two, byte_order;
     int iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
     if (!arch_big_endian)
-      blocksize = byteswap2(blocksize);
+      ByteSwapInPlace(&blocksize, 1);
     printf("APP Block size is %d %04x\n", blocksize, blocksize);
     iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
     if (iRV != 1)
@@ -243,7 +244,7 @@ namespace jpeg_redaction {
   int Jpeg::ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall) {
     short slice = 0;
     int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
-    slice = byteswap2(slice);
+    ByteSwapInPlace(&slice, 1);
     printf("SOS slice %d\n", slice);
     int dataloc = blockloc + sizeof(unsigned short); // marker's size
     unsigned int buf = 0;
@@ -365,6 +366,8 @@ namespace jpeg_redaction {
       }
       rv = fseek(pFile, 0, SEEK_END);
     }
+    if (photoshop3_)
+      photoshop3_->Write(pFile);
     // Write the other markers.
     printf("Saving : %lu markers\n", markers_.size());
     for (int i = 0 ; i < markers_.size(); ++i) {
@@ -463,7 +466,7 @@ namespace jpeg_redaction {
     unsigned short slice_or_length = length_;
     if (marker_ == Jpeg::jpeg_sos)
       slice_or_length = slice_;
-    slice_or_length = byteswap2(slice_or_length);
+    ByteSwapInPlace(&slice_or_length, 1);
     rv = fwrite(&slice_or_length, sizeof(unsigned short), 1, pFile);
     if (rv != 1) return 0;
     if (marker_ == Jpeg::jpeg_sos) {

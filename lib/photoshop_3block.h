@@ -14,12 +14,10 @@
 #include <string.h>
 #include <vector>
 
-
-using std::string;
-
 #include "iptc.h"
 #include "byte_swapping.h"
 
+using std::string;
 using std::vector;
 
 // const unsigned short Iptc::tag_bim_iptc_ = 0x0404; // The bim type for IPTC data
@@ -67,7 +65,7 @@ class Photoshop3Block
       if (bim_type_ == tag_bim_iptc_) {
         iptc_ = new Iptc(pFile, bim_length_);
       } else {
-        printf("Got a BIM of type %x\n", bim_type_);
+        printf("Got a BIM of type %x size %d\n", bim_type_, bim_length_rounded);
         data_.resize(bim_length_rounded);
         iRV = fread(&data_[0], sizeof(unsigned char),
 		    bim_length_rounded, pFile);
@@ -87,6 +85,7 @@ class Photoshop3Block
 	1  - (pascalstringlength_%2);}
 
     int Write(FILE *pFile) {
+      printf("Writing BIM\n");
       const bool arch_big_endian = ArchBigEndian();
       int length = 0;
       int iRV;
@@ -99,7 +98,8 @@ class Photoshop3Block
       if (!arch_big_endian)
 	ByteSwapInPlace(&bim_type, 1);
       iRV = fwrite(&bim_type, sizeof(bim_type), 1, pFile);
-
+      printf("Writing BIM\n");
+      
       // Number of bytes to write out - to make the (length + string)
       // structure even length.
       
@@ -109,13 +109,20 @@ class Photoshop3Block
       iRV = fwrite(&pascalstring_[0], sizeof(unsigned char),
 		   pascalstringlengthrounded, pFile);
       // Rounded to be even.
-      unsigned int bim_length_rounded = bim_length_ + (bim_length_%2);
+      printf("Writing BIM3\n");
+      const unsigned int bim_length_rounded = bim_length_ + (bim_length_%2);
+      unsigned int bim_length_rounded_swap = bim_length_rounded;
       if (!arch_big_endian)
-	ByteSwapInPlace(&bim_length_rounded, 1);
+	ByteSwapInPlace(&bim_length_rounded_swap, 1);
 
-      iRV = fwrite(&bim_length_rounded, sizeof(unsigned int), 1, pFile);
+      iRV = fwrite(&bim_length_rounded_swap, sizeof(unsigned int), 1, pFile);
+      printf("Writing BIM length %d, %x %d\n", bim_length_rounded, &data_[0], data_.size());
+      if (bim_type_ == tag_bim_iptc_) {
+	if (iptc_ == NULL) throw("IPTC is null in write");
+	iptc_->Write(pFile);
+      } else {
       iRV = fwrite(&data_[0], sizeof(unsigned char), bim_length_rounded, pFile);
-
+      }
       return length;
     }
 

@@ -8,10 +8,12 @@ fi
 
 for i in testdata/devices/*; do
     echo "testing $i"
-    ${binary} $i > testout.log
-    exiftool $i > src.exiflog
-    exiftool testout/testoutput.jpg > out.exiflog
-    # if diff src.exiflog out.exiflog; then
+    ${binary} $i > testout/testreadwrite.log
+    exiftool $i | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \)" > testout/src.exiflog
+    exiftool testout/testplainoutput.jpg  | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \)"> testout/out.exiflog
+    # winmerge testout/src.exiflog testout/out.exiflog
+    # if     diff testout/src.exiflog testout/out.exiflog; then
+    diff testout/src.exiflog testout/out.exiflog
     # 	echo "src.exiflog out.exiflog differ"
     # 	exit 1;
     # fi

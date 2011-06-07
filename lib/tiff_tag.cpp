@@ -147,8 +147,12 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     iRV = fread(data_, sizeof(char), totallength, pFile);
     if (iRV  != totallength)
       throw("Couldn't read data block.");
-    if (byte_swapping)
-      ByteSwapInPlace(data_, count_, type_len);
+    if (byte_swapping) {
+      if (type_ == tiff_rational || type_ == tiff_urational)
+	ByteSwapInPlace(data_, count_ * 2, type_len/2);
+      else
+	ByteSwapInPlace(data_, count_, type_len);
+    }
     loaded_ = true;
     return totallength;
   }

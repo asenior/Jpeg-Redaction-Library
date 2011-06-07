@@ -313,6 +313,7 @@ namespace jpeg_redaction {
 
     // write the EXIF IFDs  Code based on CR2.cpp
     if (write_exif && ifds_.size() !=0) {
+      printf("Writing exif at %d\n", ftell(pFile));
       std::vector<unsigned int> pending_pointers;  // Pairs of Where/What
       unsigned short marker = jpeg_app + 1;
       if (!arch_big_endian) ByteSwapInPlace(&marker, 1);
@@ -341,6 +342,8 @@ namespace jpeg_redaction {
       rv = fwrite(&exifoffset, sizeof(unsigned int), 1, pFile);
       unsigned int zero = 0x00000000;
       for (int i = 0 ; i < ifds_.size(); ++i) {
+	printf("Writing IFD %d at %d\n", i, ftell(pFile));
+
 	unsigned int ifdloc = ifds_[i]->Write(pFile, zero, subfileoffset);
 	// "What":  Where we wrote this ifd (to be put in the previous "where")
 	pending_pointers.push_back(ifdloc - subfileoffset);
@@ -369,7 +372,7 @@ namespace jpeg_redaction {
     if (photoshop3_)
       photoshop3_->Write(pFile);
     // Write the other markers.
-    printf("Saving : %lu markers\n", markers_.size());
+    printf("Saving: %lu markers\n", markers_.size());
     for (int i = 0 ; i < markers_.size(); ++i) {
       if (markers_[i]->Save(pFile)==0)
 	printf("Failed with marker %d\n", i);;
@@ -458,6 +461,7 @@ namespace jpeg_redaction {
 
   // Save this (preloaded) marker to disk.
   int JpegMarker::Save(FILE *pFile) {
+    const int location = ftell(pFile);
     if (pFile == NULL)
       throw("Null File in JpegMarker::Save.");
     unsigned short markerswapped = byteswap2(marker_);
@@ -480,7 +484,7 @@ namespace jpeg_redaction {
       rv = fwrite(&data_[0], sizeof(char), data_.size(), pFile);
       if (rv != data_.size()) return 0;
     }
-    printf("Saved marker %04x length %u\n", marker_, length_);
+    printf("Saved marker %04x length %u at %d\n", marker_, length_, location);
     return 1;
   }
   // Write out the marker inserting stuff (0) bytes when there's an ff.

@@ -102,7 +102,7 @@ test_bit_shifts: $(BITSHIFTS)
 	./$(BITSHIFTS)  > testout/test_bit_shifts_output.log
 	@echo "== " $@ " passed"
 
-test_devices:  $(READWRITE) 
+test_devices:  $(READWRITE) testout_dir
 	./testreadwrite.sh
 
 # DO NOT DELETE

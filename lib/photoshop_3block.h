@@ -85,7 +85,7 @@ class Photoshop3Block
 	1  - (pascalstringlength_%2);}
 
     int Write(FILE *pFile) {
-      printf("Writing BIM\n");
+      printf("Writing BIM3 at %d\n", ftell(pFile));
       const bool arch_big_endian = ArchBigEndian();
       int length = 0;
       int iRV;
@@ -98,7 +98,6 @@ class Photoshop3Block
       if (!arch_big_endian)
 	ByteSwapInPlace(&bim_type, 1);
       iRV = fwrite(&bim_type, sizeof(bim_type), 1, pFile);
-      printf("Writing BIM\n");
       
       // Number of bytes to write out - to make the (length + string)
       // structure even length.
@@ -109,7 +108,6 @@ class Photoshop3Block
       iRV = fwrite(&pascalstring_[0], sizeof(unsigned char),
 		   pascalstringlengthrounded, pFile);
       // Rounded to be even.
-      printf("Writing BIM3\n");
       const unsigned int bim_length_rounded = bim_length_ + (bim_length_%2);
       unsigned int bim_length_rounded_swap = bim_length_rounded;
       if (!arch_big_endian)

@@ -33,22 +33,16 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
     if (iRV != 1) throw("Can't read file");
     int totallength = GetDataLength();
     if ((totallength > 4 || TagIsSubIFD()) && byte_swapping) {
-      printf("Swapping pointer\n");// If it's a pointer.
+      //      printf("Swapping pointer\n");// If it's a pointer.
       ByteSwapInPlace(&value, 1);
     }
-#ifdef DEBUG
-    printf("Read tag %d/%x, type %d count %d value %d/%0x "
-	    "totallength %d\n",
-	    tagid_, tagid_, type_, count_,
-	   value, value, totallength);
-#endif
     if (totallength < 0 || totallength > 1e8) {
       throw("totallength is broken");
     }
     // Some types are pointers that will be stored in an ifd.
     if (totallength <= 4 && ! (TagIsSubIFD()) ) {
       if (byte_swapping) {
-	printf("Swapping non-pointer\n");// If it's a pointer.
+	//	printf("Swapping non-pointer\n");// If it's a pointer.
         ByteSwapInPlace((unsigned char *)&value,
                         4/LengthOfType(type_), LengthOfType(type_));
       }
@@ -61,6 +55,12 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
       valpointer_ = value;
       // Too long to fit in the tag.
     }
+#ifdef DEBUG
+    printf("Read tag %d/0x%x, type %d count %d value %d/0x%x "
+	    "totallength %d\n",
+	    tagid_, tagid_, type_, count_,
+	   value, value, totallength);
+#endif
 }
 
 TiffTag::~TiffTag() {
@@ -132,7 +132,7 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     // IFDs use absolute position, normal tags are relative to subfileoffset.
     //if (tagid_ == tag_makernote)
     //    position = valpointer_;
-    printf("Loading SUB IFD %0x at %d (%d + %d)", tagid_, position,
+    printf("Loading SUB IFD 0x%x at %d (%d + %d) ", tagid_, position,
 	  valpointer_, subfileoffset);
 
     subifd_ = new TiffIfd(pFile, position, true,

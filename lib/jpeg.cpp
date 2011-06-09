@@ -242,9 +242,10 @@ namespace jpeg_redaction {
   }
 
   int Jpeg::ReadSOSMarker(FILE *pFile, unsigned int blockloc, bool loadall) {
+    const bool arch_big_endian = ArchBigEndian();
     short slice = 0;
     int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
-    ByteSwapInPlace(&slice, 1);
+    if (!arch_big_endian) ByteSwapInPlace(&slice, 1);
     printf("SOS slice %d\n", slice);
     int dataloc = blockloc + sizeof(unsigned short); // marker's size
     unsigned int buf = 0;

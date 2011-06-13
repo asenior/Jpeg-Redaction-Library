@@ -412,7 +412,7 @@ namespace jpeg_redaction {
     // const int check_len = 64;
     data += 10;
 
-    JpegDecoder decoder(width_, height_, data, data_length - 10,
+    JpegDecoder decoder(width_, height_, data, 8 * (data_length - 10),
 			dhts_, &components_);
     printf("\n\nDecoding %lu\n", sos_block->data_.size());
     //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);

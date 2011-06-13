@@ -14,7 +14,7 @@ const int JpegDecoder::kRedactingOff = 0;
 const int JpegDecoder::kBlockSize = 8;
 JpegDecoder::JpegDecoder(int w, int h,
 			 unsigned char *data,
-			 int length,  // in bytes
+			 int length,  // in bits
 			 const std::vector<JpegDHT *> &dhts,
 			 const std::vector<Jpeg::JpegComponent*> *components) :
   height_(h), width_(w), components_(components), current_strip_(NULL) {
@@ -119,7 +119,7 @@ void JpegDecoder::Decode(Redaction *redaction) {
   if (redaction != NULL && redaction->NumRegions() > 0) {
     redacting_ = kRedactingInactive;
     // Reserve space for the redacted data- should be smaller than the original.
-    redacted_data_.reserve(length_ + 2); // For end marker later.
+    redacted_data_.reserve(((length_ + 7) >> 3) + 2); // For end marker later.
   }
 
   while (mcus_ < num_mcus_) {
@@ -142,7 +142,7 @@ void JpegDecoder::Decode(Redaction *redaction) {
       StoreEndOfStrip(redaction);
 
   printf("Got to %d mcus. %d bits left.\n", num_mcus_,
-	 length_ * 8 - data_pointer_);
+	 length_ - data_pointer_);
 }
 
 void JpegDecoder::StoreEndOfStrip(Redaction *redaction) {

@@ -17,7 +17,7 @@ class JpegDecoder {
  public:
   JpegDecoder(int w, int h,
 	      unsigned char *data,
-	      int length,
+	      int length,  // in bits of the data.
 	      const std::vector<JpegDHT *> &dhts,
 	      const std::vector<Jpeg::JpegComponent*> *components);
 
@@ -25,7 +25,15 @@ class JpegDecoder {
   // Decode the whole image.
   void Decode(Redaction *redaction);
 
-  const std::vector<unsigned char> &GetRedactedData() const {
+  const std::vector<unsigned char> &GetRedactedData() {
+    if (redaction_bit_pointer_ > (redacted_data_.size() * 8) || 
+	redaction_bit_pointer_ < (redacted_data_.size() * 8) - 8) {
+      throw("RedactedData length mismatch");
+    }
+    // Pad the last byte with ones.
+    int used_bits_last_byte = (redaction_bit_pointer_ % 8);
+    unsigned char unused_bits_mask = (1 << (8 - used_bits_last_byte)) - 1;
+    redacted_data_.back() |= unused_bits_mask;
     return redacted_data_;
   }
   // Write the grey scale decoded image to a file.
@@ -82,9 +90,9 @@ protected:
     // The remaining bits in this byte.
     int new_bits = 8 - (data_pointer_ & 0x7);
     data_pointer_ += word_size_ - num_bits_;
-    if (data_pointer_ > (length_ << 3))
-      data_pointer_ = length_ << 3;
-    while (num_bits_ < word_size_ && byte < length_) {
+    if (data_pointer_ > length_)
+      data_pointer_ = length_;
+    while (num_bits_ < word_size_ && byte < ((length_ + 7) >> 3)) {
       unsigned int val = (data_[byte] & ((1<<new_bits)-1));
       const int shift = word_size_ - new_bits - num_bits_;
       if (shift < 0) {
@@ -222,7 +230,7 @@ protected:
 
   // Decoding information:
   unsigned char *data_;
-  int length_; // How many bytes in data
+  int length_; // How many bits in data
 
   unsigned int current_bits_;  // Buffer of up to 32 bits.
   int num_bits_; // How many bits valid in current_bits_

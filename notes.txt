@@ -18,3 +18,20 @@ Need to fill in API:
 
 Bigger test suite (images from other cameras etc.)
     
+
+06/08/11 
+Need to keep track of the exact length of the bit stream and pad
+appropriately when writing out. Both for redaction and reversing
+redaction. 
+
+Need to handle restart markers correctly. 
+(Insert them into the stream when writing out? Remove them when
+decoding.)
+
+Need to figure out why IPTC isn't working properly. 
+Bad assumptions about locations where we can write? 
+
+
+Describe the basic use case in the README. 
+
+Put a license on it.

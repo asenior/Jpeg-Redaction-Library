@@ -143,7 +143,9 @@ public:
 				      pFile, loadall);
     if (loadall)
       markerptr->RemoveStuffBytes();
-    fseek(pFile, 2, SEEK_CUR);
+    int rv = fseek(pFile, 2, SEEK_CUR);
+    if (rv != 0)
+      throw("Fail seeking in AddSOMarker");
     markerptr->slice_ = slice;
     return markerptr;
   }

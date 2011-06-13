@@ -103,7 +103,7 @@ namespace jpeg_redaction {
 	}
 	fseek(pFile, blockloc + blocksize + sizeof(marker), SEEK_SET);
 	continue;
-      }
+      } else 
       if (marker >= jpeg_app && marker < jpeg_app + 16) {
 	unsigned short blocksize;
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
@@ -519,13 +519,18 @@ namespace jpeg_redaction {
       throw("Data length mismatch in RemoveStuffBytes");
     }
     const int start_of_huffman = 10;
-    unsigned char *dest = &data_[start_of_huffman];
-    unsigned char *src = &data_[start_of_huffman];
+    if (data_.size() < start_of_huffman) {
+      printf("Data %d len %d\n", data_.size(), length_);
+      throw("Data too short in RemoveStuffBytes");
+    }
+
+    int dest = start_of_huffman;
+    int src  = start_of_huffman;
     int stuff_bytes = 0;
-    for (int i = start_of_huffman; i < length_; ++i, ++dest, ++src) {
-      *dest = *src;
-      if (*src == 0xff && *(src+1) == 0x00) {
-	src++;
+    for (int src = start_of_huffman; src < length_ - 2; ++dest, ++src) {
+      data_[dest] = data_[src];
+      if (data_[src] == 0xff && data_[src+1] == 0x00) {
+	++src;
 	++stuff_bytes;
       }
     }

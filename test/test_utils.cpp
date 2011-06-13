@@ -169,6 +169,8 @@ namespace jpeg_redaction {
       }
       return 0;
     }
+    // TODO this can fail- we need to keep track of the padding bits both when redacting and
+    // reversing redaction.
     int test_reversingredactions_multi(const std::string &filename) {
       Redaction::Rect rectonestrip(50, 300, 64, 79);  // l,r, t, b
       int rv = test_reversingredaction(filename.c_str(), rectonestrip);

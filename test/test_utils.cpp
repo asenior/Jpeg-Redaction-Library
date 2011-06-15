@@ -133,10 +133,9 @@ namespace jpeg_redaction {
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
-	Redaction::Rect rect(50, 300, 50, 200);
 	Redaction redaction;
 
-	redaction.AddRegion(rect);
+	redaction.AddRegions(";50,300,50,200;");
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");

@@ -124,9 +124,20 @@ public:
     for (int i = 0; i < strips_.size(); ++i)
       delete strips_[i];
   }
+  Redaction *Copy() {
+    Redaction *copy = new Redaction;
+    for (int i = 0; i < regions_.size(); ++i) {
+      printf("adding region %d of %d\n", i, regions_.size());
+      copy->AddRegion(regions_[i]);
+    }
+    return copy;
+  }
   void AddRegion(const Rect &rect) {
-    if (rect.l_ >= rect.r_ || rect.t_ >= rect.b_)
+    if (rect.l_ >= rect.r_ || rect.t_ >= rect.b_) {
+      printf("Bad region %d %d %d %d\n",
+	     rect.l_, rect.r_, rect.t_, rect.b_);
       throw("region badly formed l>=r or t>=b");
+    }
     regions_.push_back(rect);
   }
   // Make a region from a string of comma coordinates: l,r,t,b
@@ -194,6 +205,9 @@ public:
   }
   void Scale(int new_width, int new_height,
 	     int old_width, int old_height) {
+    printf("Scaling %dx%d -> %dx%d\n",
+	   old_width, old_height,
+	   new_width, new_height);
     for (int i = 0; i< regions_.size(); ++i) {
       regions_[i].l_ = (regions_[i].l_ * new_width) / old_width;
       regions_[i].r_ = (regions_[i].r_ * new_width) / old_width;

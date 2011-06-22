@@ -442,21 +442,20 @@ namespace jpeg_redaction {
   // Returns: 0: no thumbnail found N:  N thumbnails found and redacted
   // <0 failed to redact thumbnail.
   int Jpeg::RedactThumbnail(Redaction *redaction) {
+    printf("Redacting thumbnail\n");
     int return_val = 0;
     Jpeg *thumbnail = GetThumbnail();
     if (thumbnail == NULL)
       return 0;
     // Get thumbnail width/height
-    int width = thumbnail->GetWidth();
-    int height = thumbnail->GetHeight();
+    const int width = thumbnail->GetWidth();
+    const int height = thumbnail->GetHeight();
     // scale the redaction object
-    redaction->Scale(width, height, GetWidth(), GetHeight());
+    Redaction *thumbnail_redaction = redaction->Copy();
+    thumbnail_redaction->Scale(width, height, GetWidth(), GetHeight());
     // Call redaction to redact the SOS block.
-    thumbnail->DecodeImage(redaction, NULL);
-
-    // Need to amend TiffIfd to write out the Jpeg from jpeg_ instead
-    // of from data_ 
-    // then update tag 201 (content) and 202 (length).
+    thumbnail->DecodeImage(thumbnail_redaction, NULL);
+    delete thumbnail_redaction;
   }
   void Jpeg::DecodeImage(Redaction *redaction,
 			 const char *pgm_save_filename) {
@@ -501,6 +500,7 @@ namespace jpeg_redaction {
     // Now keep on dumping data out.
     printf("H %d W %d\n", width_, height_);
     //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
+    RedactThumbnail(redaction);
   }
 
   int Jpeg::ReverseRedaction(const Redaction &redaction) {

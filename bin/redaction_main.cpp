@@ -53,13 +53,13 @@ namespace jpeg_redaction {
     }
   int redact(const string &filename,
 	     const string &output,
-	     const string &region) {
+	     const string &regions) {
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename.c_str(), true);
 	Redaction redaction;
 
-	redaction.AddRegion(region);
+	redaction.AddRegions(regions);
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");
@@ -78,13 +78,13 @@ namespace jpeg_redaction {
 int main(int argc, char **argv) {
   std::string filename;
   std::string outfile;
-  std::string region;
+  std::string regions;
   if (argc < 3) {
-    fprintf(stderr, "%s <infile> <outfile> <l,r,t,b>\n", argv[0]);
+    fprintf(stderr, "%s <infile> <outfile> <l,r,t,b;...>\n", argv[0]);
     exit(1);
   }
   filename = argv[1];
   outfile = argv[2];
-  region = argv[3];
-  jpeg_redaction::redact(filename, outfile, region);
+  regions = argv[3];
+  jpeg_redaction::redact(filename, outfile, regions);
 }

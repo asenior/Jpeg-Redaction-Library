@@ -34,7 +34,7 @@ namespace jpeg_redaction {
 TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
 		     bool loadall, unsigned int subfileoffset,
 		     bool byte_swapping) :
-  data_(NULL), subfileoffset_(subfileoffset), byte_swapping_(byte_swapping) {
+  subfileoffset_(subfileoffset), byte_swapping_(byte_swapping) {
 
   if (pFile == NULL)
     return;
@@ -109,52 +109,37 @@ unsigned int TiffIfd::Write(FILE *pFile,
   // image data offset
   short nr = tags_.size();
   iRV = fwrite(&nr, sizeof(short), 1, pFile);
-  int whereisdata = -1;
-  int whereisdata_length = -1;
+  int length_where = -1;
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
     unsigned int pointer = tags_[tagindex]->Write(pFile);   // 0 if no pointer.
     if (pointer) {
-      // Record entry in which we wrote the pointer to the strips/thumbnail
-      if (tags_[tagindex]->GetTag() == TiffTag::tag_stripoffset ||
-	  tags_[tagindex]->GetTag() == TiffTag::tag_thumbnailoffset)
-        whereisdata = pending_pointers_where.size();
-      // Record entry in which we wrote the strips/thumbnail length
       if (tags_[tagindex]->GetTag() == TiffTag::tag_stripbytes ||
-	  tags_[tagindex]->GetTag() == TiffTag::tag_thumbnaillength)
-        whereisdata_length = pending_pointers_where.size();
-      // "Where":  Where we stored the pointer
-      pending_pointers_where.push_back(pointer);
+	  tags_[tagindex]->GetTag() == TiffTag::tag_thumbnaillength) {
+	length_where = pointer;
+      } else {
+	pending_pointers_where.push_back(pointer);
+      }
     }
   }
   iRV = fwrite(&nextifdoffset, sizeof(unsigned int), 1, pFile);
 
-  unsigned int data_start = 0;
   unsigned int data_length = 0;
   // Write the image or thumbnail data.
-  if (data_) {
-    TiffTag *tagdatabytes = FindTag(TiffTag::tag_stripbytes);
-    if (tagdatabytes == NULL) {
-      tagdatabytes = FindTag(TiffTag::tag_thumbnaillength);
-      if (tagdatabytes)
-	printf("Saving thumbnail\n");
-      else
-	throw("Have data_ but can't find thumbnail or strip info");
-    }
-    data_start = ftell(pFile);
-    // Write the image data out.
-    iRV = fwrite(data_, sizeof(unsigned char), tagdatabytes->GetUIntValue(0),
-		 pFile);
-    data_length = ftell(pFile) - data_start;
-  }
 
-  // Write all the subsidiary data from other tags.
+  // Write all the subsidiary data that doesn't fit in tags
+  // as well as thumbnail/image data.
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
-    // when we get to the appropriate point in the pending_pointers vector,
-    // record "Where" we wrote the datablock/length.
-    if (data_start && pending_pointers_what.size() == whereisdata)
+    if (tags_[tagindex]->GetTag() == TiffTag::tag_stripoffset ||
+	tags_[tagindex]->GetTag() == TiffTag::tag_thumbnailoffset) {
+      if (data_.empty()) throw("No data t owrite");
+      unsigned int data_start = ftell(pFile);
+      // Write the image data out.
+      iRV = fwrite(&data_.front(), sizeof(unsigned char), data_.size(),
+		   pFile);
+      data_length = ftell(pFile) - data_start;
       pending_pointers_what.push_back(data_start);
-    if (data_start && pending_pointers_what.size() == whereisdata_length)
-      pending_pointers_what.push_back(data_length);
+      continue;
+    }
 
     // Returns 0 if the data is short enough to be in the tag and not
     // in a data block.
@@ -164,15 +149,19 @@ unsigned int TiffIfd::Write(FILE *pFile,
     if (pointer)
       pending_pointers_what.push_back(pointer);
   }
-  // "Where" we wrote the datablock.
-  if (data_start && pending_pointers_what.size() == whereisdata)
-    pending_pointers_what.push_back(data_start);
-  if (data_start && pending_pointers_what.size() == whereisdata_length)
-    pending_pointers_what.push_back(data_length);
 
   // If we're keeping track of pending pointers, fill them in now.
-  if (pending_pointers_where.size() != pending_pointers_what.size())
+  if (pending_pointers_where.size() != pending_pointers_what.size()) {
+    printf("Pending pointers where %d what %d\n", 
+	   pending_pointers_where.size(), pending_pointers_what.size());
     throw("pending pointers don't match");
+  }
+  if (length_where >= 0) {
+    if (data_length == 0)
+      throw("Data length not set");
+    fseek(pFile, length_where, SEEK_SET); // Where
+    iRV = fwrite(&data_length, sizeof(unsigned int), 1, pFile);
+  }
   for(int i = 0; i < pending_pointers_what.size(); ++i) {
     printf("Write TiffIfd Locs Where: %d What: %d-%d\n",
 	   pending_pointers_where[i], pending_pointers_what[i], subfileoffset);
@@ -215,8 +204,7 @@ int TiffIfd::LoadImageData(FILE *pFile, bool loadall)
       printf("Loading thumbnail\n");
     }
   }
-  delete [] data_;
-  data_ = NULL;
+  data_.clear();
   if (tagdataoffs && tagdatabytes) {
     const unsigned int dataoffs = tagdataoffs->GetUIntValue(0);
     const unsigned int databytes = tagdatabytes->GetUIntValue(0);
@@ -229,8 +217,8 @@ int TiffIfd::LoadImageData(FILE *pFile, bool loadall)
     if (loadall) {
       printf("TiffIfd:LoadImageData all\n");
       iRV = fseek(pFile, dataoffs + subfileoffset_, SEEK_SET);
-      data_ = new unsigned char [databytes];
-      iRV = fread(data_, sizeof(unsigned char), databytes, pFile);
+      data_.resize(databytes);
+      iRV = fread(&data_.front(), sizeof(unsigned char), databytes, pFile);
       if (iRV != databytes)
         throw("Couldn't read ImageData");
     }

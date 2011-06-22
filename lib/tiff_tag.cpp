@@ -109,7 +109,8 @@ int TiffTag::Write(FILE *pFile) const {
   if (iRV != 4) throw("Can't write file");
   // Return where the pointer has to be written.
   if (totallength > 4 || TagIsSubIFD() ||
-      tagid_ == tag_stripoffset|| tagid_ == tag_thumbnailoffset) {
+      tagid_ == tag_stripoffset || tagid_ == tag_thumbnailoffset ||
+      tagid_ == tag_stripbytes || tagid_ == tag_thumbnaillength) {
     return pointer_location;
   } else {
     return 0;

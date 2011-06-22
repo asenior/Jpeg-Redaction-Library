@@ -50,6 +50,7 @@ Read tag 514/0x202, type 4 count 1 value 6716/0x1a3c totallength 4
 Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
 
  DIDIFD
+Loading thumbnail
 Loading internal image data at 11764,6716
 Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
@@ -263,6 +264,7 @@ Read tag 514/0x202, type 4 count 1 value 6716/0x1a3c totallength 4
 Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
 
  DIDIFD
+Loading thumbnail
 Loading internal image data at 11764,6716
 Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
@@ -278,7 +280,7 @@ Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
-Loading all
+TiffIfd:LoadImageData all
 Loaded Image data
 Listing tags
 0x103 1x2 (6) 
@@ -361,9 +363,9 @@ Write TiffIfd Locs Where: 162 What: 11149-12
 Write TiffIfd Locs Where: 174 What: 11357-12
 Write TiffIfd Locs Where: 186 What: 11421-12
 Writing IFD 1 at 11549
-Write TiffIfd Locs Where: 11583 What: 18367-12
-Write TiffIfd Locs Where: 11595 What: 18375-12
-Write TiffIfd Locs Where: 11619 What: 11651-12
+Write TiffIfd Locs Where: 11583 What: 11651-12
+Write TiffIfd Locs Where: 11595 What: 11659-12
+Write TiffIfd Locs Where: 11619 What: 11667-12
 IFD Locs Where: 16 What: 8
 IFD Locs Where: 190 What: 11537
 IFD Locs Where: 11647 What: 0
@@ -543,6 +545,7 @@ Read tag 514/0x202, type 4 count 1 value 6716/0x1a3c totallength 4
 Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
 
  DIDIFD
+Loading thumbnail
 Loading internal image data at 11764,6716
 Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
@@ -558,7 +561,7 @@ Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
-Loading all
+TiffIfd:LoadImageData all
 Loaded Image data
 Listing tags
 0x103 1x2 (6) 
@@ -662,9 +665,9 @@ Write TiffIfd Locs Where: 162 What: 11149-12
 Write TiffIfd Locs Where: 174 What: 11357-12
 Write TiffIfd Locs Where: 186 What: 11421-12
 Writing IFD 1 at 11549
-Write TiffIfd Locs Where: 11583 What: 18367-12
-Write TiffIfd Locs Where: 11595 What: 18375-12
-Write TiffIfd Locs Where: 11619 What: 11651-12
+Write TiffIfd Locs Where: 11583 What: 11651-12
+Write TiffIfd Locs Where: 11595 What: 11659-12
+Write TiffIfd Locs Where: 11619 What: 11667-12
 IFD Locs Where: 16 What: 8
 IFD Locs Where: 190 What: 11537
 IFD Locs Where: 11647 What: 0
@@ -843,6 +846,7 @@ Read tag 514/0x202, type 4 count 1 value 6716/0x1a3c totallength 4
 Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
 
  DIDIFD
+Loading thumbnail
 Loading internal image data at 11764,6716
 Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
@@ -858,7 +862,7 @@ Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
-Loading all
+TiffIfd:LoadImageData all
 Loaded Image data
 Listing tags
 0x103 1x2 (6) 
@@ -958,9 +962,9 @@ Write TiffIfd Locs Where: 162 What: 11149-12
 Write TiffIfd Locs Where: 174 What: 11357-12
 Write TiffIfd Locs Where: 186 What: 11421-12
 Writing IFD 1 at 11549
-Write TiffIfd Locs Where: 11583 What: 18367-12
-Write TiffIfd Locs Where: 11595 What: 18375-12
-Write TiffIfd Locs Where: 11619 What: 11651-12
+Write TiffIfd Locs Where: 11583 What: 11651-12
+Write TiffIfd Locs Where: 11595 What: 11659-12
+Write TiffIfd Locs Where: 11619 What: 11667-12
 IFD Locs Where: 16 What: 8
 IFD Locs Where: 190 What: 11537
 IFD Locs Where: 11647 What: 0
@@ -1139,6 +1143,7 @@ Read tag 514/0x202, type 4 count 1 value 6716/0x1a3c totallength 4
 Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
 
  DIDIFD
+Loading thumbnail
 Loading internal image data at 11764,6716
 Got marker 0xffdb DQT at 11778
  sz 132 nextloc 11912
@@ -1154,7 +1159,7 @@ Got marker 0xffda SOS at 12351
 SOS slice 12
 In scan found marker 0xffd9
 EOI at 18492 (len 6137)
-Loading all
+TiffIfd:LoadImageData all
 Loaded Image data
 Listing tags
 0x103 1x2 (6) 
@@ -1380,9 +1385,9 @@ Write TiffIfd Locs Where: 162 What: 11149-12
 Write TiffIfd Locs Where: 174 What: 11357-12
 Write TiffIfd Locs Where: 186 What: 11421-12
 Writing IFD 1 at 11549
-Write TiffIfd Locs Where: 11583 What: 18367-12
-Write TiffIfd Locs Where: 11595 What: 18375-12
-Write TiffIfd Locs Where: 11619 What: 11651-12
+Write TiffIfd Locs Where: 11583 What: 11651-12
+Write TiffIfd Locs Where: 11595 What: 11659-12
+Write TiffIfd Locs Where: 11619 What: 11667-12
 IFD Locs Where: 16 What: 8
 IFD Locs Where: 190 What: 11537
 IFD Locs Where: 11647 What: 0

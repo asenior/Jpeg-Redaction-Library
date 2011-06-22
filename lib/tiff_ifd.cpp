@@ -131,11 +131,15 @@ unsigned int TiffIfd::Write(FILE *pFile,
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
     if (tags_[tagindex]->GetTag() == TiffTag::tag_stripoffset ||
 	tags_[tagindex]->GetTag() == TiffTag::tag_thumbnailoffset) {
-      if (data_.empty()) throw("No data t owrite");
+      if (data_.empty()) throw("No data to write");
       unsigned int data_start = ftell(pFile);
       // Write the image data out.
-      iRV = fwrite(&data_.front(), sizeof(unsigned char), data_.size(),
-		   pFile);
+      printf("Saving thumbnail to file\n");
+      if (jpeg_ == NULL) throw("No JPEG to write out");
+      jpeg_->Save(pFile);
+      // iRV = fwrite(&data_.front(), sizeof(unsigned char), data_.size(),
+      // 		   pFile);
+      printf("thumbnail written\n");
       data_length = ftell(pFile) - data_start;
       pending_pointers_what.push_back(data_start);
       continue;
@@ -213,7 +217,7 @@ int TiffIfd::LoadImageData(FILE *pFile, bool loadall)
     if (iRV != 0)
       throw("Can't seek to data");
     jpeg_ = new Jpeg();
-    jpeg_->LoadFromFile(pFile, false, dataoffs + subfileoffset_);
+    jpeg_->LoadFromFile(pFile, true, dataoffs + subfileoffset_);
     if (loadall) {
       printf("TiffIfd:LoadImageData all\n");
       iRV = fseek(pFile, dataoffs + subfileoffset_, SEEK_SET);

@@ -119,6 +119,7 @@ public:
   // Save the current (possibly redacted) version of the JPEG out.
   // Return 0 on success.
   int Save(const char * const filename);
+  int Save(FILE *pFile);
 
   const char *MarkerName(int marker) const;
   Iptc *GetIptc();

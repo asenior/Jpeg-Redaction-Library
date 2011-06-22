@@ -325,6 +325,17 @@ namespace jpeg_redaction {
       fprintf(stderr, "Can't open output file : %s\n", filename);
       return 1;
     }
+    int rv = Save(pFile);
+    fclose(pFile);
+    return rv;
+  }
+
+  // Save the image to disk (after preloading).
+  int Jpeg::Save(FILE *pFile) {
+    const bool arch_big_endian = ArchBigEndian();
+    if (pFile == NULL) {
+      throw("NULL file in Jpeg::Save");
+    }
     // Write the header,
     unsigned short magic = 0xd8ff;
     if (arch_big_endian) ByteSwapInPlace(&magic, 1);
@@ -397,7 +408,6 @@ namespace jpeg_redaction {
       if (markers_[i]->Save(pFile)==0)
 	printf("Failed with marker %d\n", i);;
     }
-    fclose(pFile);
     return 0;
   }
 
@@ -544,6 +554,13 @@ namespace jpeg_redaction {
     int rv = 0;
     unsigned char zero = 0x00;
     int stuff_bytes = 0;
+    // Repeatedly look for the next ff.
+    // Then write all the data up to & including it and write out the
+    // stuff byte (00).
+    if (check > data_.size()) {
+      printf("data size is %d\n", data_.size());
+      throw("data too short in stuffing.");
+    }
     while (check < data_.size()) {
       if (data_[check] == 0xff) {
 	rv = fwrite(&data_[written], sizeof(char), check + 1 - written, pFile);
@@ -557,6 +574,8 @@ namespace jpeg_redaction {
       }
       ++check;
     }
+    if (check != data_.size()) throw("data_.size() mismatch in stuffing.");
+    // Write out the last chunk of data.
     if (written < check)
       rv = fwrite(&data_[written], sizeof(char), check - written, pFile);
     printf("Inserted %d stuff_bytes in %d now %d\n", stuff_bytes,

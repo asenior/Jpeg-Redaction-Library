@@ -1,3 +1,42 @@
+# Issues
+
+# Issue1
+06/08/11 
+Need to keep track of the exact length of the bit stream and pad
+appropriately when writing out. Both for redaction and reversing
+redaction. 
+
+06/15/11 
+Have fixed this partially, but don't record the true bit length of the 
+original data, just the rounded-up length that is stored. Need to
+reduce this when it's been read.
+
+#Issue2
+Need ability to remove thumbnail
+
+#Issue3
+Need ability to redact thumbnail in same way as main image.
+
+#Issue4
+Need to remove exif from SSC version.
+
+#Issue5
+Need to handle restart markers correctly. 
+(Insert them into the stream when writing out? Remove them when
+decoding.)
+
+#Issue6
+Enable read-write (and then redact) of IPTC.
+Bad assumptions about locations where we can write? 
+
+#Issue7
+Handle full edit of Exif
+
+
+
+##################################################
+General notes.
+
 03/16/11 
 Seem to have Exif & IFD reading sorted out (read makernote as a block
 now). Not currently writing them out properly. (Exiftool says bad
@@ -17,21 +56,10 @@ Need to fill in API:
   return data, reinject data.
 
 Bigger test suite (images from other cameras etc.)
-    
-
-06/08/11 
-Need to keep track of the exact length of the bit stream and pad
-appropriately when writing out. Both for redaction and reversing
-redaction. 
-
-Need to handle restart markers correctly. 
-(Insert them into the stream when writing out? Remove them when
-decoding.)
-
-Need to figure out why IPTC isn't working properly. 
-Bad assumptions about locations where we can write? 
 
 
 Describe the basic use case in the README. 
 
-Put a license on it.
+06/15/11 
+Hooked up to ssc app.
+

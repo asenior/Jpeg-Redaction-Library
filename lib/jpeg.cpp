@@ -417,7 +417,37 @@ namespace jpeg_redaction {
       ++table;
     }
   }
+  // First find the IFD with tags 0x201 & 0x202.
+  // should contain data_
+  Jpeg *Jpeg::GetThumbnail() {
+    for (int i = 0 ; i < ifds_.size(); ++i) {
+      if (ifds_[i]->GetJpeg() &&
+	  ifds_[i]->FindTag(TiffTag::tag_thumbnailoffset))
+	return ifds_[i]->GetJpeg();
+    }
+    return NULL;
+  }
 
+  // Redact the thumbnail 
+  // Returns: 0: no thumbnail found N:  N thumbnails found and redacted
+  // <0 failed to redact thumbnail.
+  int Jpeg::RedactThumbnail(Redaction *redaction) {
+    int return_val = 0;
+    Jpeg *thumbnail = GetThumbnail();
+    if (thumbnail == NULL)
+      return 0;
+    // Get thumbnail width/height
+    int width = thumbnail->GetWidth();
+    int height = thumbnail->GetHeight();
+    // scale the redaction object
+    redaction->Scale(width, height, GetWidth(), GetHeight());
+    // Call redaction to redact the SOS block.
+    thumbnail->DecodeImage(redaction, NULL);
+
+    // Need to amend TiffIfd to write out the Jpeg from jpeg_ instead
+    // of from data_ 
+    // then update tag 201 (content) and 202 (length).
+  }
   void Jpeg::DecodeImage(Redaction *redaction,
 			 const char *pgm_save_filename) {
     JpegMarker *sos_block = GetMarker(jpeg_sos);

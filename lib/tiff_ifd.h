@@ -95,7 +95,7 @@ public:
   }
   int GetNTags() const { return tags_.size(); }
   void ListTags() const;
-
+  Jpeg *GetJpeg() { return jpeg_;}
 protected:
   void Reset();
 

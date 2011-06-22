@@ -192,6 +192,15 @@ public:
   void AddStrip(const JpegStrip *strip) {
     strips_.push_back(strip);
   }
+  void Scale(int new_width, int new_height,
+	     int old_width, int old_height) {
+    for (int i = 0; i< regions_.size(); ++i) {
+      regions_[i].l_ = (regions_[i].l_ * new_width) / old_width;
+      regions_[i].r_ = (regions_[i].r_ * new_width) / old_width;
+      regions_[i].t_ = (regions_[i].t_ * new_height) / old_height;
+      regions_[i].b_ = (regions_[i].b_ * new_height) / old_height;
+    }
+  }
   // Test if a box of width dx, dy, with top left corner at x,y
   // intersects with any of the rectangular regions.
   bool InRegion(int x, int y, int dx, int dy) const {

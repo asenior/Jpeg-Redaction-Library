@@ -30,8 +30,8 @@
 //////////////////////////////////////////////////////////////////////
 
 namespace jpeg_redaction {
-TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : data_(NULL), subifd_(NULL)
-{
+TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : 
+  data_(NULL), subifd_(NULL) {
     if (pFile == NULL)
       throw("NULL file");
     int iRV = fread(&tagid_, sizeof(short), 1, pFile);

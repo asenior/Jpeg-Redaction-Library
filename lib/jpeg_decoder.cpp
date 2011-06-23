@@ -245,10 +245,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   if (redacting == kRedactingInactive)
     CopyBits(dc_length_size);
   if (redacting == kRedactingStarting) {
-    // if (redaction_ &&
-    // 	redaction_->GetRedactionMethod() == Redaction::redact_solid)
-    // else
-    // CopyBits(dc_length_size);
+    if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
+      CopyBits(dc_length_size);
   }
   if (redacting == kRedactingActive) { // Write out zero.
     WriteZeroLength(2 * dht);
@@ -256,27 +254,25 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   DropBits(dc_length_size);
   if (num_bits_ < dc_symbol_size)
     FillBits();
-  //  printf("Sym\n");
   if (redacting == kRedactingInactive)
     CopyBits(dc_symbol_size);
   if (redacting == kRedactingStarting) {
-    //    CopyBits(dc_symbol_size);
+    if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
+      CopyBits(dc_symbol_size);
   }
   const int dc_value = NextValue(dc_symbol_size);
   // Current cumulative value for this pixel.
   dc_values_[comp] += dc_value;
-  // if (redacting == kRedactingActive || redacting == kRedactingStarting)
-  //   WriteValue(2*dht, dc_value);
   // Maintain the dc delta through the redaction.
   if (redacting == kRedactingStarting) {
-    // if (redaction_ &&
-    // 	redaction_->GetRedactionMethod() == Redaction::redact_solid)
-    // Step required to take previous value down to zero.
-    WriteValue(2 * dht, -(dc_values_[comp] - dc_value));
-    // The delta to restore to correct level from fake level.
-    redaction_dc_[comp] = dc_values_[comp];
-    // else
-    //   redaction_dc_[comp] = 0;
+    if (redaction_->GetRedactionMethod() == Redaction::redact_solid) {
+      // Step required to take previous value down to zero.
+      WriteValue(2 * dht, -(dc_values_[comp] - dc_value));
+      // The delta to restore to correct level from fake level.
+      redaction_dc_[comp] = dc_values_[comp];
+    } else {
+      redaction_dc_[comp] = 0;
+    }
   }
   if (redacting == kRedactingActive)
     redaction_dc_[comp] += dc_value;
@@ -290,12 +286,9 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
 
   // Now deal with AC.
   int coeffs = 1; // DC is the first
-  // If we're redacting, have no AC
-  if (redacting == kRedactingActive)
+  // If we're redacting, have no AC (otherwise copy AC later).
+  if (redacting == kRedactingActive || redacting == kRedactingStarting)
     WriteZeroLength(2 * dht + 1);
-  if (redacting == kRedactingStarting) {
-    WriteZeroLength(2 * dht + 1);
-  }
 
   for (; coeffs <= 63;) {
     int start_coeff = coeffs;

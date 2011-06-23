@@ -16,9 +16,11 @@ Need ability to remove thumbnail
 
 #Issue3
 Need ability to redact thumbnail in same way as main image.
+06/21/11 Fixed
 
 #Issue4
 Need to remove exif from SSC version.
+~06/19/11 Fixed 
 
 #Issue5
 Need to handle restart markers correctly. 
@@ -32,6 +34,11 @@ Bad assumptions about locations where we can write?
 #Issue7
 Handle full edit of Exif
 
+#Issue8 06/21/11 
+Need to support other redaction methods:
+Solid colour.
+Pixellate.
+ImageOverlay.
 
 
 ##################################################

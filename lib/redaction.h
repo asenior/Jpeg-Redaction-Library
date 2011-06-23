@@ -110,6 +110,11 @@ protected:
 // redacted information.
 class Redaction {
 public:
+  enum redaction_method {redact_copystrip = 0,
+			 redact_solid = 1,
+			 redact_pixellate = 2,
+			 redact_overlay   = 3};
+
   // Simple rectangle class for redaction regions.
   class Rect {
    public:
@@ -119,7 +124,7 @@ public:
     }
     int l_, r_, t_, b_;
   };
-  Redaction() {};
+  Redaction() : redaction_method_(redact_solid) {}
   virtual ~Redaction() {
     for (int i = 0; i < strips_.size(); ++i)
       delete strips_[i];
@@ -131,6 +136,12 @@ public:
       copy->AddRegion(regions_[i]);
     }
     return copy;
+  }
+  void SetRedactionMethod(redaction_method method) {
+    redaction_method_ = method;
+  }
+  redaction_method GetRedactionMethod() const {
+    return redaction_method_;
   }
   void AddRegion(const Rect &rect) {
     if (rect.l_ >= rect.r_ || rect.t_ >= rect.b_) {
@@ -228,6 +239,7 @@ public:
     return false;
   }
 protected:
+  redaction_method  redaction_method_;
   // Information redacted.
   std::vector<const JpegStrip*> strips_;
   std::vector<Rect> regions_;

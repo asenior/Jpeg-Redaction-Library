@@ -9,7 +9,7 @@ redaction.
 06/15/11 
 Have fixed this partially, but don't record the true bit length of the 
 original data, just the rounded-up length that is stored. Need to
-reduce this when it's been read.
+reduce to the correct value when it's been read.
 
 #Issue2
 Need ability to remove thumbnail
@@ -29,7 +29,7 @@ decoding.)
 
 #Issue6
 Enable read-write (and then redact) of IPTC.
-Bad assumptions about locations where we can write? 
+06/22/11 Fixed writing of IPTC. Still need to edit & redact.
 
 #Issue7
 Handle full edit of Exif
@@ -39,7 +39,21 @@ Need to support other redaction methods:
 Solid colour.
 Pixellate.
 ImageOverlay.
+06/22/11 Implemented solid grey and set as default.
 
+#Issue9 06/22/11 
+Can't handle testdata/devices/canon-1999.jpg
+DHT 0 id 0
+DHT 1 id 0
+DHT 2 id 1
+DHT 3 id 1
+comp 2/3 table 2 dhts 4 AC 0 dc 0
+Error: <Can't find table > at outer level
+
+#Issue10 06/22/11 
+Do ReadSOSMarker more elegantly & faster.
+Now it's being scanned twice.
+Go directly to AddSOMarker? 
 
 ##################################################
 General notes.

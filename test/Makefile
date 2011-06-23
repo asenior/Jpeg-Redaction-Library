@@ -47,7 +47,7 @@ $(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h
 $(BINARY): $(LIB) jpegtest.cpp test_utils.cpp
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
-$(READWRITE): $(LIB) testreadwrite.cpp test_utils.cpp
+$(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp
 	$(CC) $(CXXFLAGS) -I../lib testreadwrite.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(EXIF_REMOVE): $(LIB) exiftest.cpp

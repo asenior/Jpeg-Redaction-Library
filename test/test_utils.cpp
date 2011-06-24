@@ -68,16 +68,18 @@ namespace jpeg_redaction {
       }
       return success;
     }
+    // Check whether two blocks of bytes are identical or not.
     bool compare_bytes(const std::vector<unsigned char> &orig,
 		       const std::vector<unsigned char> &other) {
-      if (orig.size() > other.size() ||
-	  orig.size() < other.size() - 1) {
-	fprintf(stderr, "Size mismatch: %d vs %d\n", orig.size(), other.size());
+      if (orig.size() != other.size()) {
+	fprintf(stderr, "Size mismatch: orig %d vs new %d\n",
+		orig.size(), other.size());
 	return false;
       }
       for(int i = 0; i < orig.size(); ++i) {
 	if (orig[i] != other[i]) {
-	  fprintf(stderr, "Byte mismatch at %d of %d\n", i, orig.size());
+	  fprintf(stderr, "Byte mismatch at %d of %d: %02x vs %02x\n",
+		  i, orig.size(), other[i], orig[i]);
 	  return false;
 	}
       }
@@ -175,7 +177,7 @@ namespace jpeg_redaction {
 	j2.ReverseRedaction(redaction);
 	sos_block = j2.GetMarker(Jpeg::jpeg_sos);
 	if (! compare_bytes(original, sos_block->data_))
-	  throw("Compare test fail");
+	  throw("test_reversingredaction Compare test fail");
 	SaveBytes(sos_block->data_, "testout/unredactedsos");
 	std::string output_filename = "testout/testunredacted.jpg";
 	if (j2.Save(output_filename.c_str()) != 0) {

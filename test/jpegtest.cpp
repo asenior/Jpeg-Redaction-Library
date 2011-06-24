@@ -30,8 +30,12 @@ int main(int argc, char **argv) {
   std::string filename("testdata/windows.jpg");
   if (argc > 1)
     filename = argv[1];
-  jpeg_redaction::tests::test_loadallfalse(filename.c_str());
-  jpeg_redaction::tests::test_readwrite(filename.c_str());
-  jpeg_redaction::tests::test_redaction(filename.c_str());
-  jpeg_redaction::tests::test_reversingredactions_multi(filename);
+  int rv = jpeg_redaction::tests::test_loadallfalse(filename.c_str());
+  if (rv) exit(1);
+  rv = jpeg_redaction::tests::test_readwrite(filename.c_str());
+  if (rv) exit(1);
+  rv = jpeg_redaction::tests::test_redaction(filename.c_str());
+  if (rv) exit(1);
+  rv = jpeg_redaction::tests::test_reversingredactions_multi(filename);
+  if (rv) exit(1);
 }

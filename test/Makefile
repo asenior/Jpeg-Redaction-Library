@@ -41,19 +41,19 @@ test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
 $(LIB): 
 	cd ../lib; $(MAKE) lib
 
-$(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h
+$(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h testout_dir
 	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp $(LIBPATH)  -o $@
 
-$(BINARY): $(LIB) jpegtest.cpp test_utils.cpp
+$(BINARY): $(LIB) jpegtest.cpp test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
-$(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp
+$(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib testreadwrite.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
-$(EXIF_REMOVE): $(LIB) exiftest.cpp
+$(EXIF_REMOVE): $(LIB) exiftest.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib exiftest.cpp $(LIBPATH) $(LIB)  -o $@
 
-$(IFDTESTBINARY): $(LIB) ifdtest.cpp
+$(IFDTESTBINARY): $(LIB) ifdtest.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib ifdtest.cpp $(LIBPATH) $(LIB)  -o $@
 
 .PHONY: clean cleanall clean_rawgrey clean_test \

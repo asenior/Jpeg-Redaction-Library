@@ -38,10 +38,17 @@ class JpegMarker {
   void LoadHere(FILE *pFile) {
     data_.resize(length_-2);
     int rv = fread(&data_[0], sizeof(char), length_-2, pFile);
+    bit_length_ = 8 * (length_ - 2);
     if (rv  != length_-2) {
       printf("Failed to read marker %x at %d\n", marker_, length_);
       throw("Failed to read marker");
     }
+  }
+  int GetBitLength() const { return bit_length_; }
+  void SetBitLength(int bit_length) {
+    if (bit_length > data_.size() * 8)
+      throw("Setting bit length longer than buffer");
+    bit_length_ = bit_length;
   }
   void WriteWithStuffBytes(FILE *pFile);
   void RemoveStuffBytes();
@@ -51,6 +58,7 @@ class JpegMarker {
   int length_;
   unsigned int location_;
   unsigned short marker_;
+  int bit_length_;
   std::vector<unsigned char> data_;
 };  // JpegMarker
 }  // namespace redaction

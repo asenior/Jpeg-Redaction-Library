@@ -123,6 +123,17 @@ public:
     ShiftTail(data, length, start, insert_length);
     return Overwrite(data, *length, start, insertion, insert_length);
   }
+  // Pad the last byte with ones.
+  static int PadLastByte(std::vector<unsigned char> *data, int bits) {
+    if (bits > data->size() * 8) throw("too many bits in PadLastByte");
+    int used_bits_last_byte = ((bits - 1) % 8) + 1;
+    if (used_bits_last_byte != 8) {
+      unsigned char unused_bits_mask = (1 << (8 - used_bits_last_byte)) - 1;
+      printf("padding %d bits mask %02x\n",
+	     8-used_bits_last_byte, unused_bits_mask);
+      data->back() |= unused_bits_mask;
+    }
+  }
 }; 
 
 #endif  // INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS

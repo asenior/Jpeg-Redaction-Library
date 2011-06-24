@@ -72,6 +72,7 @@ public:
     BitShifts::Overwrite(data, *data_bits,
     			 src_start_ + offset, 
     			 data_, bits_);
+    BitShifts::PadLastByte(data, *data_bits);
     return tail_shift;
   }
   bool Valid(int *offset) const {

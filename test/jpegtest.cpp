@@ -31,11 +31,23 @@ int main(int argc, char **argv) {
   if (argc > 1)
     filename = argv[1];
   int rv = jpeg_redaction::tests::test_loadallfalse(filename.c_str());
-  if (rv) exit(1);
+  if (rv) {
+    fprintf(stderr, "Failed on loadallfalse\n");
+    exit(1);
+  }
   rv = jpeg_redaction::tests::test_readwrite(filename.c_str());
-  if (rv) exit(1);
+  if (rv)  {
+    fprintf(stderr, "Failed on test_readwrite\n");
+    exit(1);
+  }
   rv = jpeg_redaction::tests::test_redaction(filename.c_str());
-  if (rv) exit(1);
+  if (rv)  {
+    fprintf(stderr, "Failed on test_redaction\n");
+    exit(1);
+  }
   rv = jpeg_redaction::tests::test_reversingredactions_multi(filename);
-  if (rv) exit(1);
+  if (rv)  {
+    fprintf(stderr, "Failed on test_reversingredactions_multi\n");
+    exit(1);
+  }
 }

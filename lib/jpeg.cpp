@@ -508,12 +508,17 @@ namespace jpeg_redaction {
     }
     if (redaction && redaction->NumRegions() > 0) {
       // Keep the 10 byte header.
-      printf("Redacted data length %lu\n", decoder.GetRedactedData().size());
+      const std::vector<unsigned char> &redacted_data =
+	decoder.GetRedactedData();
+      printf("Redacted data length %lu bytes %d bits\n",
+	     redacted_data.size(),
+	     decoder.GetBitLength());
       sos_block->data_.erase(sos_block->data_.begin() + 10,
 			     sos_block->data_.end());
       sos_block->data_.insert(sos_block->data_.end(),
-			      decoder.GetRedactedData().begin(),
-			      decoder.GetRedactedData().end());
+			      redacted_data.begin(),
+			      redacted_data.end());
+      sos_block->SetBitLength(decoder.GetBitLength() + 10 * 8);
       printf("sos block now %d bytes\n", sos_block->data_.size());
     }
     // Now keep on dumping data out.
@@ -525,15 +530,17 @@ namespace jpeg_redaction {
   int Jpeg::ReverseRedaction(const Redaction &redaction) {
     JpegMarker *sos_block = GetMarker(jpeg_sos);
     // For each strip insert it into the JPEG data.
-    int data_bits = 8 * sos_block->data_.size();
-    printf("Before patching size %d\n", sos_block->data_.size());
+    int data_bits = sos_block->GetBitLength();
+    printf("Before patching size %d bytes %d bits.\n",
+	   sos_block->data_.size(), data_bits);
     // We pass the data with the header in it, so start at this bit.
     int offset = 10 * 8;
     for (int i = 0; i < redaction.NumStrips(); ++i) {
       printf("Patching in strip %d\n", i);
       // If we patch all the strips in, they need no offset.
       int shift = redaction.GetStrip(i)->PatchIn(offset, &sos_block->data_,
-				     &data_bits);
+						 &data_bits);
+      sos_block->SetBitLength(data_bits);
       //      offset += shift;
     }
   }

@@ -24,6 +24,7 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include "bit_shifts.h"
 #include "jpeg.h"
 #include "jpeg_dht.h"
 #include "redaction.h"
@@ -49,10 +50,7 @@ class JpegDecoder {
 	redaction_bit_pointer_ < (redacted_data_.size() * 8) - 8) {
       throw("RedactedData length mismatch");
     }
-    // Pad the last byte with ones.
-    int used_bits_last_byte = (redaction_bit_pointer_ % 8);
-    unsigned char unused_bits_mask = (1 << (8 - used_bits_last_byte)) - 1;
-    redacted_data_.back() |= unused_bits_mask;
+    BitShifts::PadLastByte(&redacted_data_, redaction_bit_pointer_);
     return redacted_data_;
   }
   // Write the grey scale decoded image to a file.
@@ -95,6 +93,8 @@ class JpegDecoder {
     }
     image_data_.assign(c.begin(), c.end());
   }
+  // Return the current length of the data block (in bits).
+  int GetBitLength() const { return length_; }
 
 
 protected:
@@ -104,6 +104,8 @@ protected:
   // bit. We shuffle in data so that there are at least N (16?) bits
   // at all times.
   // Assumes that stuff bytes and tags have already been removed.
+  // data_pointer is the next bit to shift into current_bits_
+  // num_bits_ is the number of bits in current_bits_
   void FillBits() {
     int byte = data_pointer_ >> 3;
     // The remaining bits in this byte.
@@ -222,7 +224,7 @@ protected:
     const int mcu_y = mcus_ / mcu_width;
     return mcu_y * vq;
   }
-
+    
   // Does the current MCU overlap a redaction region.
   bool InRedactionRegion(const Redaction *const redaction) const {
     const int mcu_width = w_blocks_ / mcu_h_;

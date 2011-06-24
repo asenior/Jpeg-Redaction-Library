@@ -78,7 +78,8 @@ namespace jpeg_redaction {
       }
       for(int i = 0; i < orig.size(); ++i) {
 	if (orig[i] != other[i]) {
-	  fprintf(stderr, "Byte mismatch at %d of %d: %02x vs %02x\n",
+	  fprintf(stderr,
+		  "Byte mismatch at %d of %d: new %02x vs orig %02x\n",
 		  i, orig.size(), other[i], orig[i]);
 	  return false;
 	}

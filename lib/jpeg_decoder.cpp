@@ -171,7 +171,8 @@ void JpegDecoder::Decode(Redaction *redaction) {
       StoreEndOfStrip(redaction);
 
   printf("Got to %d mcus. %d bits left.\n", num_mcus_,
-	 length_ - data_pointer_);
+	 length_ - data_pointer_ + num_bits_);
+  length_ = redaction_bit_pointer_;
   redaction_ = NULL;
 }
 
@@ -242,9 +243,10 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   if (num_bits_ <= 16)
     FillBits();
   unsigned int dc_symbol_size; // The number of bits to encode the symbol.
-  int dc_length_size = 0; // actually the number of bits to encode the symbol length.
+  int dc_length_size = 0; // the number of bits to encode the symbol length.
   try {
-    dc_length_size = dhts_[2*dht]->Decode(current_bits_, num_bits_, &dc_symbol_size);
+    dc_length_size = dhts_[2*dht]->Decode(current_bits_, num_bits_,
+					  &dc_symbol_size);
   } catch (const char *error) {
     printf("Caught %s at MCU %d of %d\n", error, mcus_, num_mcus_);
     throw(error);

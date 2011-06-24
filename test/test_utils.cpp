@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 #include "jpeg.h"
+#include "jpeg_marker.h"
 #include "redaction.h"
 #include "test_utils.h"
 

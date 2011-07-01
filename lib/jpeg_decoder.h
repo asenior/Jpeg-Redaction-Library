@@ -274,6 +274,7 @@ protected:
   std::vector<int> dc_values_;
 
   int redaction_dc_[3];
+  std::vector<int> int_image_data_;
   std::vector<unsigned char> image_data_;
   // These are pointers into the Jpeg's table of DHTs
   // The decoder does not own the memory.

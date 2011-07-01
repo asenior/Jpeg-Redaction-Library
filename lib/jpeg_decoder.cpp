@@ -42,7 +42,6 @@ JpegDecoder::JpegDecoder(int w, int h,
   mcu_h_ = 1;
   mcu_v_ = 1;
   ResetDecoding();
-  image_data_.reserve((height_/kBlockSize) * (width_/kBlockSize));
   // Build a temp table of the DHTs to use for each component
   // and find the size of the MCU.
   for (int comp = 0; comp < components->size(); ++comp) {
@@ -86,6 +85,8 @@ JpegDecoder::JpegDecoder(int w, int h,
   num_mcus_ = (w_blocks_/mcu_h_) * (h_blocks_/ mcu_v_);
   printf("Expect %d MCUS. %dx%d blocks h:%d v:%d\n",
 	 num_mcus_, w_blocks_, h_blocks_, mcu_h_, mcu_v_);
+  image_data_.reserve(num_mcus_ * mcu_h_ * mcu_v_);
+  int_image_data_.reserve(num_mcus_ * (2 + mcu_h_ * mcu_v_));
 }
 
 void JpegDecoder::WriteZeroLength(int which_dht) {
@@ -214,6 +215,8 @@ void JpegDecoder::DecodeOneMCU() {
 		 error, mcus_, num_mcus_);
 	  throw(error);
 	}
+	int_image_data_.push_back(dc_values_[comp]);
+
 	if ((*components_)[comp]->table_ == 0) { // Y component
 	  if (debug > 0)
 	    printf("DCY: %d\n", dc_value);
@@ -263,6 +266,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   DropBits(dc_length_size);
   if (num_bits_ < dc_symbol_size)
     FillBits();
+
   if (redacting == kRedactingInactive)
     CopyBits(dc_symbol_size);
   if (redacting == kRedactingStarting) {
@@ -272,6 +276,12 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   const int dc_value = NextValue(dc_symbol_size);
   // Current cumulative value for this pixel.
   dc_values_[comp] += dc_value;
+
+  // Work out the value we want to write.
+  int value_to_write = dc_values_[comp];
+  if (redaction_ && redaction_->GetRedactionMethod() == Redaction::redact_solid)
+    value_to_write = 0;
+
   // Maintain the dc delta through the redaction.
   if (redacting == kRedactingStarting) {
     if (redaction_->GetRedactionMethod() == Redaction::redact_solid) {

@@ -272,8 +272,8 @@ protected:
   int redacting_; // Are we redacting this image: see kRedacting* flags above.
   int y_value_; // The most recent decoded brightness value.
   std::vector<int> dc_values_;
+  std::vector<int> redaction_dc_;
 
-  int redaction_dc_[3];
   std::vector<int> int_image_data_;
   std::vector<unsigned char> image_data_;
   // These are pointers into the Jpeg's table of DHTs

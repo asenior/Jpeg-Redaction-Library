@@ -80,6 +80,7 @@ JpegDecoder::JpegDecoder(int w, int h,
   const int hq = kBlockSize * mcu_h_;
   const int vq = kBlockSize * mcu_v_;
   dc_values_.resize(components->size(), 0);
+  redaction_dc_.resize(components->size(), 0);
   w_blocks_ = mcu_h_ * ((width_ + hq -1)/hq);
   h_blocks_ = mcu_v_ * ((height_ + vq -1)/vq);
   num_mcus_ = (w_blocks_/mcu_h_) * (h_blocks_/ mcu_v_);
@@ -254,54 +255,31 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     printf("Caught %s at MCU %d of %d\n", error, mcus_, num_mcus_);
     throw(error);
   }
-  if (redacting == kRedactingInactive)
-    CopyBits(dc_length_size);
-  if (redacting == kRedactingStarting) {
-    if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
-      CopyBits(dc_length_size);
-  }
-  if (redacting == kRedactingActive) { // Write out zero.
-    WriteZeroLength(2 * dht);
-  }
+  if (redacting == kRedactingInactive) CopyBits(dc_length_size);
   DropBits(dc_length_size);
   if (num_bits_ < dc_symbol_size)
     FillBits();
-
-  if (redacting == kRedactingInactive)
-    CopyBits(dc_symbol_size);
-  if (redacting == kRedactingStarting) {
-    if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
-      CopyBits(dc_symbol_size);
-  }
+  if (redacting == kRedactingInactive) CopyBits(dc_symbol_size);
   const int dc_value = NextValue(dc_symbol_size);
   // Current cumulative value for this pixel.
   dc_values_[comp] += dc_value;
-
-  // Work out the value we want to write.
-  int value_to_write = dc_values_[comp];
-  if (redaction_ && redaction_->GetRedactionMethod() == Redaction::redact_solid)
-    value_to_write = 0;
-
-  // Maintain the dc delta through the redaction.
-  if (redacting == kRedactingStarting) {
-    if (redaction_->GetRedactionMethod() == Redaction::redact_solid) {
-      // Step required to take previous value down to zero.
-      WriteValue(2 * dht, -(dc_values_[comp] - dc_value));
-      // The delta to restore to correct level from fake level.
-      redaction_dc_[comp] = dc_values_[comp];
-    } else {
-      redaction_dc_[comp] = 0;
+  
+  if (redaction_ && redacting != kRedactingInactive) {
+  // Work out the (absolute) value we want to write.
+  // Default is the cumulative sum so far.
+    int value_to_write = dc_values_[comp];
+  // If solid, we write out 0.
+    if ( redacting != kRedactingEnding) {
+      if (redaction_->GetRedactionMethod() == Redaction::redact_solid)
+	value_to_write = 0;
+      else if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
+	value_to_write = redaction_dc_[comp];
     }
+    WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);
+    redaction_dc_[comp] = value_to_write;
   }
-  if (redacting == kRedactingActive)
-    redaction_dc_[comp] += dc_value;
-  if (redacting == kRedactingEnding) {  // Write out new delta.
-    redaction_dc_[comp] += dc_value;
-    WriteValue(2 * dht, redaction_dc_[comp]);
-  }
-  if (debug > 0)
-    printf("DCValue is %d\n", dc_value);
-
+  if (redacting == kRedactingInactive)
+    redaction_dc_[comp] = dc_values_[comp];
 
   // Now deal with AC.
   int coeffs = 1; // DC is the first

@@ -221,16 +221,17 @@ void JpegDecoder::DecodeOneMCU() {
 	if ((*components_)[comp]->table_ == 0) { // Y component
 	  if (debug > 0)
 	    printf("DCY: %d\n", dc_value);
-	  y_value_ += dc_value;
-	  while (y_value_ < (-128 << dct_gain_) ||
-		 y_value_ >= (128 << dct_gain_)) {
+	  //	  y_value_ += dc_value;
+	  while (dc_values_[0] < (-128 << dct_gain_) ||
+		 dc_values_[0] >= (128 << dct_gain_)) {
 	    ++dct_gain_;
 	    printf("MCU %d dc_value %d y_value_ %d. Doubling gain to %d\n",
-		   mcus_, dc_value, y_value_, dct_gain_);
+		   mcus_, dc_value, dc_values_[0], dct_gain_);
 	    for (int op = 0; op < image_data_.size(); ++op)
 	      image_data_[op]= image_data_[op]/2 + 64;
 	  }
-	  image_data_.push_back((y_value_ + (128 << dct_gain_)) >> dct_gain_);
+	  image_data_.push_back((dc_values_[0] + (128 << dct_gain_))
+				>> dct_gain_);
 	}
       }
     }

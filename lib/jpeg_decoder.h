@@ -204,7 +204,6 @@ protected:
     redaction_bit_pointer_ = 0;
 
     dct_gain_ = 0; // Number of bits to shift.
-    y_value_ = 0;
     current_bits_ = 0;  // Buffer of 32 bits.
     num_bits_ = 0;  // Number of bits remaining in current_bits_
     data_pointer_ = 0;  // Next bit to get into current_bits;
@@ -270,11 +269,17 @@ protected:
   int h_blocks_;  // Height of the image in MCUs
   int dct_gain_;
   int redacting_; // Are we redacting this image: see kRedacting* flags above.
-  int y_value_; // The most recent decoded brightness value.
+  // The current (input) DC (delta) value for this MCU, one per channel.
   std::vector<int> dc_values_;
+  // The current DC (delta) value for this MCU, one per channel, as output.
+  // Differs from dc_values_ when we're redacting.
   std::vector<int> redaction_dc_;
 
+  // This stores the cumulative DC values for all components, interleaved.
+  // before down-scaling.
   std::vector<int> int_image_data_;
+  // The DC values scaled to bytes. Currently intensity only.
+  // Initially in MCU order, but then reordered to raster for writing as a pgm.
   std::vector<unsigned char> image_data_;
   // These are pointers into the Jpeg's table of DHTs
   // The decoder does not own the memory.

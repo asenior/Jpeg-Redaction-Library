@@ -158,14 +158,14 @@ namespace jpeg_redaction {
     // Test wiping a region and then restoring it again from
     // saved redaction data (strips).
     int test_reversingredaction(const char * const filename,
-				const Redaction::Rect &rect) {
+				const Redaction::Region &rect) {
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
 	JpegMarker *sos_block = j2.GetMarker(Jpeg::jpeg_sos);
 	std::vector<unsigned char> original(sos_block->data_);
 	SaveBytes(sos_block->data_, "testout/originalsos");
-	//	Redaction::Rect rect(50, 300, 50, 200);  // l,r, t, b
+	//	Redaction::Region rect(50, 300, 50, 200);  // l,r, t, b
 	// One strip
 	Redaction redaction;
 	redaction.AddRegion(rect);
@@ -194,10 +194,10 @@ namespace jpeg_redaction {
     // TODO this can fail- we need to keep track of the padding bits both when redacting and
     // reversing redaction.
     int test_reversingredactions_multi(const std::string &filename) {
-      Redaction::Rect rectonestrip(50, 300, 64, 79);  // l,r, t, b
+      Redaction::Region rectonestrip(50, 300, 64, 79);  // l,r, t, b
       int rv = test_reversingredaction(filename.c_str(), rectonestrip);
       if (rv) return 1;
-      Redaction::Rect rect(50, 500, 89, 245);  // l,r, t, b
+      Redaction::Region rect(50, 500, 89, 245);  // l,r, t, b
       rv = test_reversingredaction(filename.c_str(), rect);
       if (rv) return 1;
       return 0;

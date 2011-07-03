@@ -226,7 +226,8 @@ protected:
   }
     
   // Does the current MCU overlap a redaction region.
-  bool InRedactionRegion(const Redaction *const redaction) const {
+  // return the index of the region, -1 if not
+  int InRedactionRegion(const Redaction *const redaction) const {
     const int mcu_width = w_blocks_ / mcu_h_;
     const int hq = kBlockSize * mcu_h_;
     const int vq = kBlockSize * mcu_v_;
@@ -270,6 +271,9 @@ protected:
   int h_blocks_;  // Height of the image in MCUs
   int dct_gain_;
   int redacting_; // Are we redacting this image: see kRedacting* flags above.
+
+  // What is the redaction method for the current region.
+  Redaction::redaction_method  redaction_method_;
   // The current (input) DC (delta) value for this MCU, one per channel.
   std::vector<int> dc_values_;
   // The current DC (delta) value for this MCU, one per channel, as output.

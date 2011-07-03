@@ -125,8 +125,9 @@ void JpegDecoder::WriteValue(int which_dht, int value) {
 
 void JpegDecoder::SetRedactingState(Redaction *redaction) {
   // Determine if we're in or on the edge of.
-  const bool in_rr = InRedactionRegion(redaction);
-  if (in_rr) {
+  const int region_index = InRedactionRegion(redaction);
+  if (region_index >= 0) {
+    redaction_method_ = redaction->GetRegion(region_index).GetRedactionMethod();
     if (redacting_ == kRedactingInactive) {
       redacting_ = kRedactingStarting;  // Start.
       if (current_strip_ != NULL) throw("Strip already exists");
@@ -296,11 +297,11 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     int value_to_write = dc_values_[comp];
   // If solid, we write out 0.
     if ( redacting != kRedactingEnding) {
-      if (redaction_->GetRedactionMethod() == Redaction::redact_solid)
+      if (redaction_method_ == Redaction::redact_solid)
 	value_to_write = 0;
-      else if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
+      else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
-      else if (redaction_->GetRedactionMethod() == Redaction::redact_pixellate)
+      else if (redaction_method_ == Redaction::redact_pixellate)
 	value_to_write = LookupPixellationValue(comp);
     }
     WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);

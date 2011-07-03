@@ -32,7 +32,7 @@ namespace jpeg_redaction {
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
-	Redaction::Rect rect(50, 300, 50, 200);  // l,r, t, b
+	Redaction::Region rect(50, 300, 50, 200);  // l,r, t, b
 	Redaction redaction;
 
 	redaction.AddRegion(rect);

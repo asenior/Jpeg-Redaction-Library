@@ -35,7 +35,7 @@ namespace jpeg_redaction {
     int test_readwrite(const char * const filename);
     int test_redaction(const char * const filename);
     int test_reversingredaction(const char * const filename,
-				const Redaction::Rect &rect);
+				const Redaction::Region &rect);
     int test_reversingredactions_multi(const std::string &filename);
   } // namespace tests
 } // namespace jpeg_redaction

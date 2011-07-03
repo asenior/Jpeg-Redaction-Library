@@ -77,12 +77,15 @@ JpegDecoder::JpegDecoder(int w, int h,
   }
   if (dhts_.size() != components->size() * 2)
     throw("dhts_ table size is wrong");
+  // The dimensions of the MCUs in pixels.
   const int hq = kBlockSize * mcu_h_;
   const int vq = kBlockSize * mcu_v_;
   dc_values_.resize(components->size(), 0);
   redaction_dc_.resize(components->size(), 0);
+  // How many 8x8 blocks there will be in each direction.
   w_blocks_ = mcu_h_ * ((width_ + hq -1)/hq);
   h_blocks_ = mcu_v_ * ((height_ + vq -1)/vq);
+  // How many MCUs there are in the image.
   num_mcus_ = (w_blocks_/mcu_h_) * (h_blocks_/ mcu_v_);
   printf("Expect %d MCUS. %dx%d blocks h:%d v:%d\n",
 	 num_mcus_, w_blocks_, h_blocks_, mcu_h_, mcu_v_);
@@ -216,7 +219,6 @@ void JpegDecoder::DecodeOneMCU() {
 		 error, mcus_, num_mcus_);
 	  throw(error);
 	}
-	int_image_data_.push_back(dc_values_[comp]);
 
 	if ((*components_)[comp]->table_ == 0) { // Y component
 	  if (debug > 0)
@@ -237,6 +239,28 @@ void JpegDecoder::DecodeOneMCU() {
     }
   }
 }
+
+  // Work out the int_image_data to be used for this pixel.
+  int JpegDecoder::LookupPixellationValue(int comp) {
+    // Each MCU contains this many components.
+    const int mcu_size = mcu_h_ * mcu_v_ + 2;
+    // The first block of the Y (0), or the only block of U (1), V (2).
+    int component = (comp == 0) ? 0 : comp += mcu_size - 3;
+    
+    // decode the blockindex from mcus_ ....
+    // How many MCUs wide the image is.
+    const int mcu_width = w_blocks_ / mcu_h_;
+    // The MCU coordinate of the current MCU.
+    const int x = mcus_ % mcu_width;
+    const int y = mcus_ / mcu_width;
+    
+    // Quantize to a particular MCU per megapixel.
+    const int blockindex = (x & ~3) + mcu_width * (y & ~3);
+    
+    int return_value = int_image_data_[blockindex * mcu_size + component];
+    return return_value;
+  }
+
 
 // Decode one 8x8 block using the specified Huffman Table.
 // redacting is a flag showing the current state
@@ -264,6 +288,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   const int dc_value = NextValue(dc_symbol_size);
   // Current cumulative value for this pixel.
   dc_values_[comp] += dc_value;
+  int_image_data_.push_back(dc_values_[comp]);
   
   if (redaction_ && redacting != kRedactingInactive) {
   // Work out the (absolute) value we want to write.
@@ -275,6 +300,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
 	value_to_write = 0;
       else if (redaction_->GetRedactionMethod() == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
+      else if (redaction_->GetRedactionMethod() == Redaction::redact_pixellate)
+	value_to_write = LookupPixellationValue(comp);
     }
     WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);
     redaction_dc_[comp] = value_to_write;

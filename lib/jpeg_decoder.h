@@ -184,6 +184,7 @@ protected:
   }
   int NextValue(int len);
   int DecodeOneBlock(int dht, int comp, int subblock_redaction);
+  int LookupPixellationValue(int comp);
 
   void WriteValue(int which_dht, int value);
   void WriteZeroLength(int which_dht);

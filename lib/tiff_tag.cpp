@@ -56,6 +56,7 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       ByteSwapInPlace(&value, 1);
     }
     if (totallength < 0 || totallength > 1e8) {
+      printf("tag %d totallength %d", tagid_, totallength);
       throw("totallength is broken");
     }
     // Some types are pointers that will be stored in an ifd.

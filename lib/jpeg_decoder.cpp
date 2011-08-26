@@ -125,9 +125,10 @@ void JpegDecoder::WriteValue(int which_dht, int value) {
 
 void JpegDecoder::SetRedactingState(Redaction *redaction) {
   // Determine if we're in or on the edge of.
-  const int region_index = InRedactionRegion(redaction);
-  if (region_index >= 0) {
-    redaction_method_ = redaction->GetRegion(region_index).GetRedactionMethod();
+  region_index_ = InRedactionRegion(redaction);
+  if (region_index_ >= 0) {
+    redaction_method_ =
+      redaction->GetRegion(region_index_).GetRedactionMethod();
     if (redacting_ == kRedactingInactive) {
       redacting_ = kRedactingStarting;  // Start.
       if (current_strip_ != NULL) throw("Strip already exists");
@@ -255,8 +256,20 @@ void JpegDecoder::DecodeOneMCU() {
     const int x = mcus_ % mcu_width;
     const int y = mcus_ / mcu_width;
     
-    // Quantize to a particular MCU per megapixel.
-    const int blockindex = (x & ~3) + mcu_width * (y & ~3);
+    // Quantize to a particular number of MCUs per megapixel.
+    // Dimension of a mega pixel in MCUs. Default to 4 for background.
+    int megapixel_size = 3;
+    int megapixels_per_region = 12;
+    if (redaction_method_ != Redaction::redact_inverse_pixellate) {
+      int w_size = (redaction_->GetRegion(region_index_).GetWidth() /
+		    megapixels_per_region + (8 * mcu_h_) -1) / (8 * mcu_h_);
+      int h_size = (redaction_->GetRegion(region_index_).GetHeight() /
+		    megapixels_per_region + (8 * mcu_v_) -1) / (8 * mcu_v_);
+      megapixel_size = h_size;
+      if (w_size > h_size) megapixel_size = w_size;
+    }
+    const int blockindex = (x / megapixel_size) * megapixel_size +
+      mcu_width * (y / megapixel_size) * megapixel_size;
     
     int return_value = int_image_data_[blockindex * mcu_size + component];
     return return_value;
@@ -301,7 +314,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
 	value_to_write = 0;
       else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
-      else if (redaction_method_ == Redaction::redact_pixellate)
+      else if (redaction_method_ == Redaction::redact_pixellate ||
+	       redaction_method_ == Redaction::redact_inverse_pixellate)
 	value_to_write = LookupPixellationValue(comp);
     }
     WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);

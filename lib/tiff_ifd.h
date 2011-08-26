@@ -18,15 +18,10 @@
 
 
 // tiff_ifd.h: interface for the TiffIfd class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_TIFFIIFD_H__669C3A6A_A035_418B_A615_B78E8E1467E3__INCLUDED_)
-#define AFX_TIFFIIFD_H__669C3A6A_A035_418B_A615_B78E8E1467E3__INCLUDED_
+#ifndef JPEG_REDACTION_LIB_TIFF_IFD
+#define JPEG_REDACTION_LIB_TIFF_IFD
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
 #include <vector>
 
 #include "tiff_tag.h"
@@ -116,4 +111,4 @@ class ExifIfd : public TiffIfd {
   }
 };
 }  // namespace jpeg_redaction
-#endif // !defined(AFX_TIFFIIFD_H__669C3A6A_A035_418B_A615_B78E8E1467E3__INCLUDED_)
+#endif // JPEG_REDACTION_LIB_TIFF_IFD

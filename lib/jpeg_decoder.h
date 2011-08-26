@@ -274,6 +274,8 @@ protected:
 
   // What is the redaction method for the current region.
   Redaction::redaction_method  redaction_method_;
+  // Index of the region that we're currently in.
+  int region_index_;
   // The current (input) DC (delta) value for this MCU, one per channel.
   std::vector<int> dc_values_;
   // The current DC (delta) value for this MCU, one per channel, as output.

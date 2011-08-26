@@ -150,8 +150,15 @@ public:
 	return;
       }
     }
-    redaction_method GetRedactionMethod() {
+    redaction_method GetRedactionMethod() const {
       return redaction_method_;
+    }
+    // Return the larger of width and height.
+    int GetWidth() const {
+      return r_ - l_;
+    }
+    int GetHeight() const {
+      return b_ - t_;
     }
     int l_, r_, t_, b_;
 
@@ -263,14 +270,29 @@ public:
   // intersects with any of the rectangular regions.
   // if so return the index of the region. If not return -1;
   int InRegion(int x, int y, int dx, int dy) const {
-    for (int i = 0; i < regions_.size(); ++i)
+    bool inverting = false;
+    int region = -1;
+    for (int i = 0; i < regions_.size(); ++i) {
+      // If this is the first "inverse" region, record that previously
+      // we WERE in the redaction region.
+      // If we were in any other kind of region, still apply that method.
+      if (regions_[i].GetRedactionMethod() == redact_inverse_pixellate) {
+	if (!inverting && region < 0)
+	  region = i;
+	inverting = true;
+      }
       if (x      < regions_[i].r_ &&
           x + dx > regions_[i].l_ &&
           y      < regions_[i].b_ &&
           y + dy > regions_[i].t_) {
-        return i;
+	if (regions_[i].GetRedactionMethod() == redact_inverse_pixellate) {
+	  region = -1;
+	} else {
+	  region = i;
+	}
       }
-    return -1;
+      }
+    return region;
   }
 protected:
   // Information redacted.

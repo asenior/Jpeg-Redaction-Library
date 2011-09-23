@@ -311,7 +311,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   // If solid, we write out 0.
     if ( redacting != kRedactingEnding) {
       if (redaction_method_ == Redaction::redact_solid)
-	value_to_write = 0;
+	// Write black.
+	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
       else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
       else if (redaction_method_ == Redaction::redact_pixellate ||

@@ -29,3 +29,9 @@ Describe the basic use case in the README.
 06/15/11 
 Hooked up to ssc app.
 
+
+11/26/11 
+Need to 
+1) Create IDF
+2) Add tag
+3) Create tag.

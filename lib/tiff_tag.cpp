@@ -76,12 +76,44 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       // Too long to fit in the tag.
     }
 #ifdef DEBUG
-    printf("Read tag %d/0x%x, type %d count %d value %d/0x%x "
-	    "totallength %d\n",
-	    tagid_, tagid_, type_, count_,
+    printf("Read tag %d/0x%x, type %s count %d value %d/0x%x "
+	    "bytes %d\n",
+	   tagid_, tagid_, TypeName((tag_types)type_), count_,
 	   value, value, totallength);
 #endif
 }
+  // Return the name of the given type.
+  const char *TiffTag::TypeName(tag_types t) {
+    switch (t) {
+    case tiff_uint8 :
+      return "uint8";
+    case tiff_string:
+      return "string";
+    case tiff_uint16:
+      return "uint16";
+    case tiff_uint32 :
+      return "uint32";
+    case tiff_urational:
+      return "urational";
+    case tiff_int8:
+      return "int8";
+    case tiff_bytes:
+      return "bytes";
+    case tiff_int16:
+      return "int16";
+    case tiff_int32:
+      return "int32";
+    case tiff_rational:
+      return "rational";
+    case tiff_float:
+      return "float";
+    case tiff_double:
+      return "double";
+    default:
+    case tiff_unknown:
+      return "unknown";
+    }
+  }
 
 TiffTag::~TiffTag() {
     delete subifd_;

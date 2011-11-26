@@ -57,6 +57,8 @@ public:
 		  tiff_rational=10,
 		  tiff_float=11,
 		  tiff_double=12};
+  // Return the name of the given type.
+  static const char *TypeName(tag_types t);
   enum tag_names {tag_width = 0x100,
 		  tag_height=0x101,
 		  tag_bitspersample = 0x102,

@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
   std::string filename;
   std::string outfile;
   std::string regions;
-  if (argc < 3) {
+  if (argc <= 3) {
     fprintf(stderr, "%s <infile> <outfile> <l,r,t,b[:method];...>\n"
 	    "method is one of [c]opystrip, [S]olid, [p]ixellate,"
 	    "[i]nverse pixellate\n", argv[0]);

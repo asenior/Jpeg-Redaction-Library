@@ -26,7 +26,7 @@ default: lib
 
 lib: $(LOCALLIB)
 
-SRCS  =  iptc.cpp jpeg.cpp  jpeg_decoder.cpp jpeg_marker.cpp \
+SRCS  =  debug_flag.cpp iptc.cpp jpeg.cpp  jpeg_decoder.cpp jpeg_marker.cpp \
         byte_swapping.cpp tiff_ifd.cpp tiff_tag.cpp
 
 OBJS    = $(SRCS:.cpp=.o)

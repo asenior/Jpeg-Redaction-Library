@@ -44,6 +44,10 @@ int main(int argc, char **argv) {
     bool load_all = true;
     jpeg_redaction::TiffIfd ifd(pFile, ifd_loc, load_all,
                                 tiff_offset, byte_swapping);
+    printf("%d tags in IFD\n",  ifd.GetNTags());
+    if (ifd.GetNTags() != 14) throw("Wrong number of tags");
+    if (ifd.GetTag(0)->GetCount() != 10) throw("Wrong length at tag 0");
+    if (ifd.GetTag(1)->GetTag() != 0x110) throw("Wrong type at tag 1");
   } catch (const char *error) {
     fprintf(stderr, "Error: <%s> at outer level\n", error);
     exit(1);

@@ -31,7 +31,6 @@
 #include "tiff_ifd.h"
 
 namespace jpeg_redaction {
-extern int debug;
 
 class Iptc;
 class JpegDHT;
@@ -100,6 +99,15 @@ public:
 	return ifds_[i]->GetExif();
     return NULL;
   }
+  // Return a pointer to the Exif IFD or make one.
+  // ExifIfd *CreateExif() {
+  //   ExifIfd *exif = GetExif();
+  //   if (!exif) {
+  //     exif = new ExifIfd();
+  //   }
+  //   return exif;
+  // }
+  
   int RemoveTag(int tag) {
     int removed = 0;
     for (int i=0; i < ifds_.size(); ++i) {

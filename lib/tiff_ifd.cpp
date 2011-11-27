@@ -20,6 +20,7 @@
 // TiffIIfd.cpp: implementation of the TiffIfd class.
 // (c) 2011 Andrew Senior andrewsenior@google.com
 
+#include "debug_flag.h"
 #include "tiff_ifd.h"
 #include "tiff_tag.h"
 #include "jpeg.h"
@@ -67,15 +68,18 @@ TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
   printf("Loaded Image data\n");
   if (loadall)
     LoadAll(pFile);
-  printf("Listing tags\n");
   ListTags();
 }
 
+  // Print all tags to stdout.
 void TiffIfd::ListTags() const {
+  if (debug >= 0)
+    printf("%s:%d Listing %d tags\n", __FILE__, __LINE__, GetNTags());
   TiffTag *width_tag = FindTag(TiffTag::tag_width);
   TiffTag *height_tag = FindTag(TiffTag::tag_height);
   if (width_tag && height_tag) {
-    printf("Image: %dx%d ", width_tag->GetUIntValue(0), height_tag->GetUIntValue(0));
+    printf("Image: %dx%d ",
+	   width_tag->GetUIntValue(0), height_tag->GetUIntValue(0));
     TiffTag *compression_tag = FindTag(TiffTag::tag_compression);
     if(compression_tag)
       printf("(%d) ", compression_tag->GetUIntValue(0));

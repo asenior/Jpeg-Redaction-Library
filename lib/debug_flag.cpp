@@ -20,4 +20,7 @@
 // Define a debug flag to turn on printing error messages.
 //
 #include "debug_flag.h"
+
+namespace jpeg_redaction {
 int debug = 0;
+}  // namespace redaction

@@ -23,5 +23,7 @@
 
 #if !defined(INCLUDE_DEBUG_FLAG)
 #define INCLUDE_DEBUG_FLAG
+namespace jpeg_redaction {
 extern int debug;
-#end  // INCLUDE_IPTC
+}  // namespace redaction
+#endif  // INCLUDE_IPTC

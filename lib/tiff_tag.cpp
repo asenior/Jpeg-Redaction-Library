@@ -21,6 +21,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
+#include "debug_flag.h"
 #include "tiff_tag.h"
 #include "tiff_ifd.h"
 #include "byte_swapping.h"
@@ -56,7 +57,7 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       ByteSwapInPlace(&value, 1);
     }
     if (totallength < 0 || totallength > 1e8) {
-      printf("tag %d totallength %d", tagid_, totallength);
+      fprintf(stderr, "tag %d totallength %d", tagid_, totallength);
       throw("totallength is broken");
     }
     // Some types are pointers that will be stored in an ifd.
@@ -75,12 +76,11 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       valpointer_ = value;
       // Too long to fit in the tag.
     }
-#ifdef DEBUG
-    printf("Read tag %d/0x%x, type %s count %d value %d/0x%x "
-	    "bytes %d\n",
-	   tagid_, tagid_, TypeName((tag_types)type_), count_,
-	   value, value, totallength);
-#endif
+    if (debug > 1)
+      printf("Read tag %d/0x%x, type %s count %d value %d/0x%x "
+	     "bytes %d\n",
+	     tagid_, tagid_, TypeName((tag_types)type_), count_,
+	     value, value, totallength);
 }
   // Return the name of the given type.
   const char *TiffTag::TypeName(tag_types t) {
@@ -185,8 +185,9 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     // IFDs use absolute position, normal tags are relative to subfileoffset.
     //if (tagid_ == tag_makernote)
     //    position = valpointer_;
-    printf("Loading SUB IFD 0x%x at %d (%d + %d) ", tagid_, position,
-	  valpointer_, subfileoffset);
+    if (debug > 0)
+      printf("Loading SUB IFD 0x%x at %d (%d + %d) ", tagid_, position,
+	     valpointer_, subfileoffset);
 
     subifd_ = new TiffIfd(pFile, position, true,
 			    subfileoffset, byte_swapping);
@@ -221,7 +222,8 @@ bool TiffTag::TagIsSubIFD() const {
 }
 
 void TiffTag::Print() const {
-  printf("0x%0x %dx%d (", tagid_, count_, LengthOfType(type_));
+  printf("0x%0x %dx%d %d (", tagid_, count_,
+	 LengthOfType(type_), TypeName((tag_types)type_));
   TraceValue(4);
   printf(") ");
 }

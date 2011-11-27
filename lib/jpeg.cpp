@@ -287,14 +287,16 @@ namespace jpeg_redaction {
       buf <<= 8;
       iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) {
-	fprintf(stderr, "Failed to load byte at %d (datalen %d)\n",
+	fprintf(stderr,
+		"ReadSOSMarker: Failed to load byte at %d (datalen %d)\n",
 		blockloc + 4 + datalen, datalen);
 	throw(-10);
       }
       datalen++;
       if (debug > 0 && (buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
       	printf("In scan found marker 0x%x\n", (buf & 0xffff));
-      if (debug > 0 && (buf & 0xffff) == jpeg_eoi) {
+      if ((buf & 0xffff) == jpeg_eoi) {
+	if (debug > 0)
 	printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
 	break;
       }

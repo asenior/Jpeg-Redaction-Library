@@ -103,9 +103,15 @@ public:
     case tiff_double:
       return(((double*)data_)[pos]);
     case tiff_urational:
-      return(((unsigned int*)data_)[pos*2] / (double)((unsigned int*)data_)[pos*2+1]);
+      if ((( int*)data_)[pos*2] == 0)
+	return 0;
+      return(((unsigned int*)data_)[pos*2] /
+	     (double)((unsigned int*)data_)[pos*2+1]);
     case tiff_rational:
-      return((( int*)data_)[pos*2] / (double)(( int*)data_)[pos*2+1]);
+      if ((( int*)data_)[pos*2] == 0)
+	return 0;
+      return((( int*)data_)[pos*2] /
+	     (double)(( int*)data_)[pos*2+1]);
     }
     throw("wrong type not float/double/rational");
   }

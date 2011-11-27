@@ -222,7 +222,7 @@ bool TiffTag::TagIsSubIFD() const {
 }
 
 void TiffTag::Print() const {
-  printf("0x%0x %dx%d %s (", tagid_, count_,
+  printf("0x%04x %2dx%d %s (", tagid_, count_,
 	 LengthOfType(type_), TypeName((tag_types)type_));
   TraceValue(4);
   printf(") ");

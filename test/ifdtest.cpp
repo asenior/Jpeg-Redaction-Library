@@ -46,8 +46,16 @@ int main(int argc, char **argv) {
                                 tiff_offset, byte_swapping);
     printf("%d tags in IFD\n",  ifd.GetNTags());
     if (ifd.GetNTags() != 14) throw("Wrong number of tags");
-    if (ifd.GetTag(0)->GetCount() != 10) throw("Wrong length at tag 0");
-    if (ifd.GetTag(1)->GetTag() != 0x110) throw("Wrong type at tag 1");
+    const int tag_types[] = {0x10f, 0x110, 0x112, 0x11a, 0x11b, 0x128,
+			     0x131, 0x132, 0x213, 0x8769, 0x8825, 0xc4a5,
+			     0xc6d2, 0xc6d3};
+    const int tag_counts[] = {10,8, 1, 1, 1, 1, 10, 20, 1, 1, 1, 208, 64, 128};
+    for (int i=0; i < 14; ++i) {
+      if (ifd.GetTag(i)->GetCount() != tag_counts[i])
+	throw("Wrong length at tag N");
+      if (ifd.GetTag(i)->GetTag() != tag_types[i])
+	throw("Wrong type at tag N");
+    }
   } catch (const char *error) {
     fprintf(stderr, "Error: <%s> at outer level\n", error);
     exit(1);

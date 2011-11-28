@@ -98,7 +98,7 @@ void JpegDecoder::WriteZeroLength(int which_dht) {
     const int eob = dhts_[which_dht]->eob_symbol_;
     const int eob_len = dhts_[which_dht]->lengths_[eob];
     const unsigned int code = dhts_[which_dht]->codes_[eob];
-    if (debug > 0) printf("Redacting this block, %x\n", code);
+    if (debug > 2) printf("Redacting this block, %x\n", code);
     InsertBits(code << (32 - eob_len), eob_len);
 }
 
@@ -202,7 +202,7 @@ void JpegDecoder::DecodeOneMCU() {
     int vf = (*components_)[comp]->v_factor_;
     int hf = (*components_)[comp]->h_factor_;
     int dht = (*components_)[comp]->table_;
-    if (debug >= 1)
+    if (debug > 2)
       printf("Decoding MCU %d,%d DHT: %d %dx%d\n", mcus_, dht, comp, hf, vf);
     for (int v = 0; v < vf; ++v) {
       for (int h = 0; h < hf; ++h) {
@@ -226,7 +226,7 @@ void JpegDecoder::DecodeOneMCU() {
 	}
 
 	if ((*components_)[comp]->table_ == 0) { // Y component
-	  if (debug > 0)
+	  if (debug > 2)
 	    printf("DCY: %d\n", dc_value);
 	  //	  y_value_ += dc_value;
 	  while (dc_values_[0] < (-128 << dct_gain_) ||
@@ -360,7 +360,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     DropBits(ac_symbol); // Could actually decode the value here.
   }
   if (debug >=2 && coeffs >= 63) printf("EOB64\n");
-  if (debug > 0)
+  if (debug > 2)
     printf("MCU %d data %d. %d coeffs\n",
 	   mcus_, data_pointer_, coeffs);
   return dc_value;

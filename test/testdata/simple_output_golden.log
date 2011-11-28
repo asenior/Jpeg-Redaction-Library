@@ -1,12 +1,10 @@
 Testing with loadall=false
 Got marker 0xffe0 APPn at 2
-APP ffe0 unsupported
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
  sz 67 nextloc 158
 Got marker 0xffc0 SOF0 at 158
-SOF sz 17 nextloc 177
 Component 1 H 2 V 2, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
@@ -25,31 +23,33 @@ In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Testing with loadall=true
 Got marker 0xffe0 APPn at 2
-APP ffe0 unsupported
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
  sz 67 nextloc 158
 Got marker 0xffc0 SOF0 at 158
-SOF sz 17 nextloc 177
 Component 1 H 2 V 2, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 648 x 486
 Got marker 0xffc4 DHT at 177
  sz 31 nextloc 210
+Building lookup table of 9 bits.
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 210
  sz 181 nextloc 393
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 10. Bytes=179 total = 179 length = 179
 Got marker 0xffc4 DHT at 393
  sz 31 nextloc 426
+Building lookup table of 10 bits.
 Didn't find 1
 DHT 0 01. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 426
  sz 181 nextloc 609
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 11. Bytes=179 total = 179 length = 179
 Got marker 0xffda SOS at 609
@@ -57,6 +57,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
+Comp 0 DC DHT: 0
+Comp 0 AC DHT: 1
+Comp 1 DC DHT: 2
+Comp 1 AC DHT: 3
+Comp 2 DC DHT: 2
+Comp 2 AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -66,7 +72,7 @@ MCU 5 dc_value 221 y_value_ 322. Doubling gain to 2
 Got to 1271 mcus. 4 bits left.
 Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
 Saving Image 82, 62 = 5084 pixels. 5084 bytes
-H 648 W 486
+DecodeImage H 648 W 486
 Saving: 9 markers
 Saved marker ffe0 length 16 at 2
 Saved marker ffdb length 67 at 20
@@ -80,31 +86,33 @@ Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Testing redaction
 Got marker 0xffe0 APPn at 2
-APP ffe0 unsupported
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
  sz 67 nextloc 158
 Got marker 0xffc0 SOF0 at 158
-SOF sz 17 nextloc 177
 Component 1 H 2 V 2, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 648 x 486
 Got marker 0xffc4 DHT at 177
  sz 31 nextloc 210
+Building lookup table of 9 bits.
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 210
  sz 181 nextloc 393
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 10. Bytes=179 total = 179 length = 179
 Got marker 0xffc4 DHT at 393
  sz 31 nextloc 426
+Building lookup table of 10 bits.
 Didn't find 1
 DHT 0 01. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 426
  sz 181 nextloc 609
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 11. Bytes=179 total = 179 length = 179
 Got marker 0xffda SOS at 609
@@ -112,6 +120,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
+Comp 0 DC DHT: 0
+Comp 0 AC DHT: 1
+Comp 1 DC DHT: 2
+Comp 1 AC DHT: 3
+Comp 2 DC DHT: 2
+Comp 2 AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -123,7 +137,7 @@ Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
 padding 6 bits mask 3f
 Redacted data length 54520 bytes 436154 bits
 sos block now 54530 bytes
-H 648 W 486
+DecodeImage H 648 W 486
 Redacting thumbnail
 Redaction::10 strips
 Strip (48,48: 143 MCUs) has 8020 bits (rep 1072), src 40095 dest 40095 diff 0 offset 0.
@@ -148,31 +162,33 @@ Saved marker ffc4 length 181 at 426
 Inserted 876 stuff_bytes in 54530 now 55406
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
-APP ffe0 unsupported
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
  sz 67 nextloc 158
 Got marker 0xffc0 SOF0 at 158
-SOF sz 17 nextloc 177
 Component 1 H 2 V 2, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 648 x 486
 Got marker 0xffc4 DHT at 177
  sz 31 nextloc 210
+Building lookup table of 9 bits.
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 210
  sz 181 nextloc 393
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 10. Bytes=179 total = 179 length = 179
 Got marker 0xffc4 DHT at 393
  sz 31 nextloc 426
+Building lookup table of 10 bits.
 Didn't find 1
 DHT 0 01. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 426
  sz 181 nextloc 609
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 11. Bytes=179 total = 179 length = 179
 Got marker 0xffda SOS at 609
@@ -180,6 +196,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
+Comp 0 DC DHT: 0
+Comp 0 AC DHT: 1
+Comp 1 DC DHT: 2
+Comp 1 AC DHT: 3
+Comp 2 DC DHT: 2
+Comp 2 AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -191,7 +213,7 @@ Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
 padding 5 bits mask 1f
 Redacted data length 63292 bytes 506331 bits
 sos block now 63302 bytes
-H 648 W 486
+DecodeImage H 648 W 486
 Redacting thumbnail
 Redaction::1 strips
 Strip (48,64: 184 MCUs) has 7977 bits (rep 1032), src 58844 dest 58844 diff 0 offset 0.
@@ -215,31 +237,33 @@ Saved marker ffc4 length 181 at 426
 Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
-APP ffe0 unsupported
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
  sz 67 nextloc 158
 Got marker 0xffc0 SOF0 at 158
-SOF sz 17 nextloc 177
 Component 1 H 2 V 2, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
 JPEG Image is 648 x 486
 Got marker 0xffc4 DHT at 177
  sz 31 nextloc 210
+Building lookup table of 9 bits.
 Didn't find 1
 DHT 0 00. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 210
  sz 181 nextloc 393
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 10. Bytes=179 total = 179 length = 179
 Got marker 0xffc4 DHT at 393
  sz 31 nextloc 426
+Building lookup table of 10 bits.
 Didn't find 1
 DHT 0 01. Bytes=29 total = 29 length = 29
 Got marker 0xffc4 DHT at 426
  sz 181 nextloc 609
+Building lookup table of 10 bits.
 Didn't find 5
 DHT 0 11. Bytes=179 total = 179 length = 179
 Got marker 0xffda SOS at 609
@@ -247,6 +271,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
+Comp 0 DC DHT: 0
+Comp 0 AC DHT: 1
+Comp 1 DC DHT: 2
+Comp 1 AC DHT: 3
+Comp 2 DC DHT: 2
+Comp 2 AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -258,7 +288,7 @@ Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
 padding 3 bits mask 07
 Redacted data length 48620 bytes 388957 bits
 sos block now 48630 bytes
-H 648 W 486
+DecodeImage H 648 W 486
 Redacting thumbnail
 Redaction::11 strips
 Strip (48,80: 238 MCUs) has 13672 bits (rep 2012), src 75715 dest 75715 diff 0 offset 0.

@@ -115,6 +115,7 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@cmp testout/test_noexif.jpg testdata/test_noexif_golden.jpg
 	@cmp testout/test_noexifgps.jpg testdata/test_noexifgps_golden.jpg
 	@cmp testout/test_nosensitive.jpg testdata/test_nosensitive_golden.jpg
+	diff testout/testexif_removal_output.log testdata/testexif_removal_output_golden.log > /dev/null
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)

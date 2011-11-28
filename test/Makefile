@@ -86,7 +86,7 @@ testout_dir:
 
 test_ifd: $(IFDTESTBINARY) testout_dir
 	./$(IFDTESTBINARY) > testout/ifdtest.log
-	diff testdata/ifdtest_golden.log testout/ifdtest.log
+	diff testdata/ifdtest_golden.log testout/ifdtest.log > /dev/null
 	@echo "== " $@ " passed"
 
 test_simple: $(BINARY) testout_dir clean_rawgrey

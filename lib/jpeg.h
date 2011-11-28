@@ -120,11 +120,11 @@ public:
   int RemoveIPTC();
   // Add here a list of all the tags that are considered sensitive.
   int RemoveAllSensitive() {
-    RemoveTag(TiffTag::tag_exif);
-    RemoveTag(TiffTag::tag_gps);
-    RemoveTag(TiffTag::tag_makernote);
-    RemoveTag(TiffTag::tag_make);
-    RemoveTag(TiffTag::tag_model);
+    RemoveTag(TiffTag::tag_ExifIFDPointer);
+    RemoveTag(TiffTag::tag_GpsInfoIFDPointer);
+    RemoveTag(TiffTag::tag_MakerNote);
+    RemoveTag(TiffTag::tag_Make);
+    RemoveTag(TiffTag::tag_Model);
     RemoveIPTC();
     // e.g. times, owner
   }

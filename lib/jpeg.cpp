@@ -469,7 +469,7 @@ namespace jpeg_redaction {
   Jpeg *Jpeg::GetThumbnail() {
     for (int i = 0 ; i < ifds_.size(); ++i) {
       if (ifds_[i]->GetJpeg() &&
-	  ifds_[i]->FindTag(TiffTag::tag_thumbnailoffset))
+	  ifds_[i]->FindTag(TiffTag::tag_ThumbnailOffset))
 	return ifds_[i]->GetJpeg();
     }
     return NULL;

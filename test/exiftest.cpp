@@ -31,7 +31,7 @@ namespace jpeg_redaction {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
 	if (!success) exit(1);
-	j2.RemoveTag(TiffTag::tag_exif);
+	j2.RemoveTag(TiffTag::tag_ExifIFDPointer);
 	j2.Save("testout/test_noexif.jpg");
       } catch (const char *error) {
 	fprintf(stderr, "Error: <%s> at outer level\n", error);
@@ -59,9 +59,9 @@ namespace jpeg_redaction {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
 	if (!success) exit(1);
-	int rem = j2.RemoveTag(TiffTag::tag_exif);
+	int rem = j2.RemoveTag(TiffTag::tag_ExifIFDPointer);
 	if (rem != 1) throw("Didn't remove one exif tag");
-	rem = j2.RemoveTag(TiffTag::tag_gps);
+	rem = j2.RemoveTag(TiffTag::tag_GpsInfoIFDPointer);
 	if (rem != 1) throw("Didn't remove one gps tag");
 	j2.Save("testout/test_noexifgps.jpg");
       } catch (const char *error) {

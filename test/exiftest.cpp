@@ -70,6 +70,27 @@ namespace jpeg_redaction {
       }
       return 0;
     }
+
+    int test_overwrite_old_string(const char * const filename) {
+      try {
+	Jpeg j2;
+	const char *new_maker = "Replace the maker with this string";
+	bool success = j2.LoadFromFile(filename, true);
+	if (!success) exit(1);
+	TiffTag *make = j2.FindTag(TiffTag::tag_Make);
+	if (make == NULL) throw("Couldn't find Make tag");
+	if (strcmp(make->GetStringValue(), "Panasonic") != 0)
+	  throw("Maker not \"Panasonic\"");
+	make->SetStringValue(new_maker);
+	if (strcmp(make->GetStringValue(), new_maker) != 0)
+	  throw("Maker not reset");
+	j2.Save("testout/test_newmaker.jpg");
+      } catch (const char *error) {
+	fprintf(stderr, "Error: <%s> at outer level\n", error);
+	exit(1);
+      }
+      return 0;
+    }
   } // namespace tests
 } // namespace jpeg_redaction
 
@@ -80,4 +101,5 @@ int main(int argc, char **argv) {
   jpeg_redaction::tests::test_exif_removal(filename.c_str());
   jpeg_redaction::tests::test_gps_removal(filename.c_str());
   jpeg_redaction::tests::test_sensitive_removal(filename.c_str());
+  jpeg_redaction::tests::test_overwrite_old_string(filename.c_str());
 }

@@ -92,25 +92,31 @@ public:
 
   const char *MarkerName(int marker) const;
   Iptc *GetIptc();
-  // Return a pointer to the Exif IFD if present. 
-  ExifIfd *GetExif() {
-    for (int i=0; i < ifds_.size(); ++i)
-      if (ifds_[i]->GetExif())
-	return ifds_[i]->GetExif();
+  // If there is one, return the first IFD.
+  TiffIfd *GetIFD() {
+    if (ifds_.size() >= 1)
+      return ifds_[0];
     return NULL;
   }
-  // Return a pointer to the Exif IFD or make one.
-  // ExifIfd *CreateExif() {
-  //   ExifIfd *exif = GetExif();
-  //   if (!exif) {
-  //     exif = new ExifIfd();
-  //   }
-  //   return exif;
-  // }
+  // Return a pointer to the Exif IFD if present. 
+  ExifIfd *GetExif() {
+    if (ifds_.size() >= 1)
+      return ifds_[0]->GetExif();
+    // for (int i=0; i < ifds_.size(); ++i)
+    //   if (ifds_[i]->GetExif())
+    // 	return ifds_[i]->GetExif();
+    return NULL;
+  }
   
+  TiffTag *FindTag(int tag_num) {
+    for (int i = 0; i < ifds_.size(); ++i) {
+      TiffTag *tag = ifds_[i]->FindTag(tag_num);
+      if (tag) return tag;
+    }
+  }
   int RemoveTag(int tag) {
     int removed = 0;
-    for (int i=0; i < ifds_.size(); ++i) {
+    for (int i = 0; i < ifds_.size(); ++i) {
       bool removed_this = ifds_[i]->RemoveTag(tag);
       if (removed_this) ++removed;
     }

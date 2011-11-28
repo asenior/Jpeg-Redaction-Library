@@ -152,7 +152,8 @@ public:
   ~TiffTag();
   TiffTag(FILE *pFile, bool byte_swapping);
 
-  // Must call WriteDataBlock first to set valpointerout_ and write the data block if appropriate.
+  // Must call WriteDataBlock first to set valpointerout_
+  // and write the data block if appropriate.
   int Write(FILE *pFile) const;
   // Call this first to write out the data block and set the valpointerout_
   int WriteDataBlock(FILE *pFile, int subfileoffset);
@@ -227,7 +228,15 @@ public:
   const unsigned char * GetData() const {
       return(data_);
   }
-
+  void SetStringValue(const char *s) {
+    if (type_ != tiff_string)
+      throw("SetStringValue on non-string.");
+    int totallength = strlen(s) + 1;
+    count_ = totallength;
+    delete [] data_;
+    data_ = new unsigned char [totallength];
+    strncpy((char*)data_, s, totallength);
+  }
   static int LengthOfType(short type) {
      if (type == tiff_int8|| type == tiff_uint8|| type == tiff_string|| type == tiff_bytes)
        return 1;

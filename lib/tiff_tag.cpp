@@ -25,6 +25,7 @@
 #include "tiff_tag.h"
 #include "tiff_ifd.h"
 #include "byte_swapping.h"
+#include "makernote.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -303,6 +304,15 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     return 1;
   } else {
     int iRV = fseek(pFile, position, SEEK_SET);
+    if (tagid_ == tag_MakerNote) {
+      printf("\n\n\n*******************************************************\n"
+	     "************************************************************\n",
+	     "Makernote\n");
+      MakerNoteFactory factory;
+      factory.SetManufacturer("Panasonic");
+      MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
+    //    position = valpointer_;
+    }
     const int type_len = LengthOfType(type_);
     const int totallength = count_ * type_len;
     data_ = new unsigned char [totallength];

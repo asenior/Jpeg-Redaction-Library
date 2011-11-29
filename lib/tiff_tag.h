@@ -37,13 +37,6 @@ class TiffIfd;
 class TiffTag
 {
 public:
-  int GetDataLength() const;
-  void TraceValue(int maxvals) const;
-  void Print() const;
-  TiffIfd *GetExif() {
-    throw("Not implemented yet");
-  }
-  void SetValOut(unsigned int val);
   enum tag_types {tiff_unknown=0,
 		  tiff_uint8 = 1,
 		  tiff_string=2,
@@ -57,6 +50,17 @@ public:
 		  tiff_rational=10,
 		  tiff_float=11,
 		  tiff_double=12};
+  TiffTag(FILE *pFile, bool byte_swapping);
+  // Create a tag from raw data.
+  TiffTag(int tag, enum tag_types type, int count, unsigned char *data);
+  ~TiffTag();
+  int GetDataLength() const;
+  void TraceValue(int maxvals) const;
+  void Print() const;
+  TiffIfd *GetExif() {
+    throw("Not implemented yet");
+  }
+  void SetValOut(unsigned int val);
   // Return the name of the given type.
   static const char *TypeName(tag_types t);
   // Return the name of the given type.
@@ -149,8 +153,6 @@ public:
 
     tag_Interoperability = 0xa005
   };
-  ~TiffTag();
-  TiffTag(FILE *pFile, bool byte_swapping);
 
   // Must call WriteDataBlock first to set valpointerout_
   // and write the data block if appropriate.

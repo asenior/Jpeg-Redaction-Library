@@ -82,6 +82,18 @@ namespace jpeg_redaction {
 	     tagid_, tagid_, TypeName((tag_types)type_), count_,
 	     value, value, totallength);
   }
+  TiffTag::TiffTag(int tagid, enum tag_types type, int count,
+		   unsigned char *data) {
+    tagid_ = tagid;
+    type_ = type;
+    count_ = count;
+    int totallength = count * LengthOfType(type);
+    data_ = new unsigned char[totallength];
+    memcpy(data_, data, totallength);
+    subifd_ = NULL;
+    loaded_ = true;
+  }
+
   const char *TiffTag::GPSTagName(const int tag) {
     switch (tag) {
     case gps_version: return "GPSversion";

@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "tiff_ifd.h"
+#include "obscura_metadata.h"
 
 namespace jpeg_redaction {
 
@@ -98,6 +99,15 @@ public:
       return ifds_[0];
     return NULL;
   }
+  // Set the obscura metadata block, deleting any previous data.
+  void SetObscuraMetaData(unsigned int length,
+			  const unsigned char *data) {
+    obscura_metadata_.SetDescriptor(length, data);
+  }
+  // Find the metadata if any.
+  const unsigned char *GetObscuraMetaData(unsigned int *length) const {
+    return obscura_metadata_.GetDescriptor(length);
+  }
   // Return a pointer to the Exif IFD if present. 
   ExifIfd *GetExif() {
     if (ifds_.size() >= 1)
@@ -164,6 +174,7 @@ protected:
   Photoshop3Block *photoshop3_;
   std::vector<JpegDHT*> dhts_;
   std::vector<JpegComponent*> components_;
+  ObscuraMetadata obscura_metadata_;
 };  // Jpeg
 }  // namespace redaction
 

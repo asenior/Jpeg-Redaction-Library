@@ -305,13 +305,13 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
   } else {
     int iRV = fseek(pFile, position, SEEK_SET);
     if (tagid_ == tag_MakerNote) {
-      printf("\n\n\n*******************************************************\n"
-	     "************************************************************\n",
-	     "Makernote\n");
-      MakerNoteFactory factory;
-      factory.SetManufacturer("Panasonic");
-      MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
-    //    position = valpointer_;
+      // printf("\n\n\n*******************************************************\n"
+      // 	     "************************************************************\n",
+      // 	     "Makernote\n");
+      // MakerNoteFactory factory;
+      // factory.SetManufacturer("Panasonic");
+      // MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
+      //    //    position = valpointer_;
     }
     const int type_len = LengthOfType(type_);
     const int totallength = count_ * type_len;

@@ -40,66 +40,65 @@ public:
     virtual int Write(FILE *pFile, int subfileoffset) const {};
   protected:
     TiffIfd *ifd_;
-
   };
 
-class Panasonic: public MakerNote {
-public:
-  Panasonic() {}
-  virtual int Read(FILE *pFile, int subfileoffset, int length) {
-    int start = ftell(pFile);
-    char header[12];
-    int iRV = fread(header, sizeof(char), 12, pFile);
-    if (strcmp(header, "Panasonic") != 0) {
+  class Panasonic: public MakerNote {
+  public:
+    Panasonic() {}
+    virtual int Read(FILE *pFile, int subfileoffset, int length) {
+      int start = ftell(pFile);
+      char header[12];
+      int iRV = fread(header, sizeof(char), 12, pFile);
+      if (strcmp(header, "Panasonic") != 0) {
+	fseek(pFile, start, SEEK_SET);
+	return 0;
+      }
+      printf("Loading Panasonic\n");
+      ifd_ = new TiffIfd(pFile, start+12, true, subfileoffset);
+      TiffTag *tag;
+      tag = ifd_->FindTag(0x69);
+      if (tag) printf("Panasonic69: %s\n", (const char *)tag->GetData());
+      tag = ifd_->FindTag(0x6b);
+      if (tag) printf("Panasonic6b: %s\n", (const char *)tag->GetData());
+      tag = ifd_->FindTag(0x6d);
+      if (tag) printf("Panasonic6d: %s\n", (const char *)tag->GetData());
+      tag = ifd_->FindTag(0x6f);
+      if (tag) printf("Panasonic6f: %s\n", (const char *)tag->GetData());
+      delete ifd_;
+
       fseek(pFile, start, SEEK_SET);
-      return 0;
+      return 1;
     }
-    printf("Loading Panasonic\n");
-    ifd_ = new TiffIfd(pFile, start+12, true, subfileoffset);
-    TiffTag *tag;
-    tag = ifd_->FindTag(0x69);
-    if (tag) printf("Panasonic69: %s\n", (const char *)tag->GetData());
-    tag = ifd_->FindTag(0x6b);
-    if (tag) printf("Panasonic6b: %s\n", (const char *)tag->GetData());
-    tag = ifd_->FindTag(0x6d);
-    if (tag) printf("Panasonic6d: %s\n", (const char *)tag->GetData());
-    tag = ifd_->FindTag(0x6f);
-    if (tag) printf("Panasonic6f: %s\n", (const char *)tag->GetData());
-    delete ifd_;
+    virtual int Write(FILE *pFile, int subfileoffset) const {
+      return 1;
+    }
+  protected:
+    const char *header;
+    TiffIfd *ifd_;
+  };
 
-    fseek(pFile, start, SEEK_SET);
-    return 1;
-  }
-  virtual int Write(FILE *pFile, int subfileoffset) const {
-    return 1;
-  }
-protected:
-  const char *header;
-  TiffIfd *ifd_;
-};
-
-class MakerNoteFactory {
-public:
-  MakerNoteFactory() {}
-  void SetManufacturer(const char *const manuf) { manufacturer_ = manuf;}
-  MakerNote *Read(FILE *pFile, int subfileoffset, int length) {
-    if (manufacturer_.compare("Canon") == 0) {
-      IfdMakerNote *canon = new IfdMakerNote;
-      canon->Read(pFile, subfileoffset, length);
-      return canon;
-    } else if (manufacturer_.compare("Panasonic") == 0) {
-      Panasonic *panasonic = new Panasonic;
-      panasonic->Read(pFile, subfileoffset, length);
-      return panasonic;
-    } else {
-      GenericMakerNote *generic = new GenericMakerNote;
-      generic->Read(pFile, subfileoffset, length);
-      return generic;
-    }      
-  }
-protected:
-  std::string manufacturer_;
-};
+  class MakerNoteFactory {
+  public:
+    MakerNoteFactory() {}
+    void SetManufacturer(const char *const manuf) { manufacturer_ = manuf;}
+    MakerNote *Read(FILE *pFile, int subfileoffset, int length) {
+      if (manufacturer_.compare("Canon") == 0) {
+	IfdMakerNote *canon = new IfdMakerNote;
+	canon->Read(pFile, subfileoffset, length);
+	return canon;
+      } else if (manufacturer_.compare("Panasonic") == 0) {
+	Panasonic *panasonic = new Panasonic;
+	panasonic->Read(pFile, subfileoffset, length);
+	return panasonic;
+      } else {
+	GenericMakerNote *generic = new GenericMakerNote;
+	generic->Read(pFile, subfileoffset, length);
+	return generic;
+      }      
+    }
+  protected:
+    std::string manufacturer_;
+  };
 
 }  // namespace jpeg_redaction
 #endif // JPEG_REDACTION_LIB_MAKERNOTE

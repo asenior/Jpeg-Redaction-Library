@@ -39,7 +39,7 @@ class JpegMarker {
     location_ = 0;
     length_ = length + 2;
     data_.resize(length);
-    memcpy(data_, data, length);
+    memcpy(&data_.front(), data, length);
     bit_length_ = length * 8;
   }
   void LoadFromLocation(FILE *pFile) {

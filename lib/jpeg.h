@@ -50,7 +50,7 @@ public:
 		 jpeg_dqt = 0xFFDB,
 		 jpeg_dri = 0xFFDD,
 		 jpeg_com = 0xFFDE,
-		 jpeg_app = 0xFFE0};
+		 jpeg_app = JPEG_APP0};
   class JpegComponent {
   public:
     JpegComponent(unsigned char *d) {

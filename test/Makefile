@@ -24,6 +24,7 @@ include ../Makefile.common
 
 BINARY = jpegtest
 READWRITE = testreadwrite
+METADATATESTBINARY = metadatatest
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
 BITSHIFTS = bit_shifts_test
@@ -55,6 +56,9 @@ $(EXIF_REMOVE): $(LIB) exiftest.cpp testout_dir
 
 $(IFDTESTBINARY): $(LIB) ifdtest.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib ifdtest.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(METADATATESTBINARY): $(LIB) metadatatest.cpp testout_dir
+	$(CC) $(CXXFLAGS) -I../lib metadatatest.cpp $(LIBPATH) $(LIB)  -o $@
 
 .PHONY: clean cleanall clean_rawgrey clean_test \
 	test testout_dir test_exif test_simple test_windows test_ifd \
@@ -116,6 +120,10 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@cmp testout/test_noexifgps.jpg testdata/test_noexifgps_golden.jpg
 	@cmp testout/test_nosensitive.jpg testdata/test_nosensitive_golden.jpg
 	diff testout/testexif_removal_output.log testdata/testexif_removal_output_golden.log > /dev/null
+	@echo "== " $@ " passed"
+
+test_metadata:  $(METADATATESTBINARY) testout_dir
+	./$(METADATATESTBINARY) testdata/windows.jpg
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)

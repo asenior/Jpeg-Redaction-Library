@@ -134,6 +134,7 @@ namespace jpeg_redaction {
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
+
 	AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	fprintf(stderr, "APP %x unsupported\n", marker);
 	//      throw("AppN unsupported");
@@ -200,6 +201,7 @@ namespace jpeg_redaction {
       if (marker == jpeg_sos) { // Start of scan
 	return ReadSOSMarker(pFile, blockloc, loadall);
       }
+      fprintf(stderr, "Unknown marker is 0x%04x.\n", marker);
       throw("Unknown marker found in JPEG");
     }
     return 0;
@@ -423,6 +425,7 @@ namespace jpeg_redaction {
       }
       rv = fseek(pFile, 0, SEEK_END);
     }
+    obscura_metadata_.Write(pFile);
     if (photoshop3_) {
       unsigned short marker =jpeg_app + 0xd;
       if (!arch_big_endian)
@@ -616,6 +619,11 @@ namespace jpeg_redaction {
       markerptr->LoadHere(pFile);
     else
       fseek(pFile, location + length + 2, SEEK_SET);
+    if (marker == jpeg_app + 7) {
+      obscura_metadata_.ImportMarker(markerptr);
+      delete markerptr;
+      return NULL;
+    }
     markers_.push_back(markerptr);
     return markerptr;
   }

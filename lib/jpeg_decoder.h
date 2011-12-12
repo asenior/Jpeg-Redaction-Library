@@ -154,7 +154,7 @@ protected:
     int byte = redaction_bit_pointer_ / 8;
     redaction_bit_pointer_ += len;
     while (len > 0) {
-      if (debug > 0) {
+      if (debug > 3) {
 	std::string s = Binary(bits >> (32-len), len);
 	printf("inserting %d bits: %s\n", len, s.c_str());
       }
@@ -177,7 +177,7 @@ protected:
       space = 8;
     }
     if (debug > 2) printf("Pointer is %d\n", redaction_bit_pointer_);
-    if (debug > 0) {
+    if (debug > 3) {
       std::string scurr = Binary(*(unsigned int*)&redacted_data_[0], 32);
       printf("redacted after: %s\n", scurr.c_str());
     }

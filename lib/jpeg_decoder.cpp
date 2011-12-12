@@ -66,8 +66,8 @@ JpegDecoder::JpegDecoder(int w, int h,
     }
     if (ac_dht == NULL || dc_dht == NULL) {
       for (int i = 0; i < dhts.size(); ++i)
-	printf("DHT %d id %d\n", i, dhts[i]->id_);
-      printf("comp %d/%d table %d dhts %d AC %x dc %x\n",
+	fprintf(stderr, "DHT %d id %d\n", i, dhts[i]->id_);
+      fprintf(stderr, "comp %d/%d table %d dhts %d AC %x dc %x\n",
 	     comp, components->size(),
 	     (*components)[comp]->table_, dhts.size(), ac_dht, dc_dht);
       throw("Can't find table ");
@@ -87,8 +87,9 @@ JpegDecoder::JpegDecoder(int w, int h,
   h_blocks_ = mcu_v_ * ((height_ + vq -1)/vq);
   // How many MCUs there are in the image.
   num_mcus_ = (w_blocks_/mcu_h_) * (h_blocks_/ mcu_v_);
-  printf("Expect %d MCUS. %dx%d blocks h:%d v:%d\n",
-	 num_mcus_, w_blocks_, h_blocks_, mcu_h_, mcu_v_);
+  if (debug > 0)
+    printf("Expect %d MCUS. %dx%d blocks h:%d v:%d\n",
+	   num_mcus_, w_blocks_, h_blocks_, mcu_h_, mcu_v_);
   image_data_.reserve(num_mcus_ * mcu_h_ * mcu_v_);
   int_image_data_.reserve(num_mcus_ * (2 + mcu_h_ * mcu_v_));
 }
@@ -97,7 +98,7 @@ void JpegDecoder::WriteZeroLength(int which_dht) {
     const int eob = dhts_[which_dht]->eob_symbol_;
     const int eob_len = dhts_[which_dht]->lengths_[eob];
     const unsigned int code = dhts_[which_dht]->codes_[eob];
-    if (debug > 0) printf("Redacting this block, %x\n", code);
+    if (debug > 2) printf("Redacting this block, %x\n", code);
     InsertBits(code << (32 - eob_len), eob_len);
 }
 
@@ -177,8 +178,9 @@ void JpegDecoder::Decode(Redaction *redaction) {
   if (redacting_ == kRedactingActive)
       StoreEndOfStrip(redaction);
 
-  printf("Got to %d mcus. %d bits left.\n", num_mcus_,
-	 length_ - data_pointer_ + num_bits_);
+  if (debug > 0)
+    printf("Got to %d mcus. %d bits left.\n", num_mcus_,
+	   length_ - data_pointer_ + num_bits_);
   length_ = redaction_bit_pointer_;
   redaction_ = NULL;
 }
@@ -200,7 +202,7 @@ void JpegDecoder::DecodeOneMCU() {
     int vf = (*components_)[comp]->v_factor_;
     int hf = (*components_)[comp]->h_factor_;
     int dht = (*components_)[comp]->table_;
-    if (debug >= 1)
+    if (debug > 2)
       printf("Decoding MCU %d,%d DHT: %d %dx%d\n", mcus_, dht, comp, hf, vf);
     for (int v = 0; v < vf; ++v) {
       for (int h = 0; h < hf; ++h) {
@@ -217,20 +219,22 @@ void JpegDecoder::DecodeOneMCU() {
 	try {
 	  dc_value = DecodeOneBlock(dht, comp, subblock_redaction);
 	} catch (const char *error) {
-	  printf("DecodeOneMCU Caught %s at MCU %d of %d\n",
-		 error, mcus_, num_mcus_);
+	  fprintf(stderr,
+		  "DecodeOneMCU Caught %s at MCU %d of %d\n",
+		  error, mcus_, num_mcus_);
 	  throw(error);
 	}
 
 	if ((*components_)[comp]->table_ == 0) { // Y component
-	  if (debug > 0)
+	  if (debug > 2)
 	    printf("DCY: %d\n", dc_value);
 	  //	  y_value_ += dc_value;
 	  while (dc_values_[0] < (-128 << dct_gain_) ||
 		 dc_values_[0] >= (128 << dct_gain_)) {
 	    ++dct_gain_;
-	    printf("MCU %d dc_value %d y_value_ %d. Doubling gain to %d\n",
-		   mcus_, dc_value, dc_values_[0], dct_gain_);
+	    if (debug > 0)
+	      printf("MCU %d dc_value %d y_value_ %d. Doubling gain to %d\n",
+		     mcus_, dc_value, dc_values_[0], dct_gain_);
 	    for (int op = 0; op < image_data_.size(); ++op)
 	      image_data_[op]= image_data_[op]/2 + 64;
 	  }
@@ -291,7 +295,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     dc_length_size = dhts_[2*dht]->Decode(current_bits_, num_bits_,
 					  &dc_symbol_size);
   } catch (const char *error) {
-    printf("Caught %s at MCU %d of %d\n", error, mcus_, num_mcus_);
+    fprintf(stderr, "Caught %s at MCU %d of %d\n", error, mcus_, num_mcus_);
     throw(error);
   }
   if (redacting == kRedactingInactive) CopyBits(dc_length_size);
@@ -357,7 +361,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     DropBits(ac_symbol); // Could actually decode the value here.
   }
   if (debug >=2 && coeffs >= 63) printf("EOB64\n");
-  if (debug > 0)
+  if (debug > 2)
     printf("MCU %d data %d. %d coeffs\n",
 	   mcus_, data_pointer_, coeffs);
   return dc_value;

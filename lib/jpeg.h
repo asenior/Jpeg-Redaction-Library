@@ -29,9 +29,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "tiff_ifd.h"
+#include "obscura_metadata.h"
 
 namespace jpeg_redaction {
-extern int debug;
 
 class Iptc;
 class JpegDHT;
@@ -50,7 +50,7 @@ public:
 		 jpeg_dqt = 0xFFDB,
 		 jpeg_dri = 0xFFDD,
 		 jpeg_com = 0xFFDE,
-		 jpeg_app = 0xFFE0};
+		 jpeg_app = JPEG_APP0};
   class JpegComponent {
   public:
     JpegComponent(unsigned char *d) {
@@ -93,16 +93,40 @@ public:
 
   const char *MarkerName(int marker) const;
   Iptc *GetIptc();
+  // If there is one, return the first IFD.
+  TiffIfd *GetIFD() {
+    if (ifds_.size() >= 1)
+      return ifds_[0];
+    return NULL;
+  }
+  // Set the obscura metadata block, deleting any previous data.
+  void SetObscuraMetaData(unsigned int length,
+			  const unsigned char *data) {
+    obscura_metadata_.SetDescriptor(length, data);
+  }
+  // Find the metadata if any.
+  const unsigned char *GetObscuraMetaData(unsigned int *length) const {
+    return obscura_metadata_.GetDescriptor(length);
+  }
   // Return a pointer to the Exif IFD if present. 
   ExifIfd *GetExif() {
-    for (int i=0; i < ifds_.size(); ++i)
-      if (ifds_[i]->GetExif())
-	return ifds_[i]->GetExif();
+    if (ifds_.size() >= 1)
+      return ifds_[0]->GetExif();
+    // for (int i=0; i < ifds_.size(); ++i)
+    //   if (ifds_[i]->GetExif())
+    // 	return ifds_[i]->GetExif();
     return NULL;
+  }
+  
+  TiffTag *FindTag(int tag_num) {
+    for (int i = 0; i < ifds_.size(); ++i) {
+      TiffTag *tag = ifds_[i]->FindTag(tag_num);
+      if (tag) return tag;
+    }
   }
   int RemoveTag(int tag) {
     int removed = 0;
-    for (int i=0; i < ifds_.size(); ++i) {
+    for (int i = 0; i < ifds_.size(); ++i) {
       bool removed_this = ifds_[i]->RemoveTag(tag);
       if (removed_this) ++removed;
     }
@@ -112,11 +136,11 @@ public:
   int RemoveIPTC();
   // Add here a list of all the tags that are considered sensitive.
   int RemoveAllSensitive() {
-    RemoveTag(TiffTag::tag_exif);
-    RemoveTag(TiffTag::tag_gps);
-    RemoveTag(TiffTag::tag_makernote);
-    RemoveTag(TiffTag::tag_make);
-    RemoveTag(TiffTag::tag_model);
+    RemoveTag(TiffTag::tag_ExifIFDPointer);
+    RemoveTag(TiffTag::tag_GpsInfoIFDPointer);
+    RemoveTag(TiffTag::tag_MakerNote);
+    RemoveTag(TiffTag::tag_Make);
+    RemoveTag(TiffTag::tag_Model);
     RemoveIPTC();
     // e.g. times, owner
   }
@@ -150,6 +174,7 @@ protected:
   Photoshop3Block *photoshop3_;
   std::vector<JpegDHT*> dhts_;
   std::vector<JpegComponent*> components_;
+  ObscuraMetadata obscura_metadata_;
 };  // Jpeg
 }  // namespace redaction
 

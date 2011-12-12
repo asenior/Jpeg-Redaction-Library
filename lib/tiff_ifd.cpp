@@ -20,6 +20,7 @@
 // TiffIIfd.cpp: implementation of the TiffIfd class.
 // (c) 2011 Andrew Senior andrewsenior@google.com
 
+#include "debug_flag.h"
 #include "tiff_ifd.h"
 #include "tiff_tag.h"
 #include "jpeg.h"
@@ -67,16 +68,19 @@ TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
   printf("Loaded Image data\n");
   if (loadall)
     LoadAll(pFile);
-  printf("Listing tags\n");
   ListTags();
 }
 
+  // Print all tags to stdout.
 void TiffIfd::ListTags() const {
-  TiffTag *width_tag = FindTag(TiffTag::tag_width);
-  TiffTag *height_tag = FindTag(TiffTag::tag_height);
+  if (debug >= 0)
+    printf("%s:%d Listing %d tags\n", __FILE__, __LINE__, GetNTags());
+  TiffTag *width_tag = FindTag(TiffTag::tag_ImageWidth);
+  TiffTag *height_tag = FindTag(TiffTag::tag_ImageHeight);
   if (width_tag && height_tag) {
-    printf("Image: %dx%d ", width_tag->GetUIntValue(0), height_tag->GetUIntValue(0));
-    TiffTag *compression_tag = FindTag(TiffTag::tag_compression);
+    printf("Image: %dx%d ",
+	   width_tag->GetUIntValue(0), height_tag->GetUIntValue(0));
+    TiffTag *compression_tag = FindTag(TiffTag::tag_Compression);
     if(compression_tag)
       printf("(%d) ", compression_tag->GetUIntValue(0));
   }
@@ -113,8 +117,8 @@ unsigned int TiffIfd::Write(FILE *pFile,
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
     unsigned int pointer = tags_[tagindex]->Write(pFile);   // 0 if no pointer.
     if (pointer) {
-      if (tags_[tagindex]->GetTag() == TiffTag::tag_stripbytes ||
-	  tags_[tagindex]->GetTag() == TiffTag::tag_thumbnaillength) {
+      if (tags_[tagindex]->GetTag() == TiffTag::tag_StripByteCounts ||
+	  tags_[tagindex]->GetTag() == TiffTag::tag_ThumbnailLength) {
 	length_where = pointer;
       } else {
 	pending_pointers_where.push_back(pointer);
@@ -129,8 +133,8 @@ unsigned int TiffIfd::Write(FILE *pFile,
   // Write all the subsidiary data that doesn't fit in tags
   // as well as thumbnail/image data.
   for(int tagindex=0 ; tagindex < tags_.size(); ++tagindex) {
-    if (tags_[tagindex]->GetTag() == TiffTag::tag_stripoffset ||
-	tags_[tagindex]->GetTag() == TiffTag::tag_thumbnailoffset) {
+    if (tags_[tagindex]->GetTag() == TiffTag::tag_StripOffsets ||
+	tags_[tagindex]->GetTag() == TiffTag::tag_ThumbnailOffset) {
       if (data_.empty()) throw("No data to write");
       unsigned int data_start = ftell(pFile);
       // Write the image data out.
@@ -197,12 +201,12 @@ void TiffIfd::Reset() {
 
 int TiffIfd::LoadImageData(FILE *pFile, bool loadall)
 {
-  TiffTag *tagdataoffs = FindTag(TiffTag::tag_stripoffset);
-  TiffTag *tagdatabytes = FindTag(TiffTag::tag_stripbytes);
+  TiffTag *tagdataoffs = FindTag(TiffTag::tag_StripOffsets);
+  TiffTag *tagdatabytes = FindTag(TiffTag::tag_StripByteCounts);
   if (tagdataoffs == NULL) {
     if (tagdatabytes !=NULL) throw("offs but no length in data");
-    tagdataoffs = FindTag(TiffTag::tag_thumbnailoffset);
-    tagdatabytes = FindTag(TiffTag::tag_thumbnaillength);
+    tagdataoffs = FindTag(TiffTag::tag_ThumbnailOffset);
+    tagdatabytes = FindTag(TiffTag::tag_ThumbnailLength);
     if (tagdataoffs) {
       if (tagdatabytes == NULL) throw("thumbnail offs but no length in data");
       printf("Loading thumbnail\n");

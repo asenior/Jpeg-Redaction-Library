@@ -24,6 +24,7 @@ include ../Makefile.common
 
 BINARY = jpegtest
 READWRITE = testreadwrite
+METADATATESTBINARY = metadatatest
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
 BITSHIFTS = bit_shifts_test
@@ -41,8 +42,8 @@ test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
 $(LIB): 
 	cd ../lib; $(MAKE) lib
 
-$(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h testout_dir
-	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp $(LIBPATH)  -o $@
+$(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h testout_dir ../lib/debug_flag.cpp
+	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp ../lib/debug_flag.cpp $(LIBPATH)  -o $@
 
 $(BINARY): $(LIB) jpegtest.cpp test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
@@ -55,6 +56,9 @@ $(EXIF_REMOVE): $(LIB) exiftest.cpp testout_dir
 
 $(IFDTESTBINARY): $(LIB) ifdtest.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib ifdtest.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(METADATATESTBINARY): $(LIB) metadatatest.cpp testout_dir
+	$(CC) $(CXXFLAGS) -I../lib metadatatest.cpp $(LIBPATH) $(LIB)  -o $@
 
 .PHONY: clean cleanall clean_rawgrey clean_test \
 	test testout_dir test_exif test_simple test_windows test_ifd \
@@ -85,20 +89,20 @@ testout_dir:
 	@mkdir -p testout
 
 test_ifd: $(IFDTESTBINARY) testout_dir
-	./$(IFDTESTBINARY) | sed -e 's/nan/-nan/g' > testout/ifdtest.log
-	diff testdata/ifdtest_golden.log testout/ifdtest.log
+	./$(IFDTESTBINARY) > testout/ifdtest.log
+	diff testdata/ifdtest_golden.log testout/ifdtest.log > /dev/null
 	@echo "== " $@ " passed"
 
 test_simple: $(BINARY) testout_dir clean_rawgrey
 	./$(BINARY) testdata/simple.jpg > testout/simple_output.log
-	diff  testdata/simple_output_golden.log testout/simple_output.log 
+	diff  testdata/simple_output_golden.log testout/simple_output.log > /dev/null
 	@cmp  testdata/simple_rawgrey_golden.pgm testout/rawgrey.pgm 
 	@echo "== " $@ " passed"
 
 
 test_windows: $(BINARY) testout_dir clean_rawgrey
-	./$(BINARY) testdata/windows.jpg  | sed -e 's/nan/-nan/g' > testout/windows_output.log
-	diff  testdata/windows_output_golden.log testout/windows_output.log
+	./$(BINARY) testdata/windows.jpg > testout/windows_output.log
+	diff  testdata/windows_output_golden.log testout/windows_output.log > /dev/null
 	@cmp  testdata/windows_out_redacted.jpg testout/testoutput.jpg
 	@cmp  testdata/windows_rawgrey_golden.pgm testout/rawgrey.pgm
 	@echo "== " $@ " passed"
@@ -107,7 +111,7 @@ test_windows: $(BINARY) testout_dir clean_rawgrey
 test_exif:  $(BINARY) testout_dir clean_rawgrey
 	./$(BINARY) testdata/testexif.jpg > testout/testexif_output.log
 	$(EXIFTOOL) testoutput.jpg | grep -v "^File"  > testout/testexif.exiftxt
-	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt
+	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt > /dev/null
 	@echo "== " $@ " passed"
 
 test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
@@ -115,6 +119,11 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@cmp testout/test_noexif.jpg testdata/test_noexif_golden.jpg
 	@cmp testout/test_noexifgps.jpg testdata/test_noexifgps_golden.jpg
 	@cmp testout/test_nosensitive.jpg testdata/test_nosensitive_golden.jpg
+	diff testout/testexif_removal_output.log testdata/testexif_removal_output_golden.log > /dev/null
+	@echo "== " $@ " passed"
+
+test_metadata:  $(METADATATESTBINARY) testout_dir
+	./$(METADATATESTBINARY) testdata/windows.jpg
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)

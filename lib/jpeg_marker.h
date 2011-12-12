@@ -31,6 +31,17 @@ class JpegMarker {
     location_ = location_;
     length_ = length;
   }
+  // Create a marker from a block of data.
+  JpegMarker(unsigned short marker,
+	     const unsigned char *data,
+	     unsigned int length) {
+    marker_ = marker;
+    location_ = 0;
+    length_ = length + 2;
+    data_.resize(length);
+    memcpy(&data_.front(), data, length);
+    bit_length_ = length * 8;
+  }
   void LoadFromLocation(FILE *pFile) {
     fseek(pFile, location_ + 4, SEEK_SET);
     LoadHere(pFile);

@@ -21,6 +21,7 @@
 #define INCLUDE_REDACTION
 
 #include <string>
+#include "debug_flag.h"
 #include "bit_shifts.h"
 
 namespace jpeg_redaction {
@@ -66,8 +67,9 @@ public:
 	       int *data_bits) const {
     // How much we have to shift the trailing region up.
     const int tail_shift =  bits_ - replaced_by_bits_;
-    printf("Patch at %d (%d) %d->%d\n",
-	   src_start_ + offset, offset, replaced_by_bits_, bits_);
+    if (debug > 0)
+      printf("Patch at %d (%d) %d->%d\n",
+	     src_start_ + offset, offset, replaced_by_bits_, bits_);
     BitShifts::ShiftTail(data, data_bits, src_start_ + offset, tail_shift);
     BitShifts::Overwrite(data, *data_bits,
     			 src_start_ + offset, 
@@ -78,11 +80,12 @@ public:
   bool Valid(int *offset) const {
     if (bits_ < 0) return false;
     if (data_.size() * 8 < bits_) return false;
-    printf("Strip (%d,%d: %d MCUs) has %d bits (rep %d), src %d dest %d "
-    	   "diff %d offset %d.\n", x_, y_, blocks_,
-    	   bits_, replaced_by_bits_,
-    	   src_start_, dest_start_, src_start_ - dest_start_,
-    	   *offset);
+    if (debug > 0)
+      printf("Strip (%d,%d: %d MCUs) has %d bits (rep %d), src %d dest %d "
+	     "diff %d offset %d.\n", x_, y_, blocks_,
+	     bits_, replaced_by_bits_,
+	     src_start_, dest_start_, src_start_ - dest_start_,
+	     *offset);
     *offset += bits_ - replaced_by_bits_;
     return true;
   }
@@ -146,7 +149,7 @@ public:
 	redaction_method_ = redact_inverse_pixellate;
 	break;
       default:
-	printf("Unknown redaction method: %s\n", method);
+	fprintf(stderr, "Unknown redaction method: %s\n", method);
 	return;
       }
     }
@@ -173,14 +176,15 @@ public:
   Redaction *Copy() {
     Redaction *copy = new Redaction;
     for (int i = 0; i < regions_.size(); ++i) {
-      printf("adding region %d of %d\n", i, regions_.size());
+      if (debug > 0)
+	printf("adding region %d of %d\n", i, regions_.size());
       copy->AddRegion(regions_[i]);
     }
     return copy;
   }
   void AddRegion(const Region &rect) {
     if (rect.l_ >= rect.r_ || rect.t_ >= rect.b_) {
-      printf("Bad region %d %d %d %d\n",
+      fprintf(stderr, "Bad region %d %d %d %d\n",
 	     rect.l_, rect.r_, rect.t_, rect.b_);
       throw("region badly formed l>=r or t>=b");
     }
@@ -225,7 +229,8 @@ public:
   // Check that all the strips are consistent.
   bool ValidateStrips() {
     int offset = 0;
-    printf("Redaction::%d strips\n", strips_.size());
+    if (debug > 0)
+      printf("Redaction::%d strips\n", strips_.size());
     for (int i = 0; i < strips_.size(); ++i) {
       if (!strips_[i]->Valid(&offset))
 	return false;
@@ -256,9 +261,10 @@ public:
   }
   void Scale(int new_width, int new_height,
 	     int old_width, int old_height) {
-    printf("Scaling %dx%d -> %dx%d\n",
-	   old_width, old_height,
-	   new_width, new_height);
+    if (debug > 0)
+      printf("Scaling %dx%d -> %dx%d\n",
+	     old_width, old_height,
+	     new_width, new_height);
     for (int i = 0; i< regions_.size(); ++i) {
       regions_[i].l_ = (regions_[i].l_ * new_width) / old_width;
       regions_[i].r_ = (regions_[i].r_ * new_width) / old_width;

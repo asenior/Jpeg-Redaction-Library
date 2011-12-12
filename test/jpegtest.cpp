@@ -22,6 +22,7 @@
 
 #include <string>
 #include <vector>
+#include "../lib/debug_flag.h"
 #include "jpeg.h"
 #include "redaction.h"
 #include "test_utils.h"
@@ -30,6 +31,9 @@ int main(int argc, char **argv) {
   std::string filename("testdata/windows.jpg");
   if (argc > 1)
     filename = argv[1];
+  // We'll compare goldens of stdout for each file, so dump 
+  // interesting info to stdout.
+  jpeg_redaction::debug = 1;
   int rv = jpeg_redaction::tests::test_loadallfalse(filename.c_str());
   if (rv) {
     fprintf(stderr, "Failed on loadallfalse\n");

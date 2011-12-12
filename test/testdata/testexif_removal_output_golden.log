@@ -1,0 +1,553 @@
+IFDSize: 14 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 34 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 2 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 2 tags
+0x0001 GPSlat_ref         4x1 string     ("R98") 
+0x0002 GPSlat             4x1 bytes      (0x30 0x31 0x30 0x30) 
+
+tiff_ifd.cpp:77 Listing 34 tags
+0x829a ExposureTime       1x8 urational  (0.016667) 
+0x829d FNumber            1x8 urational  (4.300000) 
+0x8822 ExposureProgram    1x2 uint16     (3) 
+0x8827 ISOSpeedRatings    1x2 uint16     (80) 
+0x9000 ExifVersion        4x1 bytes      (0x30 0x32 0x32 0x31) 
+0x9003 DateTimeOriginal  20x1 string     ("2011:03:12 14:45:33") 
+0x9004 DateTimeDigitized 20x1 string     ("2011:03:12 14:45:33") 
+0x9101 Unknown            4x1 bytes      (0x01 0x02 0x03 0x00) 
+0x9102 Unknown            1x8 urational  (4.000000) 
+0x9204 ExposureBiasValue  1x8 rational   (0.000000) 
+0x9205 MaxApertureValue   1x8 urational  (3.440000) 
+0x9207 MeteringMode       1x2 uint16     (5) 
+0x9208 LightSource        1x2 uint16     (0) 
+0x9209 Flash              1x2 uint16     (16) 
+0x920a FocalLength        1x8 urational  (15.800000) 
+0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
+0xa001 Unknown            1x2 uint16     (1) 
+0xa002 Unknown            1x4 uint32     (3264) 
+0xa003 Unknown            1x4 uint32     (2448) 
+0xa005 Interoperability   1x4 uint32     (IFD 11516) 
+0xa217 Unknown            1x2 uint16     (2) 
+0xa300 Unknown            1x1 bytes      (0x03) 
+0xa301 Unknown            1x1 bytes      (0x01) 
+0xa401 Unknown            1x2 uint16     (0) 
+0xa402 Unknown            1x2 uint16     (0) 
+0xa403 Unknown            1x2 uint16     (0) 
+0xa404 Unknown            1x8 urational  (0.000000) 
+0xa405 Unknown            1x2 uint16     (96) 
+0xa406 Unknown            1x2 uint16     (0) 
+0xa407 Unknown            1x2 uint16     (0) 
+0xa408 Unknown            1x2 uint16     (0) 
+0xa409 Unknown            1x2 uint16     (0) 
+0xa40a Unknown            1x2 uint16     (0) 
+
+IFDSize: 13 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 13 tags
+0x0000 GPSversion         4x1 uint8      (2 2 0 0) 
+0x0001 GPSlat_ref         2x1 string     ("N") 
+0x0002 GPSlat             3x8 urational  (51.000000 33.000000 19.350000) 
+0x0003 GPSlong_ref        2x1 string     ("W") 
+0x0004 GPSlong            3x8 urational  (0.000000 10.000000 23.980000) 
+0x0007 GPStime_stamp      3x8 urational  (21.000000 9.000000 27.000000) 
+0x0008 GPSsatellites      2x1 string     ("5") 
+0x0009 GPSstatus          2x1 string     ("A") 
+0x000a GPSmeasure_mode    2x1 string     ("2") 
+0x000b GPSdop             1x8 urational  (2.200000) 
+0x0012 GPSmap_datum      10x1 string     ("WGS-84   ") 
+0x001b Unknown            3x1 bytes      (0x47 0x50 0x53) 
+0x001d Unknown           11x1 string     ("2011:03:10") 
+
+tiff_ifd.cpp:77 Listing 14 tags
+0x010f Make              10x1 string     ("Panasonic") 
+0x0110 Model              8x1 string     ("DMC-ZS7") 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0131 Software          10x1 string     ("Ver.1.0  ") 
+0x0132 DateChange        20x1 string     ("2011:03:12 14:45:33") 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+0x8769 ExifIFDPointer     1x4 uint32     (IFD 654) 
+0x8825 GpsInfoIFDPointer  1x4 uint32     (IFD 11252) 
+0xc4a5 Unknown           208x1 bytes      (0x50 0x72 0x69 0x6e ) 
+0xc6d2 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0xc6d3 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+
+IFDSize: 8 
+
+ DIDIFD
+Loading thumbnail
+Loading internal image data at 11764,6716
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+TiffIfd:LoadImageData all
+Loaded Image data
+tiff_ifd.cpp:77 Listing 8 tags
+0x0103 Compression        1x2 uint16     (6) 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0201 ThumbnailOffset    1x4 uint32     (11764) 
+0x0202 ThumbnailLength    1x4 uint32     (6716) 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+Write TiffIfd Locs Where: 280 What: 408-12
+Write TiffIfd Locs Where: 304 What: 432-12
+Write TiffIfd Locs Where: 316 What: 456-12
+Write TiffIfd Locs Where: 364 What: 480-12
+Write TiffIfd Locs Where: 376 What: 488-12
+Write TiffIfd Locs Where: 400 What: 498-12
+Write TiffIfd Locs Where: 30 What: 182-12
+Write TiffIfd Locs Where: 42 What: 192-12
+Write TiffIfd Locs Where: 66 What: 200-12
+Write TiffIfd Locs Where: 78 What: 208-12
+Write TiffIfd Locs Where: 102 What: 216-12
+Write TiffIfd Locs Where: 114 What: 226-12
+Write TiffIfd Locs Where: 138 What: 246-12
+Write TiffIfd Locs Where: 150 What: 509-12
+Write TiffIfd Locs Where: 162 What: 717-12
+Write TiffIfd Locs Where: 174 What: 781-12
+Saving thumbnail to file
+thumbnail written
+Write TiffIfd Locs Where: 943 What: 1011-12
+Write TiffIfd Locs Where: 955 What: 1019-12
+Write TiffIfd Locs Where: 979 What: 1027-12
+IFDSize: 14 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 34 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 2 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 2 tags
+0x0001 GPSlat_ref         4x1 string     ("R98") 
+0x0002 GPSlat             4x1 bytes      (0x30 0x31 0x30 0x30) 
+
+tiff_ifd.cpp:77 Listing 34 tags
+0x829a ExposureTime       1x8 urational  (0.016667) 
+0x829d FNumber            1x8 urational  (4.300000) 
+0x8822 ExposureProgram    1x2 uint16     (3) 
+0x8827 ISOSpeedRatings    1x2 uint16     (80) 
+0x9000 ExifVersion        4x1 bytes      (0x30 0x32 0x32 0x31) 
+0x9003 DateTimeOriginal  20x1 string     ("2011:03:12 14:45:33") 
+0x9004 DateTimeDigitized 20x1 string     ("2011:03:12 14:45:33") 
+0x9101 Unknown            4x1 bytes      (0x01 0x02 0x03 0x00) 
+0x9102 Unknown            1x8 urational  (4.000000) 
+0x9204 ExposureBiasValue  1x8 rational   (0.000000) 
+0x9205 MaxApertureValue   1x8 urational  (3.440000) 
+0x9207 MeteringMode       1x2 uint16     (5) 
+0x9208 LightSource        1x2 uint16     (0) 
+0x9209 Flash              1x2 uint16     (16) 
+0x920a FocalLength        1x8 urational  (15.800000) 
+0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
+0xa001 Unknown            1x2 uint16     (1) 
+0xa002 Unknown            1x4 uint32     (3264) 
+0xa003 Unknown            1x4 uint32     (2448) 
+0xa005 Interoperability   1x4 uint32     (IFD 11516) 
+0xa217 Unknown            1x2 uint16     (2) 
+0xa300 Unknown            1x1 bytes      (0x03) 
+0xa301 Unknown            1x1 bytes      (0x01) 
+0xa401 Unknown            1x2 uint16     (0) 
+0xa402 Unknown            1x2 uint16     (0) 
+0xa403 Unknown            1x2 uint16     (0) 
+0xa404 Unknown            1x8 urational  (0.000000) 
+0xa405 Unknown            1x2 uint16     (96) 
+0xa406 Unknown            1x2 uint16     (0) 
+0xa407 Unknown            1x2 uint16     (0) 
+0xa408 Unknown            1x2 uint16     (0) 
+0xa409 Unknown            1x2 uint16     (0) 
+0xa40a Unknown            1x2 uint16     (0) 
+
+IFDSize: 13 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 13 tags
+0x0000 GPSversion         4x1 uint8      (2 2 0 0) 
+0x0001 GPSlat_ref         2x1 string     ("N") 
+0x0002 GPSlat             3x8 urational  (51.000000 33.000000 19.350000) 
+0x0003 GPSlong_ref        2x1 string     ("W") 
+0x0004 GPSlong            3x8 urational  (0.000000 10.000000 23.980000) 
+0x0007 GPStime_stamp      3x8 urational  (21.000000 9.000000 27.000000) 
+0x0008 GPSsatellites      2x1 string     ("5") 
+0x0009 GPSstatus          2x1 string     ("A") 
+0x000a GPSmeasure_mode    2x1 string     ("2") 
+0x000b GPSdop             1x8 urational  (2.200000) 
+0x0012 GPSmap_datum      10x1 string     ("WGS-84   ") 
+0x001b Unknown            3x1 bytes      (0x47 0x50 0x53) 
+0x001d Unknown           11x1 string     ("2011:03:10") 
+
+tiff_ifd.cpp:77 Listing 14 tags
+0x010f Make              10x1 string     ("Panasonic") 
+0x0110 Model              8x1 string     ("DMC-ZS7") 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0131 Software          10x1 string     ("Ver.1.0  ") 
+0x0132 DateChange        20x1 string     ("2011:03:12 14:45:33") 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+0x8769 ExifIFDPointer     1x4 uint32     (IFD 654) 
+0x8825 GpsInfoIFDPointer  1x4 uint32     (IFD 11252) 
+0xc4a5 Unknown           208x1 bytes      (0x50 0x72 0x69 0x6e ) 
+0xc6d2 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0xc6d3 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+
+IFDSize: 8 
+
+ DIDIFD
+Loading thumbnail
+Loading internal image data at 11764,6716
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+TiffIfd:LoadImageData all
+Loaded Image data
+tiff_ifd.cpp:77 Listing 8 tags
+0x0103 Compression        1x2 uint16     (6) 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0201 ThumbnailOffset    1x4 uint32     (11764) 
+0x0202 ThumbnailLength    1x4 uint32     (6716) 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+Write TiffIfd Locs Where: 30 What: 170-12
+Write TiffIfd Locs Where: 42 What: 180-12
+Write TiffIfd Locs Where: 66 What: 188-12
+Write TiffIfd Locs Where: 78 What: 196-12
+Write TiffIfd Locs Where: 102 What: 204-12
+Write TiffIfd Locs Where: 114 What: 214-12
+Write TiffIfd Locs Where: 138 What: 234-12
+Write TiffIfd Locs Where: 150 What: 442-12
+Write TiffIfd Locs Where: 162 What: 506-12
+Saving thumbnail to file
+thumbnail written
+Write TiffIfd Locs Where: 668 What: 736-12
+Write TiffIfd Locs Where: 680 What: 744-12
+Write TiffIfd Locs Where: 704 What: 752-12
+IFDSize: 14 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 34 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 2 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 2 tags
+0x0001 GPSlat_ref         4x1 string     ("R98") 
+0x0002 GPSlat             4x1 bytes      (0x30 0x31 0x30 0x30) 
+
+tiff_ifd.cpp:77 Listing 34 tags
+0x829a ExposureTime       1x8 urational  (0.016667) 
+0x829d FNumber            1x8 urational  (4.300000) 
+0x8822 ExposureProgram    1x2 uint16     (3) 
+0x8827 ISOSpeedRatings    1x2 uint16     (80) 
+0x9000 ExifVersion        4x1 bytes      (0x30 0x32 0x32 0x31) 
+0x9003 DateTimeOriginal  20x1 string     ("2011:03:12 14:45:33") 
+0x9004 DateTimeDigitized 20x1 string     ("2011:03:12 14:45:33") 
+0x9101 Unknown            4x1 bytes      (0x01 0x02 0x03 0x00) 
+0x9102 Unknown            1x8 urational  (4.000000) 
+0x9204 ExposureBiasValue  1x8 rational   (0.000000) 
+0x9205 MaxApertureValue   1x8 urational  (3.440000) 
+0x9207 MeteringMode       1x2 uint16     (5) 
+0x9208 LightSource        1x2 uint16     (0) 
+0x9209 Flash              1x2 uint16     (16) 
+0x920a FocalLength        1x8 urational  (15.800000) 
+0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
+0xa001 Unknown            1x2 uint16     (1) 
+0xa002 Unknown            1x4 uint32     (3264) 
+0xa003 Unknown            1x4 uint32     (2448) 
+0xa005 Interoperability   1x4 uint32     (IFD 11516) 
+0xa217 Unknown            1x2 uint16     (2) 
+0xa300 Unknown            1x1 bytes      (0x03) 
+0xa301 Unknown            1x1 bytes      (0x01) 
+0xa401 Unknown            1x2 uint16     (0) 
+0xa402 Unknown            1x2 uint16     (0) 
+0xa403 Unknown            1x2 uint16     (0) 
+0xa404 Unknown            1x8 urational  (0.000000) 
+0xa405 Unknown            1x2 uint16     (96) 
+0xa406 Unknown            1x2 uint16     (0) 
+0xa407 Unknown            1x2 uint16     (0) 
+0xa408 Unknown            1x2 uint16     (0) 
+0xa409 Unknown            1x2 uint16     (0) 
+0xa40a Unknown            1x2 uint16     (0) 
+
+IFDSize: 13 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 13 tags
+0x0000 GPSversion         4x1 uint8      (2 2 0 0) 
+0x0001 GPSlat_ref         2x1 string     ("N") 
+0x0002 GPSlat             3x8 urational  (51.000000 33.000000 19.350000) 
+0x0003 GPSlong_ref        2x1 string     ("W") 
+0x0004 GPSlong            3x8 urational  (0.000000 10.000000 23.980000) 
+0x0007 GPStime_stamp      3x8 urational  (21.000000 9.000000 27.000000) 
+0x0008 GPSsatellites      2x1 string     ("5") 
+0x0009 GPSstatus          2x1 string     ("A") 
+0x000a GPSmeasure_mode    2x1 string     ("2") 
+0x000b GPSdop             1x8 urational  (2.200000) 
+0x0012 GPSmap_datum      10x1 string     ("WGS-84   ") 
+0x001b Unknown            3x1 bytes      (0x47 0x50 0x53) 
+0x001d Unknown           11x1 string     ("2011:03:10") 
+
+tiff_ifd.cpp:77 Listing 14 tags
+0x010f Make              10x1 string     ("Panasonic") 
+0x0110 Model              8x1 string     ("DMC-ZS7") 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0131 Software          10x1 string     ("Ver.1.0  ") 
+0x0132 DateChange        20x1 string     ("2011:03:12 14:45:33") 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+0x8769 ExifIFDPointer     1x4 uint32     (IFD 654) 
+0x8825 GpsInfoIFDPointer  1x4 uint32     (IFD 11252) 
+0xc4a5 Unknown           208x1 bytes      (0x50 0x72 0x69 0x6e ) 
+0xc6d2 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0xc6d3 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+
+IFDSize: 8 
+
+ DIDIFD
+Loading thumbnail
+Loading internal image data at 11764,6716
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+TiffIfd:LoadImageData all
+Loaded Image data
+tiff_ifd.cpp:77 Listing 8 tags
+0x0103 Compression        1x2 uint16     (6) 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0201 ThumbnailOffset    1x4 uint32     (11764) 
+0x0202 ThumbnailLength    1x4 uint32     (6716) 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+Write TiffIfd Locs Where: 42 What: 146-12
+Write TiffIfd Locs Where: 54 What: 154-12
+Write TiffIfd Locs Where: 78 What: 162-12
+Write TiffIfd Locs Where: 90 What: 172-12
+Write TiffIfd Locs Where: 114 What: 192-12
+Write TiffIfd Locs Where: 126 What: 400-12
+Write TiffIfd Locs Where: 138 What: 464-12
+Saving thumbnail to file
+thumbnail written
+Write TiffIfd Locs Where: 626 What: 694-12
+Write TiffIfd Locs Where: 638 What: 702-12
+Write TiffIfd Locs Where: 662 What: 710-12
+IFDSize: 14 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 34 
+
+ DIDIFD
+Loaded Image data
+IFDSize: 2 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 2 tags
+0x0001 GPSlat_ref         4x1 string     ("R98") 
+0x0002 GPSlat             4x1 bytes      (0x30 0x31 0x30 0x30) 
+
+tiff_ifd.cpp:77 Listing 34 tags
+0x829a ExposureTime       1x8 urational  (0.016667) 
+0x829d FNumber            1x8 urational  (4.300000) 
+0x8822 ExposureProgram    1x2 uint16     (3) 
+0x8827 ISOSpeedRatings    1x2 uint16     (80) 
+0x9000 ExifVersion        4x1 bytes      (0x30 0x32 0x32 0x31) 
+0x9003 DateTimeOriginal  20x1 string     ("2011:03:12 14:45:33") 
+0x9004 DateTimeDigitized 20x1 string     ("2011:03:12 14:45:33") 
+0x9101 Unknown            4x1 bytes      (0x01 0x02 0x03 0x00) 
+0x9102 Unknown            1x8 urational  (4.000000) 
+0x9204 ExposureBiasValue  1x8 rational   (0.000000) 
+0x9205 MaxApertureValue   1x8 urational  (3.440000) 
+0x9207 MeteringMode       1x2 uint16     (5) 
+0x9208 LightSource        1x2 uint16     (0) 
+0x9209 Flash              1x2 uint16     (16) 
+0x920a FocalLength        1x8 urational  (15.800000) 
+0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
+0xa001 Unknown            1x2 uint16     (1) 
+0xa002 Unknown            1x4 uint32     (3264) 
+0xa003 Unknown            1x4 uint32     (2448) 
+0xa005 Interoperability   1x4 uint32     (IFD 11516) 
+0xa217 Unknown            1x2 uint16     (2) 
+0xa300 Unknown            1x1 bytes      (0x03) 
+0xa301 Unknown            1x1 bytes      (0x01) 
+0xa401 Unknown            1x2 uint16     (0) 
+0xa402 Unknown            1x2 uint16     (0) 
+0xa403 Unknown            1x2 uint16     (0) 
+0xa404 Unknown            1x8 urational  (0.000000) 
+0xa405 Unknown            1x2 uint16     (96) 
+0xa406 Unknown            1x2 uint16     (0) 
+0xa407 Unknown            1x2 uint16     (0) 
+0xa408 Unknown            1x2 uint16     (0) 
+0xa409 Unknown            1x2 uint16     (0) 
+0xa40a Unknown            1x2 uint16     (0) 
+
+IFDSize: 13 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 13 tags
+0x0000 GPSversion         4x1 uint8      (2 2 0 0) 
+0x0001 GPSlat_ref         2x1 string     ("N") 
+0x0002 GPSlat             3x8 urational  (51.000000 33.000000 19.350000) 
+0x0003 GPSlong_ref        2x1 string     ("W") 
+0x0004 GPSlong            3x8 urational  (0.000000 10.000000 23.980000) 
+0x0007 GPStime_stamp      3x8 urational  (21.000000 9.000000 27.000000) 
+0x0008 GPSsatellites      2x1 string     ("5") 
+0x0009 GPSstatus          2x1 string     ("A") 
+0x000a GPSmeasure_mode    2x1 string     ("2") 
+0x000b GPSdop             1x8 urational  (2.200000) 
+0x0012 GPSmap_datum      10x1 string     ("WGS-84   ") 
+0x001b Unknown            3x1 bytes      (0x47 0x50 0x53) 
+0x001d Unknown           11x1 string     ("2011:03:10") 
+
+tiff_ifd.cpp:77 Listing 14 tags
+0x010f Make              10x1 string     ("Panasonic") 
+0x0110 Model              8x1 string     ("DMC-ZS7") 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0131 Software          10x1 string     ("Ver.1.0  ") 
+0x0132 DateChange        20x1 string     ("2011:03:12 14:45:33") 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+0x8769 ExifIFDPointer     1x4 uint32     (IFD 654) 
+0x8825 GpsInfoIFDPointer  1x4 uint32     (IFD 11252) 
+0xc4a5 Unknown           208x1 bytes      (0x50 0x72 0x69 0x6e ) 
+0xc6d2 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0xc6d3 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+
+IFDSize: 8 
+
+ DIDIFD
+Loading thumbnail
+Loading internal image data at 11764,6716
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+TiffIfd:LoadImageData all
+Loaded Image data
+tiff_ifd.cpp:77 Listing 8 tags
+0x0103 Compression        1x2 uint16     (6) 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0201 ThumbnailOffset    1x4 uint32     (11764) 
+0x0202 ThumbnailLength    1x4 uint32     (6716) 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+
+Component 1 H 2 V 1, Table 0
+Component 2 H 1 V 1, Table 1
+Component 3 H 1 V 1, Table 1
+Didn't find 1
+Didn't find 5
+Didn't find 1
+Didn't find 5
+Write TiffIfd Locs Where: 315 What: 719-12
+Write TiffIfd Locs Where: 327 What: 727-12
+Write TiffIfd Locs Where: 375 What: 735-12
+Write TiffIfd Locs Where: 387 What: 755-12
+Write TiffIfd Locs Where: 411 What: 775-12
+Write TiffIfd Locs Where: 423 What: 783-12
+Write TiffIfd Locs Where: 435 What: 791-12
+Write TiffIfd Locs Where: 483 What: 799-12
+Write TiffIfd Locs Where: 495 What: 807-12
+Write TiffIfd Locs Where: 555 What: 10895-12
+Write TiffIfd Locs Where: 639 What: 10925-12
+Write TiffIfd Locs Where: 10967 What: 11095-12
+Write TiffIfd Locs Where: 10991 What: 11119-12
+Write TiffIfd Locs Where: 11003 What: 11143-12
+Write TiffIfd Locs Where: 11051 What: 11167-12
+Write TiffIfd Locs Where: 11063 What: 11175-12
+Write TiffIfd Locs Where: 11087 What: 11185-12
+Write TiffIfd Locs Where: 30 What: 206-12
+Write TiffIfd Locs Where: 42 What: 216-12
+Write TiffIfd Locs Where: 54 What: 251-12
+Write TiffIfd Locs Where: 78 What: 259-12
+Write TiffIfd Locs Where: 90 What: 267-12
+Write TiffIfd Locs Where: 114 What: 275-12
+Write TiffIfd Locs Where: 126 What: 285-12
+Write TiffIfd Locs Where: 150 What: 305-12
+Write TiffIfd Locs Where: 162 What: 10933-12
+Write TiffIfd Locs Where: 174 What: 11196-12
+Write TiffIfd Locs Where: 186 What: 11404-12
+Write TiffIfd Locs Where: 198 What: 11468-12
+Saving thumbnail to file
+thumbnail written
+Write TiffIfd Locs Where: 11630 What: 11698-12
+Write TiffIfd Locs Where: 11642 What: 11706-12
+Write TiffIfd Locs Where: 11666 What: 11714-12

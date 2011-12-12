@@ -1,151 +1,89 @@
 Dumping IFD in testdata/windows.jpg at position 20 byteswapping off
 IFDSize: 14 
-Read tag 271/0x10f, type 2 count 10 value 182/0xb6 totallength 10
-Read tag 272/0x110, type 2 count 8 value 194/0xc2 totallength 8
-Read tag 274/0x112, type 3 count 1 value 1/0x1 totallength 2
-Read tag 282/0x11a, type 5 count 1 value 208/0xd0 totallength 8
-Read tag 283/0x11b, type 5 count 1 value 216/0xd8 totallength 8
-Read tag 296/0x128, type 3 count 1 value 2/0x2 totallength 2
-Read tag 305/0x131, type 2 count 10 value 224/0xe0 totallength 10
-Read tag 306/0x132, type 2 count 20 value 234/0xea totallength 20
-Read tag 531/0x213, type 3 count 1 value 2/0x2 totallength 2
-Read tag 34665/0x8769, type 4 count 1 value 654/0x28e totallength 4
-Read tag 34853/0x8825, type 4 count 1 value 11252/0x2bf4 totallength 4
-Read tag 50341/0xc4a5, type 7 count 208 value 254/0xfe totallength 208
-Read tag 50898/0xc6d2, type 7 count 64 value 462/0x1ce totallength 64
-Read tag 50899/0xc6d3, type 7 count 128 value 526/0x20e totallength 128
 
  DIDIFD
 Loaded Image data
-Loading SUB IFD 0x8769 at 666 (654 + 12) IFDSize: 34 
-Read tag 33434/0x829a, type 5 count 1 value 1068/0x42c totallength 8
-Read tag 33437/0x829d, type 5 count 1 value 1076/0x434 totallength 8
-Read tag 34850/0x8822, type 3 count 1 value 3/0x3 totallength 2
-Read tag 34855/0x8827, type 3 count 1 value 80/0x50 totallength 2
-Read tag 36864/0x9000, type 7 count 4 value 825373232/0x31323230 totallength 4
-Read tag 36867/0x9003, type 2 count 20 value 1084/0x43c totallength 20
-Read tag 36868/0x9004, type 2 count 20 value 1104/0x450 totallength 20
-Read tag 37121/0x9101, type 7 count 4 value 197121/0x30201 totallength 4
-Read tag 37122/0x9102, type 5 count 1 value 1124/0x464 totallength 8
-Read tag 37380/0x9204, type 10 count 1 value 1132/0x46c totallength 8
-Read tag 37381/0x9205, type 5 count 1 value 1140/0x474 totallength 8
-Read tag 37383/0x9207, type 3 count 1 value 5/0x5 totallength 2
-Read tag 37384/0x9208, type 3 count 1 value 0/0x0 totallength 2
-Read tag 37385/0x9209, type 3 count 1 value 16/0x10 totallength 2
-Read tag 37386/0x920a, type 5 count 1 value 1148/0x47c totallength 8
-Read tag 37500/0x927c, type 7 count 10088 value 1156/0x484 totallength 10088
-Read tag 40960/0xa000, type 7 count 4 value 808464688/0x30303130 totallength 4
-Read tag 40961/0xa001, type 3 count 1 value 1/0x1 totallength 2
-Read tag 40962/0xa002, type 4 count 1 value 3264/0xcc0 totallength 4
-Read tag 40963/0xa003, type 4 count 1 value 2448/0x990 totallength 4
-Read tag 40965/0xa005, type 4 count 1 value 11516/0x2cfc totallength 4
-Read tag 41495/0xa217, type 3 count 1 value 2/0x2 totallength 2
-Read tag 41728/0xa300, type 7 count 1 value 3/0x3 totallength 1
-Read tag 41729/0xa301, type 7 count 1 value 1/0x1 totallength 1
-Read tag 41985/0xa401, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41986/0xa402, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41987/0xa403, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41988/0xa404, type 5 count 1 value 11244/0x2bec totallength 8
-Read tag 41989/0xa405, type 3 count 1 value 96/0x60 totallength 2
-Read tag 41990/0xa406, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41991/0xa407, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41992/0xa408, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41993/0xa409, type 3 count 1 value 0/0x0 totallength 2
-Read tag 41994/0xa40a, type 3 count 1 value 0/0x0 totallength 2
+IFDSize: 34 
 
  DIDIFD
 Loaded Image data
-Loading SUB IFD 0xa005 at 11528 (11516 + 12) IFDSize: 2 
-Read tag 1/0x1, type 2 count 4 value 3684690/0x383952 totallength 4
-Read tag 2/0x2, type 7 count 4 value 808464688/0x30303130 totallength 4
+IFDSize: 2 
 
  DIDIFD
 Loaded Image data
-Listing tags
-0x1 4x1 ("R98") 
-0x2 4x1 (0x30 0x31 0x30 0x30) 
+tiff_ifd.cpp:77 Listing 2 tags
+0x0001 GPSlat_ref         4x1 string     ("R98") 
+0x0002 GPSlat             4x1 bytes      (0x30 0x31 0x30 0x30) 
 
-Listing tags
-0x829a 1x8 (0.016667) 
-0x829d 1x8 (4.300000) 
-0x8822 1x2 (3) 
-0x8827 1x2 (80) 
-0x9000 4x1 (0x30 0x32 0x32 0x31) 
-0x9003 20x1 ("2011:03:12 14:45:33") 
-0x9004 20x1 ("2011:03:12 14:45:33") 
-0x9101 4x1 (0x01 0x02 0x03 0x00) 
-0x9102 1x8 (4.000000) 
-0x9204 1x8 (0.000000) 
-0x9205 1x8 (3.440000) 
-0x9207 1x2 (5) 
-0x9208 1x2 (0) 
-0x9209 1x2 (16) 
-0x920a 1x8 (15.800000) 
-0x927c 10088x1 (0x50 0x61 0x6e 0x61 ) 
-0xa000 4x1 (0x30 0x31 0x30 0x30) 
-0xa001 1x2 (1) 
-0xa002 1x4 (3264) 
-0xa003 1x4 (2448) 
-0xa005 1x4 (IFD 11516) 
-0xa217 1x2 (2) 
-0xa300 1x1 (0x03) 
-0xa301 1x1 (0x01) 
-0xa401 1x2 (0) 
-0xa402 1x2 (0) 
-0xa403 1x2 (0) 
-0xa404 1x8 (-nan) 
-0xa405 1x2 (96) 
-0xa406 1x2 (0) 
-0xa407 1x2 (0) 
-0xa408 1x2 (0) 
-0xa409 1x2 (0) 
-0xa40a 1x2 (0) 
+tiff_ifd.cpp:77 Listing 34 tags
+0x829a ExposureTime       1x8 urational  (0.016667) 
+0x829d FNumber            1x8 urational  (4.300000) 
+0x8822 ExposureProgram    1x2 uint16     (3) 
+0x8827 ISOSpeedRatings    1x2 uint16     (80) 
+0x9000 ExifVersion        4x1 bytes      (0x30 0x32 0x32 0x31) 
+0x9003 DateTimeOriginal  20x1 string     ("2011:03:12 14:45:33") 
+0x9004 DateTimeDigitized 20x1 string     ("2011:03:12 14:45:33") 
+0x9101 Unknown            4x1 bytes      (0x01 0x02 0x03 0x00) 
+0x9102 Unknown            1x8 urational  (4.000000) 
+0x9204 ExposureBiasValue  1x8 rational   (0.000000) 
+0x9205 MaxApertureValue   1x8 urational  (3.440000) 
+0x9207 MeteringMode       1x2 uint16     (5) 
+0x9208 LightSource        1x2 uint16     (0) 
+0x9209 Flash              1x2 uint16     (16) 
+0x920a FocalLength        1x8 urational  (15.800000) 
+0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
+0xa001 Unknown            1x2 uint16     (1) 
+0xa002 Unknown            1x4 uint32     (3264) 
+0xa003 Unknown            1x4 uint32     (2448) 
+0xa005 Interoperability   1x4 uint32     (IFD 11516) 
+0xa217 Unknown            1x2 uint16     (2) 
+0xa300 Unknown            1x1 bytes      (0x03) 
+0xa301 Unknown            1x1 bytes      (0x01) 
+0xa401 Unknown            1x2 uint16     (0) 
+0xa402 Unknown            1x2 uint16     (0) 
+0xa403 Unknown            1x2 uint16     (0) 
+0xa404 Unknown            1x8 urational  (0.000000) 
+0xa405 Unknown            1x2 uint16     (96) 
+0xa406 Unknown            1x2 uint16     (0) 
+0xa407 Unknown            1x2 uint16     (0) 
+0xa408 Unknown            1x2 uint16     (0) 
+0xa409 Unknown            1x2 uint16     (0) 
+0xa40a Unknown            1x2 uint16     (0) 
 
-Loading SUB IFD 0x8825 at 11264 (11252 + 12) IFDSize: 13 
-Read tag 0/0x0, type 1 count 4 value 514/0x202 totallength 4
-Read tag 1/0x1, type 2 count 2 value 78/0x4e totallength 2
-Read tag 2/0x2, type 5 count 3 value 11414/0x2c96 totallength 24
-Read tag 3/0x3, type 2 count 2 value 87/0x57 totallength 2
-Read tag 4/0x4, type 5 count 3 value 11438/0x2cae totallength 24
-Read tag 7/0x7, type 5 count 3 value 11462/0x2cc6 totallength 24
-Read tag 8/0x8, type 2 count 2 value 53/0x35 totallength 2
-Read tag 9/0x9, type 2 count 2 value 65/0x41 totallength 2
-Read tag 10/0xa, type 2 count 2 value 50/0x32 totallength 2
-Read tag 11/0xb, type 5 count 1 value 11486/0x2cde totallength 8
-Read tag 18/0x12, type 2 count 10 value 11494/0x2ce6 totallength 10
-Read tag 27/0x1b, type 7 count 3 value 5460039/0x535047 totallength 3
-Read tag 29/0x1d, type 2 count 11 value 11504/0x2cf0 totallength 11
+IFDSize: 13 
 
  DIDIFD
 Loaded Image data
-Listing tags
-0x0 4x1 (2 2 0 0) 
-0x1 2x1 ("N") 
-0x2 3x8 (51.000000 33.000000 19.350000) 
-0x3 2x1 ("W") 
-0x4 3x8 (0.000000 10.000000 23.980000) 
-0x7 3x8 (21.000000 9.000000 27.000000) 
-0x8 2x1 ("5") 
-0x9 2x1 ("A") 
-0xa 2x1 ("2") 
-0xb 1x8 (2.200000) 
-0x12 10x1 ("WGS-84   ") 
-0x1b 3x1 (0x47 0x50 0x53) 
-0x1d 11x1 ("2011:03:10") 
+tiff_ifd.cpp:77 Listing 13 tags
+0x0000 GPSversion         4x1 uint8      (2 2 0 0) 
+0x0001 GPSlat_ref         2x1 string     ("N") 
+0x0002 GPSlat             3x8 urational  (51.000000 33.000000 19.350000) 
+0x0003 GPSlong_ref        2x1 string     ("W") 
+0x0004 GPSlong            3x8 urational  (0.000000 10.000000 23.980000) 
+0x0007 GPStime_stamp      3x8 urational  (21.000000 9.000000 27.000000) 
+0x0008 GPSsatellites      2x1 string     ("5") 
+0x0009 GPSstatus          2x1 string     ("A") 
+0x000a GPSmeasure_mode    2x1 string     ("2") 
+0x000b GPSdop             1x8 urational  (2.200000) 
+0x0012 GPSmap_datum      10x1 string     ("WGS-84   ") 
+0x001b Unknown            3x1 bytes      (0x47 0x50 0x53) 
+0x001d Unknown           11x1 string     ("2011:03:10") 
 
-Listing tags
-0x10f 10x1 ("Panasonic") 
-0x110 8x1 ("DMC-ZS7") 
-0x112 1x2 (1) 
-0x11a 1x8 (180.000000) 
-0x11b 1x8 (180.000000) 
-0x128 1x2 (2) 
-0x131 10x1 ("Ver.1.0  ") 
-0x132 20x1 ("2011:03:12 14:45:33") 
-0x213 1x2 (2) 
-0x8769 1x4 (IFD 654) 
-0x8825 1x4 (IFD 11252) 
-0xc4a5 208x1 (0x50 0x72 0x69 0x6e ) 
-0xc6d2 64x1 (0x00 0x00 0x00 0x00 ) 
-0xc6d3 128x1 (0x00 0x00 0x00 0x00 ) 
+tiff_ifd.cpp:77 Listing 14 tags
+0x010f Make              10x1 string     ("Panasonic") 
+0x0110 Model              8x1 string     ("DMC-ZS7") 
+0x0112 Orientation        1x2 uint16     (1) 
+0x011a XResolution        1x8 urational  (180.000000) 
+0x011b YResolution        1x8 urational  (180.000000) 
+0x0128 ResolutionUnit     1x2 uint16     (2) 
+0x0131 Software          10x1 string     ("Ver.1.0  ") 
+0x0132 DateChange        20x1 string     ("2011:03:12 14:45:33") 
+0x0213 YCbCrPositioning   1x2 uint16     (2) 
+0x8769 ExifIFDPointer     1x4 uint32     (IFD 654) 
+0x8825 GpsInfoIFDPointer  1x4 uint32     (IFD 11252) 
+0xc4a5 Unknown           208x1 bytes      (0x50 0x72 0x69 0x6e ) 
+0xc6d2 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0xc6d3 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
 
+14 tags in IFD

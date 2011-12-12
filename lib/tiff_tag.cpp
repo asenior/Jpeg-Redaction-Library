@@ -21,17 +21,19 @@
 //
 //////////////////////////////////////////////////////////////////////
 
+#include "debug_flag.h"
 #include "tiff_tag.h"
 #include "tiff_ifd.h"
 #include "byte_swapping.h"
+#include "makernote.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
 namespace jpeg_redaction {
-TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : 
-  data_(NULL), subifd_(NULL) {
+  TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : 
+    data_(NULL), subifd_(NULL) {
     if (pFile == NULL)
       throw("NULL file");
     int iRV = fread(&tagid_, sizeof(short), 1, pFile);
@@ -56,7 +58,7 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       ByteSwapInPlace(&value, 1);
     }
     if (totallength < 0 || totallength > 1e8) {
-      printf("tag %d totallength %d", tagid_, totallength);
+      fprintf(stderr, "tag %d totallength %d", tagid_, totallength);
       throw("totallength is broken");
     }
     // Some types are pointers that will be stored in an ifd.
@@ -75,13 +77,152 @@ TiffTag::TiffTag(FILE *pFile, bool byte_swapping) :
       valpointer_ = value;
       // Too long to fit in the tag.
     }
-#ifdef DEBUG
-    printf("Read tag %d/0x%x, type %d count %d value %d/0x%x "
-	    "totallength %d\n",
-	    tagid_, tagid_, type_, count_,
-	   value, value, totallength);
-#endif
+    if (debug > 1)
+      printf("Read tag %d/0x%x, type %s count %d value %d/0x%x "
+	     "bytes %d\n",
+	     tagid_, tagid_, TypeName((tag_types)type_), count_,
+	     value, value, totallength);
+  }
+  TiffTag::TiffTag(int tagid, enum tag_types type, int count,
+		   unsigned char *data) {
+    tagid_ = tagid;
+    type_ = type;
+    count_ = count;
+    int totallength = count * LengthOfType(type);
+    data_ = new unsigned char[totallength];
+    memcpy(data_, data, totallength);
+    subifd_ = NULL;
+    loaded_ = true;
+  }
+
+  const char *TiffTag::GPSTagName(const int tag) {
+    switch (tag) {
+    case gps_version: return "GPSversion";
+    case gps_lat_ref: return "GPSlat_ref";
+    case gps_lat: return "GPSlat";
+    case gps_long_ref: return "GPSlong_ref";
+    case gps_long: return "GPSlong";
+    case gps_alt_ref: return "GPSalt_ref";
+    case gps_alt: return "GPSalt";
+    case gps_time_stamp: return "GPStime_stamp";
+    case gps_satellites: return "GPSsatellites";
+    case gps_status: return "GPSstatus";
+    case gps_measure_mode: return "GPSmeasure_mode";
+    case gps_dop: return "GPSdop";
+    case gps_speed_ref: return "GPSspeed_ref";
+    case gps_speed: return "GPSspeed";
+    case gps_track_ref: return "GPStrack_ref";
+    case gps_track: return "GPStrack";
+    case gps_img_direction_ref: return "GPSimg_direction_ref";
+    case gps_img_direction: return "GPSimg_direction";
+    case gps_map_datum: return "GPSmap_datum";
+    case gps_dest_lat_ref: return "GPSdest_lat_ref";
+    case gps_dest_lat: return "GPSdest_lat";
+    case gps_dest_long_ref: return "GPSdest_long_ref";
+    case gps_dest_long: return "GPSdest_long";
+    case gps_dest_bearing_ref: return "GPSdest_bearing_ref";
+    case gps_dest_bearing: return "GPSdest_bearing";
+    case gps_dest_dist_ref: return "GPSdest_dist_ref";
+    case gps_dest_dist: return "GPSdest_dist";
+      }
+    return NULL;
 }
+  const char *TiffTag::TagName(const int tag) {
+    switch (tag) {
+    case tag_ImageWidth: return "ImageWidth";
+    case tag_ImageHeight: return "ImageHeight";
+    case tag_BitsPerSample: return "BitsPerSample";
+    case tag_Compression: return "Compression";
+    case tag_PhotometricInterpretation: return "PhotometricInterpretation";
+    case tag_Title: return "Title";
+    case tag_Make: return "Make";
+    case tag_Model: return "Model";
+    case tag_StripOffsets: return "StripOffsets";
+    case tag_Orientation: return "Orientation";
+    case tag_SamplesPerPixel: return "SamplesPerPixel";
+    case tag_RowsPerStrip: return "RowsPerStrip";
+    case tag_StripByteCounts: return "StripByteCounts";
+    case tag_XResolution: return "XResolution";
+    case tag_YResolution: return "YResolution";
+    case tag_PlanarConfiguration: return "PlanarConfiguration";
+    case tag_ResolutionUnit: return "ResolutionUnit";// 2= inches 3=centimeters
+    case tag_TransferFunction: return "TransferFunction";
+    case tag_Software: return "Software";
+    case tag_DateChange: return "DateChange";
+    case tag_Artist: return "Artist";
+    case tag_WhitePoint: return "WhitePoint";
+    case tag_PrimaryChromaticities: return "PrimaryChromaticities";
+    case tag_ThumbnailOffset: return "ThumbnailOffset";
+    case tag_ThumbnailLength: return "ThumbnailLength";
+    case tag_YCbCrCoefficients: return "YCbCrCoefficients";
+    case tag_YCbCrSubSampling: return "YCbCrSubSampling";
+    case tag_YCbCrPositioning: return "YCbCrPositioning";
+    case tag_ReferenceBlackWhite: return "ReferenceBlackWhite";
+    case tag_Copyright: return "Copyright";
+    case tag_ExposureTime: return "ExposureTime";
+    case tag_FNumber: return "FNumber";
+    case tag_ExposureProgram: return "ExposureProgram";
+    case tag_ExifIFDPointer: return "ExifIFDPointer";
+    case tag_SpectralSensitivity: return "SpectralSensitivity";
+    case tag_GpsInfoIFDPointer: return "GpsInfoIFDPointer";
+    case tag_ISOSpeedRatings: return "ISOSpeedRatings";
+    case tag_OECF: return "OECF";
+
+    case tag_ExifVersion: return "ExifVersion";
+    case tag_DateTimeOriginal: return "DateTimeOriginal";
+    case tag_DateTimeDigitized: return "DateTimeDigitized";
+
+    case tag_ShutterSpeedValue: return "ShutterSpeedValue";
+    case tag_ApertureValue: return "ApertureValue";
+    case tag_BrightnessValue: return "BrightnessValue";
+    case tag_ExposureBiasValue: return "ExposureBiasValue";
+    case tag_MaxApertureValue: return "MaxApertureValue";
+    case tag_SubjectDistance: return "SubjectDistance";
+    case tag_MeteringMode: return "MeteringMode";
+    case tag_LightSource: return "LightSource";
+    case tag_Flash: return "Flash";
+    case tag_FocalLength: return "FocalLength";
+    case tag_MakerNote: return "MakerNote";
+
+    case tag_Interoperability: return "Interoperability";
+    }
+    const char *gps_tag = GPSTagName(tag);
+    if (gps_tag != NULL)
+      return gps_tag;
+    return "Unknown";
+  }
+  // Return the name of the given type.
+  const char *TiffTag::TypeName(tag_types t) {
+    switch (t) {
+    case tiff_uint8 :
+      return "uint8";
+    case tiff_string:
+      return "string";
+    case tiff_uint16:
+      return "uint16";
+    case tiff_uint32 :
+      return "uint32";
+    case tiff_urational:
+      return "urational";
+    case tiff_int8:
+      return "int8";
+    case tiff_bytes:
+      return "bytes";
+    case tiff_int16:
+      return "int16";
+    case tiff_int32:
+      return "int32";
+    case tiff_rational:
+      return "rational";
+    case tiff_float:
+      return "float";
+    case tiff_double:
+      return "double";
+    default:
+    case tiff_unknown:
+      return "unknown";
+    }
+  }
 
 TiffTag::~TiffTag() {
     delete subifd_;
@@ -110,8 +251,8 @@ int TiffTag::Write(FILE *pFile) const {
   if (iRV != 4) throw("Can't write file");
   // Return where the pointer has to be written.
   if (totallength > 4 || TagIsSubIFD() ||
-      tagid_ == tag_stripoffset || tagid_ == tag_thumbnailoffset ||
-      tagid_ == tag_stripbytes || tagid_ == tag_thumbnaillength) {
+      tagid_ == tag_StripOffsets || tagid_ == tag_ThumbnailOffset ||
+      tagid_ == tag_StripByteCounts || tagid_ == tag_ThumbnailLength) {
     return pointer_location;
   } else {
     return 0;
@@ -151,10 +292,11 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
   int position = valpointer_ + subfileoffset;
   if (TagIsSubIFD()) {
     // IFDs use absolute position, normal tags are relative to subfileoffset.
-    //if (tagid_ == tag_makernote)
+    //if (tagid_ == tag_MakerNote)
     //    position = valpointer_;
-    printf("Loading SUB IFD 0x%x at %d (%d + %d) ", tagid_, position,
-	  valpointer_, subfileoffset);
+    if (debug > 0)
+      printf("Loading SUB IFD 0x%x at %d (%d + %d) ", tagid_, position,
+	     valpointer_, subfileoffset);
 
     subifd_ = new TiffIfd(pFile, position, true,
 			    subfileoffset, byte_swapping);
@@ -162,6 +304,15 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
     return 1;
   } else {
     int iRV = fseek(pFile, position, SEEK_SET);
+    if (tagid_ == tag_MakerNote) {
+      // printf("\n\n\n*******************************************************\n"
+      // 	     "************************************************************\n",
+      // 	     "Makernote\n");
+      // MakerNoteFactory factory;
+      // factory.SetManufacturer("Panasonic");
+      // MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
+      //    //    position = valpointer_;
+    }
     const int type_len = LengthOfType(type_);
     const int totallength = count_ * type_len;
     data_ = new unsigned char [totallength];
@@ -184,12 +335,13 @@ void TiffTag::SetValOut(unsigned int val) {
 }
 
 bool TiffTag::TagIsSubIFD() const {
-  return(tagid_ == tag_exif || tagid_ == tag_gps || tagid_ == tag_gps ||
-         /* tagid_ == tag_makernote || */ tagid_ == tag_interoperability);
+  return(tagid_ == tag_ExifIFDPointer || tagid_ == tag_GpsInfoIFDPointer ||
+         /* tagid_ == tag_MakerNote || */ tagid_ == tag_Interoperability);
 }
 
 void TiffTag::Print() const {
-  printf("0x%0x %dx%d (", tagid_, count_, LengthOfType(type_));
+  printf("0x%04x %-17s %2dx%d %-10s (", tagid_, TagName(tagid_), count_,
+	 LengthOfType(type_), TypeName((tag_types)type_));
   TraceValue(4);
   printf(") ");
 }

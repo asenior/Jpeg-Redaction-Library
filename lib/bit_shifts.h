@@ -20,6 +20,9 @@
 // Class to apply bit operations to a (JPEG) bit stream.
 #ifndef INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS
 #define INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS
+#include "debug_flag.h"
+
+namespace jpeg_redaction {
 class BitShifts {
 public:
   // Shift the block after the  start-th bit up by shift,
@@ -31,10 +34,11 @@ public:
     if (shift < 0)
       throw("ShiftTail: shift is negative");
 
-    printf("Shifting data (%d bits in %d bytes) up by %d bits "
-	   "starting at b%d B%d. New length %d\n",
-	   *data_bits, data->size(), shift, start,
-	   start/8, *data_bits + shift);
+    if (debug > 0)
+      printf("Shifting data (%d bits in %d bytes) up by %d bits "
+	     "starting at b%d B%d. New length %d\n",
+	     *data_bits, data->size(), shift, start,
+	     start/8, *data_bits + shift);
 
     // Enough space for everything.
     *data_bits += shift;
@@ -63,13 +67,16 @@ public:
 	const int start_offset = 8 - ((start + shift) % 8);
 	const unsigned char final_low_mask = (1 << start_offset) -1;
 	const unsigned char final_high_mask = 0xff - final_low_mask;
-	printf("fb %d flm %d fhm %d so %d\n", i, final_low_mask, final_high_mask, start_offset);
+	if (debug > 0)
+	  printf("fb %d flm %d fhm %d so %d\n",
+		 i, final_low_mask, final_high_mask, start_offset);
 	(*data)[i] = ((*data)[i] & final_high_mask) | (byte & final_low_mask);
       } else {
 	(*data)[i] = byte;
       }
     }
-    printf("Ended with src_byte %d\n", src_byte);
+    if (debug > 0)
+      printf("Ended with src_byte %d\n", src_byte);
     return true;
   }
   // Take the first insert_length bits from insertion
@@ -105,8 +112,9 @@ public:
 	const int shift_final = 1 + (start + overwrite_length - 1) % 8;
 	const unsigned char low_mask_final = (1 << (8 - shift_final)) -1;
 	const unsigned char high_mask_final = 0xff - low_mask_final;
-	printf("i %d shift_final %d mask h%0x l%x\n",
-	       i, shift_final, high_mask_final, low_mask_final);
+	if (debug > 0)
+	  printf("i %d shift_final %d mask h%0x l%x\n",
+		 i, shift_final, high_mask_final, low_mask_final);
 	byte = (byte & high_mask_final) | ((*data)[i] & low_mask_final);
       }
       (*data)[i] = byte;
@@ -129,11 +137,12 @@ public:
     int used_bits_last_byte = ((bits - 1) % 8) + 1;
     if (used_bits_last_byte != 8) {
       unsigned char unused_bits_mask = (1 << (8 - used_bits_last_byte)) - 1;
-      printf("padding %d bits mask %02x\n",
-	     8-used_bits_last_byte, unused_bits_mask);
+      if (debug > 0)
+	printf("padding %d bits mask %02x\n",
+	       8-used_bits_last_byte, unused_bits_mask);
       data->back() |= unused_bits_mask;
     }
   }
 }; 
-
+}  // namespace jpeg_redaction
 #endif  // INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS

@@ -46,7 +46,7 @@ public:
   unsigned int Write(FILE *pFile,
 		     unsigned int nextifdoffset,
 		     int subfileoffset) const;
-  ExifIfd *GetExif() { return (ExifIfd*)FindTag(TiffTag::tag_exif); }
+  ExifIfd *GetExif() { return (ExifIfd*)FindTag(TiffTag::tag_ExifIFDPointer); }
 
     // Find a tag with a particular number. Return -1 if not in this IFD.
   TiffTag *FindTag(const int tagno) const {
@@ -89,6 +89,7 @@ public:
     return(tags_[tagindex]);
   }
   int GetNTags() const { return tags_.size(); }
+  // Print all tags to stdout.
   void ListTags() const;
   Jpeg *GetJpeg() { return jpeg_;}
 protected:

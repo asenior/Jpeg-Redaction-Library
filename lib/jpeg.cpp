@@ -19,6 +19,7 @@
 // jpeg.cpp: implementation of the Jpeg class to store all the information
 // from a JPEG file.
 
+#include "debug_flag.h"
 #include "jpeg.h"
 #include "jpeg_dht.h"
 #include "jpeg_decoder.h"
@@ -32,7 +33,9 @@
 //////////////////////////////////////////////////////////////////////
 
 namespace jpeg_redaction {
-  int debug = 0;
+ const int ObscuraMetadata::kObscuraMarker = JPEG_APP0 + 7;
+ const char *ObscuraMetadata::kDescriptorType = "ObscuraMetaData";
+ const char *ObscuraMetadata::kRedactionDataType = "ObscuraRedaction";
 
   void DumpHex(unsigned char *data, int len) {
     for (int i = 0; i < len; ++i) {
@@ -90,8 +93,9 @@ namespace jpeg_redaction {
 	throw(-1);
       if (!arch_big_endian)
 	ByteSwapInPlace(&marker, 1);
-      printf("Got marker 0x%x %s at %d\n",
-	     marker, MarkerName(marker), blockloc);
+      if (debug > 0)
+	printf("Got marker 0x%x %s at %d\n",
+	       marker, MarkerName(marker), blockloc);
 
       if (marker == jpeg_eoi) {
 	return 0;
@@ -112,12 +116,13 @@ namespace jpeg_redaction {
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
-	printf("Photoshop 0x%x at %d length %d\n",
-	       marker, ftell(pFile), blocksize);
+	if (debug > 0)
+	  printf("Photoshop 0x%x at %d length %d\n",
+		 marker, ftell(pFile), blocksize);
 	try {
 	  photoshop3_ = new Photoshop3Block(pFile, blocksize-sizeof(blocksize));
 	}  catch (char *ex) {
-	  printf("Got exception %s", ex);
+	  fprintf(stderr, "Got exception %s", ex);
 	  throw(ex);
 	}
 	fseek(pFile, blockloc + blocksize + sizeof(marker), SEEK_SET);
@@ -129,8 +134,9 @@ namespace jpeg_redaction {
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
+
 	AddMarker(marker, blockloc, blocksize, pFile, loadall);
-	printf("APP %x unsupported\n", marker);
+	fprintf(stderr, "APP %x unsupported\n", marker);
 	//      throw("AppN unsupported");
 	continue;
       }
@@ -140,8 +146,9 @@ namespace jpeg_redaction {
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
-	printf("SOF sz %u nextloc %ld\n",
-	       blocksize, blockloc + blocksize + sizeof(marker));
+	if (debug > 1)
+	  printf("SOF sz %u nextloc %ld\n",
+		 blocksize, blockloc + blocksize + sizeof(marker));
 	JpegMarker *sof = AddMarker(marker, blockloc, blocksize, pFile, true);
 	softype_ = (marker == jpeg_sof0) ? 0:2;
 	unsigned char *data = (unsigned char*)(&sof->data_[0]);
@@ -153,14 +160,15 @@ namespace jpeg_redaction {
 	width_ = data[3] * 256 + data[4];
 	int components = data[5];
 	if (blocksize != 8 + 3 * components) {
-	  printf("Error - wrong blocksize ins SOF\n");
+	  fprintf(stderr, "Error - wrong blocksize ins SOF\n");
 	}
 	for (int i = 0; i < components; ++i) {
 	  JpegComponent *comp = new JpegComponent(data + 6 + 3 * i);
 	  comp->Print();
 	  components_.push_back(comp);
 	}
-	printf("JPEG Image is %d x %d\n", width_, height_);
+	if (debug > 0)
+	  printf("JPEG Image is %d x %d\n", width_, height_);
 	continue;
       }
       if (marker == jpeg_dqt || marker == jpeg_dht) {
@@ -168,7 +176,8 @@ namespace jpeg_redaction {
 	iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
-	printf(" sz %d nextloc %d\n", blocksize, blockloc + blocksize + 2);
+	if (debug > 0)
+	  printf(" sz %d nextloc %d\n", blocksize, blockloc + blocksize + 2);
 	JpegMarker *d = AddMarker(marker, blockloc, blocksize, pFile, loadall);
 	if (marker == jpeg_dht && loadall) {
 	  BuildDHTs(d);
@@ -185,12 +194,14 @@ namespace jpeg_redaction {
 	restartinterval_ = *(short*)(&dri->data_[0]);
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&restartinterval_, 1);
-	printf("Restart interval %d\n", restartinterval_);
+	if (debug > 1)
+	  printf("Restart interval %d\n", restartinterval_);
 	continue;
       }
       if (marker == jpeg_sos) { // Start of scan
 	return ReadSOSMarker(pFile, blockloc, loadall);
       }
+      fprintf(stderr, "Unknown marker is 0x%04x.\n", marker);
       throw("Unknown marker found in JPEG");
     }
     return 0;
@@ -205,7 +216,8 @@ namespace jpeg_redaction {
     int iRV = fread(&blocksize, sizeof(unsigned short), 1, pFile);
     if (!arch_big_endian)
       ByteSwapInPlace(&blocksize, 1);
-    printf("APP Block size is %d %04x\n", blocksize, blocksize);
+    if (debug > 0)
+      printf("APP Block size is %d %04x\n", blocksize, blocksize);
     iRV = fread(&magic, sizeof(unsigned int), 1, pFile);
     if (iRV != 1)
       throw(-2);
@@ -219,12 +231,14 @@ namespace jpeg_redaction {
     if (iRV != 1)
       throw(-2);
     bool big_endian = false;
-    printf("EXIF byte_order: %04x\n", byte_order);
+    if (debug > 0)
+      printf("EXIF byte_order: %04x\n", byte_order);
     if (byte_order == 0x4d4d) // "Motorola"
       big_endian = true;
     else if (byte_order != 0x4949) // "Intel"
       throw("Don't recognize EXIF tag");
-    printf("EXIF tag is: %s endian (%d), arch is: %s (%d)\n",
+    if (debug > 0)
+      printf("EXIF block is: %s endian (%d), arch is: %s (%d)\n",
 	   (big_endian ? "big" : "little"), big_endian,
 	   (arch_big_endian ? "big" : "little"), arch_big_endian);
     bool byte_swapping = (big_endian != arch_big_endian);
@@ -239,21 +253,24 @@ namespace jpeg_redaction {
       throw(-2);
     if (byte_swapping) ByteSwapInPlace(&exifoffset, 1);
     unsigned int exifloc = ftell(pFile);
-    printf("Exifloc %d/0x%x Offset %d/0x%x\n",
-	   exifloc, exifloc, exifoffset, exifoffset);
+    if (debug > 0)
+      printf("Exifloc %d/0x%x Offset %d/0x%x\n",
+	     exifloc, exifloc, exifoffset, exifoffset);
     // Absolute location of IFD:
     unsigned int ifdoffset = exifloc;
     while (ifdoffset > 0) {
       const unsigned int subfileoffset = blockloc + 10;
-      printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
-	     ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
+      if (debug > 0)
+	printf("Loading IFD %lu @%u subfileoffset %u swap %d ",
+	       ifds_.size(), ifdoffset, subfileoffset, byte_swapping);
       TiffIfd *tempifd = new TiffIfd(pFile, ifdoffset,
 				     loadall, subfileoffset, byte_swapping);
       ifds_.push_back(tempifd);
       ifdoffset = tempifd->GetNextIfdOffset();
       if (ifdoffset != 0)
 	ifdoffset += subfileoffset;
-      printf("Next offset %d\n", ifdoffset);
+      if (debug > 0)
+	printf("Next offset %d\n", ifdoffset);
     }
     //      exif_ = new TiffIfd(pFile, exifloc, true, blockloc + 10); // Need to pass the baseline.
     iRV = fseek(pFile, blockloc + blocksize + sizeof(unsigned short),
@@ -266,7 +283,8 @@ namespace jpeg_redaction {
     short slice = 0;
     int iRV = fread(&slice, sizeof(unsigned short), 1, pFile);
     if (!arch_big_endian) ByteSwapInPlace(&slice, 1);
-    printf("SOS slice %d\n", slice);
+    if (debug > 0)
+      printf("SOS slice %d\n", slice);
     int dataloc = blockloc + sizeof(unsigned short); // marker's size
     unsigned int buf = 0;
     int datalen = 0;
@@ -275,14 +293,16 @@ namespace jpeg_redaction {
       buf <<= 8;
       iRV = fread(&buf, sizeof(unsigned char), 1, pFile);
       if (iRV != 1) {
-	printf("Failed to load byte at %d (datalen %d)\n",
-	       blockloc + 4 + datalen, datalen);
+	fprintf(stderr,
+		"ReadSOSMarker: Failed to load byte at %d (datalen %d)\n",
+		blockloc + 4 + datalen, datalen);
 	throw(-10);
       }
       datalen++;
-      if ((buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
+      if (debug > 0 && (buf & 0xff00) == 0xff00 && (buf & 0xffff)!= 0xff00)
       	printf("In scan found marker 0x%x\n", (buf & 0xffff));
       if ((buf & 0xffff) == jpeg_eoi) {
+	if (debug > 0)
 	printf("EOI at %d (len %d)\n", blockloc + 4 + datalen, datalen);
 	break;
       }
@@ -345,7 +365,8 @@ namespace jpeg_redaction {
 
     // write the EXIF IFDs  Code based on CR2.cpp
     if (write_exif && ifds_.size() !=0) {
-      printf("Writing exif at %d\n", ftell(pFile));
+      if (debug > 0)
+	printf("Writing exif at %d\n", ftell(pFile));
       std::vector<unsigned int> pending_pointers;  // Pairs of Where/What
       unsigned short marker = jpeg_app + 1;
       if (!arch_big_endian) ByteSwapInPlace(&marker, 1);
@@ -354,7 +375,8 @@ namespace jpeg_redaction {
       // TODO save the correct length.
       int exif_len_pos = ftell(pFile);
       rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);
-      printf("Saving %lu Exif IFDs\n", ifds_.size());
+      if (debug > 0)
+	printf("Saving %lu Exif IFDs\n", ifds_.size());
       unsigned int exifmarker = 0x45786966;
       if (!arch_big_endian) ByteSwapInPlace(&exifmarker, 1);
       rv = fwrite(&exifmarker, sizeof(unsigned int), 1, pFile);
@@ -374,7 +396,8 @@ namespace jpeg_redaction {
       rv = fwrite(&exifoffset, sizeof(unsigned int), 1, pFile);
       unsigned int zero = 0x00000000;
       for (int i = 0 ; i < ifds_.size(); ++i) {
-	printf("Writing IFD %d at %d\n", i, ftell(pFile));
+	if (debug > 0)
+	  printf("Writing IFD %d at %d\n", i, ftell(pFile));
 
 	unsigned int ifdloc = ifds_[i]->Write(pFile, zero, subfileoffset);
 	// "What":  Where we wrote this ifd (to be put in the previous "where")
@@ -391,8 +414,9 @@ namespace jpeg_redaction {
       if (!arch_big_endian) ByteSwapInPlace(&exiflength, 1);
       rv = fwrite(&exiflength, sizeof(unsigned short), 1, pFile);
       for(int j = 0; j < pending_pointers.size(); j+=2) {
-	printf("IFD Locs Where: %d What: %d\n",
-	       pending_pointers[j], pending_pointers[j + 1]);
+	if (debug > 0)
+	  printf("IFD Locs Where: %d What: %d\n",
+		 pending_pointers[j], pending_pointers[j + 1]);
 	fseek(pFile, pending_pointers[j], SEEK_SET); // Where
 	unsigned int ifdloc = pending_pointers[j + 1];  // What
 	// Pending pointers are written in native byte order.
@@ -401,6 +425,7 @@ namespace jpeg_redaction {
       }
       rv = fseek(pFile, 0, SEEK_END);
     }
+    obscura_metadata_.Write(pFile);
     if (photoshop3_) {
       unsigned short marker =jpeg_app + 0xd;
       if (!arch_big_endian)
@@ -410,8 +435,9 @@ namespace jpeg_redaction {
       unsigned int blockloc = ftell(pFile);
       rv = fwrite(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = photoshop3_->Write(pFile) + sizeof(blocksize);
-      printf("  IPTC Written bytes: %d vs %d\n", ftell(pFile) - blockloc,
-	     blocksize);
+      if (debug > 0)
+	printf("  IPTC Written bytes: %d vs %d\n", ftell(pFile) - blockloc,
+	       blocksize);
       fseek(pFile, blockloc, SEEK_SET);
       if (!arch_big_endian)
 	ByteSwapInPlace(&blocksize, 1);
@@ -419,10 +445,11 @@ namespace jpeg_redaction {
       fseek(pFile, 0, SEEK_END);
     }
     // Write the other markers.
-    printf("Saving: %lu markers\n", markers_.size());
+    if (debug > 0)
+      printf("Saving: %lu markers\n", markers_.size());
     for (int i = 0 ; i < markers_.size(); ++i) {
       if (markers_[i]->Save(pFile)==0)
-	printf("Failed with marker %d\n", i);;
+	fprintf(stderr, "Failed with marker %d\n", i);;
     }
     return 0;
   }
@@ -437,8 +464,9 @@ namespace jpeg_redaction {
       JpegDHT *dht = new JpegDHT;
       int bytes = dht->Build(data + bytes_used, length-bytes_used);
       bytes_used += bytes;
-      printf("DHT %d %d%d. Bytes=%d total = %d length = %d\n",
-	     table, dht->class_, dht->id_, bytes, bytes_used, length);
+      if (debug > 0)
+	printf("DHT %d %d%d. Bytes=%d total = %d length = %d\n",
+	       table, dht->class_, dht->id_, bytes, bytes_used, length);
       dhts_.push_back(dht);
       ++table;
     }
@@ -448,7 +476,7 @@ namespace jpeg_redaction {
   Jpeg *Jpeg::GetThumbnail() {
     for (int i = 0 ; i < ifds_.size(); ++i) {
       if (ifds_[i]->GetJpeg() &&
-	  ifds_[i]->FindTag(TiffTag::tag_thumbnailoffset))
+	  ifds_[i]->FindTag(TiffTag::tag_ThumbnailOffset))
 	return ifds_[i]->GetJpeg();
     }
     return NULL;
@@ -458,7 +486,8 @@ namespace jpeg_redaction {
   // Returns: 0: no thumbnail found N:  N thumbnails found and redacted
   // <0 failed to redact thumbnail.
   int Jpeg::RedactThumbnail(Redaction *redaction) {
-    printf("Redacting thumbnail\n");
+    if (debug > 0)
+      printf("Redacting thumbnail\n");
     int return_val = 0;
     Jpeg *thumbnail = GetThumbnail();
     if (thumbnail == NULL)
@@ -491,7 +520,8 @@ namespace jpeg_redaction {
 
     JpegDecoder decoder(width_, height_, data, 8 * (data_length - 10),
 			dhts_, &components_);
-    printf("\n\nDecoding %lu\n", sos_block->data_.size());
+    if (debug > 0)
+      printf("\n\nDecoding %lu\n", sos_block->data_.size());
     //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
     try {
       decoder.Decode(redaction);
@@ -510,19 +540,22 @@ namespace jpeg_redaction {
       // Keep the 10 byte header.
       const std::vector<unsigned char> &redacted_data =
 	decoder.GetRedactedData();
-      printf("Redacted data length %lu bytes %d bits\n",
-	     redacted_data.size(),
-	     decoder.GetBitLength());
+      if (debug > 0)
+	printf("Redacted data length %lu bytes %d bits\n",
+	       redacted_data.size(),
+	       decoder.GetBitLength());
       sos_block->data_.erase(sos_block->data_.begin() + 10,
 			     sos_block->data_.end());
       sos_block->data_.insert(sos_block->data_.end(),
 			      redacted_data.begin(),
 			      redacted_data.end());
       sos_block->SetBitLength(decoder.GetBitLength() + 10 * 8);
-      printf("sos block now %d bytes\n", sos_block->data_.size());
+      if (debug > 0)
+	printf("sos block now %d bytes\n", sos_block->data_.size());
     }
     // Now keep on dumping data out.
-    printf("H %d W %d\n", width_, height_);
+    if (debug > 0)
+      printf("DecodeImage H %d W %d\n", width_, height_);
     //  DumpHex((unsigned char*)&sos_block->data_[check_offset], check_len);
     if (redaction) RedactThumbnail(redaction);
   }
@@ -531,12 +564,14 @@ namespace jpeg_redaction {
     JpegMarker *sos_block = GetMarker(jpeg_sos);
     // For each strip insert it into the JPEG data.
     int data_bits = sos_block->GetBitLength();
-    printf("Before patching size %d bytes %d bits.\n",
-	   sos_block->data_.size(), data_bits);
+    if (debug > 0)
+      printf("Before patching size %d bytes %d bits.\n",
+	     sos_block->data_.size(), data_bits);
     // We pass the data with the header in it, so start at this bit.
     int offset = 10 * 8;
     for (int i = 0; i < redaction.NumStrips(); ++i) {
-      printf("Patching in strip %d\n", i);
+      if (debug > 0)
+	printf("Patching in strip %d\n", i);
       // If we patch all the strips in, they need no offset.
       int shift = redaction.GetStrip(i)->PatchIn(offset, &sos_block->data_,
 						 &data_bits);
@@ -584,6 +619,11 @@ namespace jpeg_redaction {
       markerptr->LoadHere(pFile);
     else
       fseek(pFile, location + length + 2, SEEK_SET);
+    if (marker == jpeg_app + 7) {
+      obscura_metadata_.ImportMarker(markerptr);
+      delete markerptr;
+      return NULL;
+    }
     markers_.push_back(markerptr);
     return markerptr;
   }

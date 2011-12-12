@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include "byte_swapping.h"
+#include "debug_flag.h"
 #include "jpeg.h"
 #include "jpeg_marker.h"
 
@@ -51,7 +52,8 @@ namespace jpeg_redaction {
       rv = fwrite(&data_[0], sizeof(char), data_.size(), pFile);
       if (rv != data_.size()) return 0;
     }
-    printf("Saved marker %04x length %u at %d\n", marker_, length_, location);
+    if (debug > 0)
+      printf("Saved marker %04x length %u at %d\n", marker_, length_, location);
     return 1;
   }
   // Write out the marker inserting stuff (0) bytes when there's an ff.
@@ -65,7 +67,7 @@ namespace jpeg_redaction {
     // Then write all the data up to & including it and write out the
     // stuff byte (00).
     if (check > data_.size()) {
-      printf("data size is %d\n", data_.size());
+      fprintf(stderr, "data size is %d\n", data_.size());
       throw("data too short in stuffing.");
     }
     while (check < data_.size()) {
@@ -85,17 +87,18 @@ namespace jpeg_redaction {
     // Write out the last chunk of data.
     if (written < check)
       rv = fwrite(&data_[written], sizeof(char), check - written, pFile);
-    printf("Inserted %d stuff_bytes in %d now %d\n", stuff_bytes,
-	   data_.size(), data_.size() + stuff_bytes);
+    if (debug > 0)
+      printf("Inserted %d stuff_bytes in %d now %d\n", stuff_bytes,
+	     data_.size(), data_.size() + stuff_bytes);
   }
   void JpegMarker::RemoveStuffBytes() {
     if (data_.size() != length_ - 2) {
-      printf("Data %d len %d\n", data_.size(), length_);
+      fprintf(stderr, "Data %d len %d\n", data_.size(), length_);
       throw("Data length mismatch in RemoveStuffBytes");
     }
     const int start_of_huffman = 10;
     if (data_.size() < start_of_huffman) {
-      printf("Data %d len %d\n", data_.size(), length_);
+      fprintf(stderr, "Data %d len %d\n", data_.size(), length_);
       throw("Data too short in RemoveStuffBytes");
     }
 
@@ -109,8 +112,9 @@ namespace jpeg_redaction {
 	++stuff_bytes;
       }
     }
-    printf("Removed %d stuff_bytes in %d now %d\n", stuff_bytes, data_.size(),
-	   data_.size() - stuff_bytes);
+    if (debug > 0)
+      printf("Removed %d stuff_bytes in %d now %d\n",
+	     stuff_bytes, data_.size(), data_.size() - stuff_bytes);
     length_ -= stuff_bytes;
     data_.resize(data_.size() - stuff_bytes);
   }

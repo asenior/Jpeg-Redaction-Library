@@ -24,14 +24,15 @@
 namespace jpeg_redaction {
 class JpegMarker {
  public:
-  // Length is payload size- includes storage for length itself.
+  // length_ is payload size- includes storage for length itself.
+  // The actual data_ buffer is of size length_ - 2
   JpegMarker(unsigned short marker, unsigned int location,
 	     int length) {
     marker_ = marker;
-    location_ = location_;
+    location_ = location;
     length_ = length;
   }
-  // Create a marker from a block of data.
+  // Create a marker from a block of data of given length.
   JpegMarker(unsigned short marker,
 	     const unsigned char *data,
 	     unsigned int length) {
@@ -45,6 +46,11 @@ class JpegMarker {
   void LoadFromLocation(FILE *pFile) {
     fseek(pFile, location_ + 4, SEEK_SET);
     LoadHere(pFile);
+  }
+  // Print a summary of the marker.
+  void Print() const {
+    printf("Marker %x length %d in bits %d datalen %zu location %d.\n",
+	   marker_, length_, bit_length_, data_.size(), location_);
   }
   void LoadHere(FILE *pFile) {
     data_.resize(length_-2);

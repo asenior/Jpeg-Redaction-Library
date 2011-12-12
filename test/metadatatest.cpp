@@ -25,12 +25,14 @@
 
 #include <string>
 #include "jpeg.h"
+#include "debug_flag.h"
 
 namespace jpeg_redaction {
 namespace tests {
   int test_insert_and_save(const char * const filename) {
     try {
       Jpeg original;
+      printf("*********** Loading original image*********** ***************\n");
       bool success = original.LoadFromFile(filename, true);
       if (!success) exit(1);
       std::vector<unsigned char> blob;
@@ -40,15 +42,25 @@ namespace tests {
       }
       original.SetObscuraMetaData(blob.size(), &blob.front());
 
+      printf("*********** Writing image with added metadata ***************\n");
       std::string output_filename = "testout/test_with_metadata.jpg";
+      debug = 1;
       original.Save(output_filename.c_str());
 
+      printf("*********** Reloading image with added metadata *************\n");
       Jpeg reread;
       success = reread.LoadFromFile(output_filename.c_str(), true);
-      if (!success) exit(1);
+      if (!success) {
+	fprintf(stderr, "Failed read");
+	exit(1);
+      }
       unsigned int length = 0;
       const unsigned char *retrieved_blob = reread.GetObscuraMetaData(&length);
-      if (length != blob.size()) throw("Retrieved metadata wrong length");
+      if (length != blob.size()) {
+	fprintf(stderr, "Original length %zu, new length %u\n",
+		blob.size(), length);
+	throw("Retrieved metadata wrong length");
+      }
       if (memcmp(retrieved_blob, &blob.front(), length) != 0)
 	throw("Retrieved metadata not identical.");
     } catch (const char *error) {

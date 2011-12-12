@@ -21,6 +21,7 @@
 
 #include <vector>
 #include "jpeg.h"  // For jpeg_app marker.
+#include "debug_flag.h"
 #include "jpeg_marker.h"
 #define JPEG_APP0 0xFFE0
 // A class to store metadata specific to ObscuraCam: 
@@ -38,6 +39,8 @@ public:
     descriptor_.resize(length);
     if (length > 0)
       memcpy(&descriptor_[0], data, length);
+    printf("********************* Set Obscura Metadata length %zu\n",
+	   descriptor_.size());
   }
   const unsigned char *GetDescriptor(unsigned int *length) const {
     if (descriptor_.size() > 0) {
@@ -53,7 +56,13 @@ public:
     if (marker == NULL || marker->marker_ != kObscuraMarker)
       return false;
     if (strcmp((char*)&marker->data_.front(), kDescriptorType) == 0) {
-      SetDescriptor(marker->length_ - strlen(kDescriptorType) - 1,
+      if (debug > 0) {
+	printf("****************** Reading Obscura metadata %s %d %zu - %zu\n",
+	       kDescriptorType, marker->length_,
+	       marker->data_.size(), strlen(kDescriptorType));
+	marker->Print();
+      }
+      SetDescriptor(marker->length_ - 2 - (strlen(kDescriptorType) + 1),
 		    &marker->data_[strlen(kDescriptorType) + 1]);
       return true;
     } else if (strcmp((char*)&marker->data_.front(), kRedactionDataType) == 0) {
@@ -68,13 +77,21 @@ public:
     // Convert the data to markers and write.
     JpegMarker *descriptor = MakeDescriptorMarker();
     if (descriptor != NULL) {
-      descriptor->WriteWithStuffBytes(pFile);
+      if (debug > 0)
+	printf("***************************Writing Obscura descriptor at %zu\n",
+	       ftell(pFile));
+      descriptor->Save(pFile);
+    if (debug > 0)
+      printf("++++++++++++++++++ Done writing Obscura metadata\n");
       delete descriptor;
     }
     std::vector<JpegMarker *> *redaction_markers = MakeRedactionMarkers();
     if (redaction_markers != NULL) {
+      if (debug > 0)
+	printf("********************* Writing %zu Obscura redaction_markers.\n",
+	       redaction_markers->size());
       for (int i = 0; i < redaction_markers->size(); ++i) {
-	(*redaction_markers)[i]->WriteWithStuffBytes(pFile);
+	(*redaction_markers)[i]->Save(pFile);
 	delete (*redaction_markers)[i];
       }
       delete redaction_markers;
@@ -89,14 +106,15 @@ protected:
       return NULL;
     const int string_length = strlen(kDescriptorType) + 1;
     const int des_length = descriptor_.size();
-    const int len = string_length + des_length;
+    const int total_length = string_length + des_length;
     // Create a temporary buffer to store the string header and the
     // marker data.
-    std::vector<unsigned char> long_data(len);
+    std::vector<unsigned char> long_data(total_length);
     memcpy(&long_data[0], kDescriptorType, string_length);
-    memcpy(&long_data[string_length], kDescriptorType, des_length);
+    memcpy(&long_data[string_length], &descriptor_.front(), des_length);
     JpegMarker *marker = new JpegMarker(kObscuraMarker, &long_data.front(),
-					string_length + des_length);
+					total_length);
+    marker->Print();
     return marker;
   }
   // Return a vector of markers containing the redaction data.

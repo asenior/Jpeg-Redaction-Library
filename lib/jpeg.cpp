@@ -135,8 +135,14 @@ namespace jpeg_redaction {
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
 
-	AddMarker(marker, blockloc, blocksize, pFile, loadall);
-	fprintf(stderr, "APP %x unsupported\n", marker);
+	JpegMarker *newmarker = AddMarker(marker, blockloc, blocksize,
+					  pFile, loadall);
+	if (newmarker != NULL &&
+	    strlen((char *)&(newmarker->data_.front())) < 10)
+	  fprintf(stderr, "APPn %x unsupported. Marker string: %s\n",
+		  marker, (char*)&newmarker->data_.front());
+	else
+	  fprintf(stderr, "APPn %x unsupported\n", marker);
 	//      throw("AppN unsupported");
 	continue;
       }
@@ -424,7 +430,7 @@ namespace jpeg_redaction {
 	rv = fwrite(&ifdloc, sizeof(ifdloc), 1, pFile);
       }
       rv = fseek(pFile, 0, SEEK_END);
-    }
+    }  // Write exif IFDs
     obscura_metadata_.Write(pFile);
     if (photoshop3_) {
       unsigned short marker =jpeg_app + 0xd;

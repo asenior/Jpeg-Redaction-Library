@@ -16,6 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+// obscura_metadata.h
+
+// A class to store metadata specific to ObscuraCam in APPn (n=7) blocks
+// of JPEG files.
+// A general metadata block to be parsed by the application.
+// and a redaction-reversal block to be parsed by this library.
+
 #ifndef INCLUDE_OBSCURA_METADATA
 #define INCLUDE_OBSCURA_METADATA
 
@@ -24,9 +32,6 @@
 #include "debug_flag.h"
 #include "jpeg_marker.h"
 #define JPEG_APP0 0xFFE0
-// A class to store metadata specific to ObscuraCam: 
-// A general metadata block to be parsed by the application.
-// and a redaction-reversal block to be parsed by this library.
 namespace jpeg_redaction {
 
 class ObscuraMetadata {

@@ -33,7 +33,7 @@
 
 namespace jpeg_redaction {
   TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : 
-    data_(NULL), subifd_(NULL) {
+    data_(NULL), subifd_(NULL), maker_note_(NULL) {
     if (pFile == NULL)
       throw("NULL file");
     int iRV = fread(&tagid_, sizeof(short), 1, pFile);
@@ -84,7 +84,7 @@ namespace jpeg_redaction {
 	     value, value, totallength);
   }
   TiffTag::TiffTag(int tagid, enum tag_types type, int count,
-		   unsigned char *data) {
+		   unsigned char *data) : maker_note_(NULL) {
     tagid_ = tagid;
     type_ = type;
     count_ = count;
@@ -305,13 +305,13 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
   } else {
     int iRV = fseek(pFile, position, SEEK_SET);
     if (tagid_ == tag_MakerNote) {
-      // printf("\n\n\n*******************************************************\n"
-      // 	     "************************************************************\n",
-      // 	     "Makernote\n");
-      // MakerNoteFactory factory;
-      // factory.SetManufacturer("Panasonic");
-      // MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
-      //    //    position = valpointer_;
+      printf("\n\n\n*******************************************************\n"
+      	     "************************************************************\n"
+      	     "Makernote\n");
+      MakerNoteFactory factory;
+      factory.SetManufacturer("Panasonic");
+      maker_note_ = factory.Read(pFile, subfileoffset, count_);
+         //    position = valpointer_;
     }
     const int type_len = LengthOfType(type_);
     const int totallength = count_ * type_len;

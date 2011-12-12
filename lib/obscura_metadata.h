@@ -39,8 +39,7 @@ public:
     descriptor_.resize(length);
     if (length > 0)
       memcpy(&descriptor_[0], data, length);
-    printf("********************* Set Obscura Metadata length %zu\n",
-	   descriptor_.size());
+    printf("Set Obscura Metadata length %zu\n", descriptor_.size());
   }
   const unsigned char *GetDescriptor(unsigned int *length) const {
     if (descriptor_.size() > 0) {
@@ -57,7 +56,7 @@ public:
       return false;
     if (strcmp((char*)&marker->data_.front(), kDescriptorType) == 0) {
       if (debug > 0) {
-	printf("****************** Reading Obscura metadata %s %d %zu - %zu\n",
+	printf("Reading Obscura metadata %s %d %zu - %zu\n",
 	       kDescriptorType, marker->length_,
 	       marker->data_.size(), strlen(kDescriptorType));
 	marker->Print();
@@ -78,17 +77,15 @@ public:
     JpegMarker *descriptor = MakeDescriptorMarker();
     if (descriptor != NULL) {
       if (debug > 0)
-	printf("***************************Writing Obscura descriptor at %zu\n",
+	printf("Writing Obscura descriptor at %zu\n",
 	       ftell(pFile));
       descriptor->Save(pFile);
-    if (debug > 0)
-      printf("++++++++++++++++++ Done writing Obscura metadata\n");
       delete descriptor;
     }
     std::vector<JpegMarker *> *redaction_markers = MakeRedactionMarkers();
     if (redaction_markers != NULL) {
       if (debug > 0)
-	printf("********************* Writing %zu Obscura redaction_markers.\n",
+	printf("Writing %zu Obscura redaction_markers.\n",
 	       redaction_markers->size());
       for (int i = 0; i < redaction_markers->size(); ++i) {
 	(*redaction_markers)[i]->Save(pFile);

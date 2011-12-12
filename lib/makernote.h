@@ -70,7 +70,10 @@ namespace jpeg_redaction {
 
   class Panasonic: public MakerNote {
   public:
-    Panasonic() {}
+  Panasonic() : ifd_(NULL) {}
+    ~Panasonic() {
+      delete ifd_;
+    }
     virtual void Print() const {
       printf("Panasonic makernote...\n");
       ifd_->Print();
@@ -100,10 +103,12 @@ namespace jpeg_redaction {
       return 1;
     }
     virtual int Write(FILE *pFile, int subfileoffset) const {
+      if (ifd_ == NULL) throw("Trying to throw NULL Panasonic makernote");
+      fwrite("Panasonic\0\0\0", sizeof(char), 12, pFile);
+      unsigned int urv = ifd_->Write(pFile, 0, subfileoffset);
       return 1;
     }
   protected:
-    const char *header;
     TiffIfd *ifd_;
   };
 
@@ -118,12 +123,13 @@ namespace jpeg_redaction {
       /* if (rv == 1) */
       /* 	return ifdmn; */
       /* delete ifdmn; */
+      /* rv = fseek(pFile, start_location, SEEK_SET); */
 
-      /* Panasonic *panasonic = new Panasonic; */
-      /* rv = panasonic->Read(pFile, subfileoffset, length); */
-      /* if (rv == 1) */
-      /* 	return panasonic; */
-      /* delete panasonic; */
+      Panasonic *panasonic = new Panasonic;
+      rv = panasonic->Read(pFile, subfileoffset, length);
+      if (rv == 1)
+      	return panasonic;
+      delete panasonic;
       rv = fseek(pFile, start_location, SEEK_SET);
       GenericMakerNote *generic = new GenericMakerNote;
       rv = generic->Read(pFile, subfileoffset, length);

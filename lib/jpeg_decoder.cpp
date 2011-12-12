@@ -67,7 +67,7 @@ JpegDecoder::JpegDecoder(int w, int h,
     if (ac_dht == NULL || dc_dht == NULL) {
       for (int i = 0; i < dhts.size(); ++i)
 	fprintf(stderr, "DHT %d id %d\n", i, dhts[i]->id_);
-      fprintf(stderr, "comp %d/%d table %d dhts %d AC %x dc %x\n",
+      fprintf(stderr, "comp %d/%zu table %d dhts %zu AC %p dc %p\n",
 	     comp, components->size(),
 	     (*components)[comp]->table_, dhts.size(), ac_dht, dc_dht);
       throw("Can't find table ");
@@ -316,7 +316,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     if ( redacting != kRedactingEnding) {
       if (redaction_method_ == Redaction::redact_solid)
 	// Write black.
-	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
+	//	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
+	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? -511 : -511);
       else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
       else if (redaction_method_ == Redaction::redact_pixellate ||

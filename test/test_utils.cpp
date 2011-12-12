@@ -72,14 +72,14 @@ namespace jpeg_redaction {
     bool compare_bytes(const std::vector<unsigned char> &orig,
 		       const std::vector<unsigned char> &other) {
       if (orig.size() != other.size()) {
-	fprintf(stderr, "Size mismatch: orig %d vs new %d\n",
+	fprintf(stderr, "Size mismatch: orig %zu vs new %zu\n",
 		orig.size(), other.size());
 	return false;
       }
       for(int i = 0; i < orig.size(); ++i) {
 	if (orig[i] != other[i]) {
 	  fprintf(stderr,
-		  "Byte mismatch at %d of %d: new %02x vs orig %02x\n",
+		  "Byte mismatch at %d of %zu: new %02x vs orig %02x\n",
 		  i, orig.size(), other[i], orig[i]);
 	  return false;
 	}

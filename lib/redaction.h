@@ -177,7 +177,7 @@ public:
     Redaction *copy = new Redaction;
     for (int i = 0; i < regions_.size(); ++i) {
       if (debug > 0)
-	printf("adding region %d of %d\n", i, regions_.size());
+	printf("adding region %d of %zu\n", i, regions_.size());
       copy->AddRegion(regions_[i]);
     }
     return copy;
@@ -230,7 +230,7 @@ public:
   bool ValidateStrips() {
     int offset = 0;
     if (debug > 0)
-      printf("Redaction::%d strips\n", strips_.size());
+      printf("Redaction::%zu strips\n", strips_.size());
     for (int i = 0; i < strips_.size(); ++i) {
       if (!strips_[i]->Valid(&offset))
 	return false;

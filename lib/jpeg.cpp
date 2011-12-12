@@ -117,7 +117,7 @@ namespace jpeg_redaction {
 	if (!arch_big_endian)
 	  ByteSwapInPlace(&blocksize, 1);
 	if (debug > 0)
-	  printf("Photoshop 0x%x at %d length %d\n",
+	  printf("Photoshop 0x%x at %zu length %d\n",
 		 marker, ftell(pFile), blocksize);
 	try {
 	  photoshop3_ = new Photoshop3Block(pFile, blocksize-sizeof(blocksize));
@@ -366,7 +366,7 @@ namespace jpeg_redaction {
     // write the EXIF IFDs  Code based on CR2.cpp
     if (write_exif && ifds_.size() !=0) {
       if (debug > 0)
-	printf("Writing exif at %d\n", ftell(pFile));
+	printf("Writing exif at %zu\n", ftell(pFile));
       std::vector<unsigned int> pending_pointers;  // Pairs of Where/What
       unsigned short marker = jpeg_app + 1;
       if (!arch_big_endian) ByteSwapInPlace(&marker, 1);
@@ -397,7 +397,7 @@ namespace jpeg_redaction {
       unsigned int zero = 0x00000000;
       for (int i = 0 ; i < ifds_.size(); ++i) {
 	if (debug > 0)
-	  printf("Writing IFD %d at %d\n", i, ftell(pFile));
+	  printf("Writing IFD %d at %zu\n", i, ftell(pFile));
 
 	unsigned int ifdloc = ifds_[i]->Write(pFile, zero, subfileoffset);
 	// "What":  Where we wrote this ifd (to be put in the previous "where")
@@ -436,7 +436,7 @@ namespace jpeg_redaction {
       rv = fwrite(&blocksize, sizeof(unsigned short), 1, pFile);
       blocksize = photoshop3_->Write(pFile) + sizeof(blocksize);
       if (debug > 0)
-	printf("  IPTC Written bytes: %d vs %d\n", ftell(pFile) - blockloc,
+	printf("  IPTC Written bytes: %zu vs %d\n", ftell(pFile) - blockloc,
 	       blocksize);
       fseek(pFile, blockloc, SEEK_SET);
       if (!arch_big_endian)
@@ -551,7 +551,7 @@ namespace jpeg_redaction {
 			      redacted_data.end());
       sos_block->SetBitLength(decoder.GetBitLength() + 10 * 8);
       if (debug > 0)
-	printf("sos block now %d bytes\n", sos_block->data_.size());
+	printf("sos block now %zu bytes\n", sos_block->data_.size());
     }
     // Now keep on dumping data out.
     if (debug > 0)
@@ -565,7 +565,7 @@ namespace jpeg_redaction {
     // For each strip insert it into the JPEG data.
     int data_bits = sos_block->GetBitLength();
     if (debug > 0)
-      printf("Before patching size %d bytes %d bits.\n",
+      printf("Before patching size %zu bytes %d bits.\n",
 	     sos_block->data_.size(), data_bits);
     // We pass the data with the header in it, so start at this bit.
     int offset = 10 * 8;

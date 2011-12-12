@@ -160,7 +160,7 @@ unsigned int TiffIfd::Write(FILE *pFile,
 
   // If we're keeping track of pending pointers, fill them in now.
   if (pending_pointers_where.size() != pending_pointers_what.size()) {
-    printf("Pending pointers where %d what %d\n", 
+    printf("Pending pointers where %zu what %zu\n", 
 	   pending_pointers_where.size(), pending_pointers_what.size());
     throw("pending pointers don't match");
   }

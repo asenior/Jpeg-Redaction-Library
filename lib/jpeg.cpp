@@ -137,13 +137,20 @@ namespace jpeg_redaction {
 
 	JpegMarker *newmarker = AddMarker(marker, blockloc, blocksize,
 					  pFile, loadall);
-	if (newmarker != NULL &&
-	    strlen((char *)&(newmarker->data_.front())) < 10)
-	  fprintf(stderr, "APPn %x unsupported. Marker string: %s\n",
-		  marker, (char*)&newmarker->data_.front());
-	else
-	  fprintf(stderr, "APPn %x unsupported\n", marker);
-	//      throw("AppN unsupported");
+	if (newmarker != NULL) {
+	  char *cp = (char *)&(newmarker->data_.front());
+	  int i = 0;
+	  const int max_string_length = 12;
+	  for (; i < max_string_length && i < newmarker->data_.size(); ++i) {
+	    if (cp[i] == '\0') {
+	      printf("Generic APPn %x loaded. Marker string: %s\n",
+		     marker, cp);
+	      break;
+	    }
+	  }
+	  if (i >= max_string_length)
+	    printf("Generic APPn %x loaded. Non-string marker.\n", marker);
+	  }
 	continue;
       }
       // http://www.bsdg.org/swag/GRAPHICS/0143.PAS.html

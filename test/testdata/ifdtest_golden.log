@@ -7,6 +7,7 @@ IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
 IFDSize: 2 
 
  DIDIFD
@@ -31,7 +32,8 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Generic makernote length 10088
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 

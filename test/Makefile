@@ -123,7 +123,7 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@echo "== " $@ " passed"
 
 test_metadata:  $(METADATATESTBINARY) testout_dir
-	./$(METADATATESTBINARY) testdata/windows.jpg
+	./$(METADATATESTBINARY) testdata/windows.jpg > testout/test_metadata_output.log
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)

@@ -90,7 +90,7 @@ public:
   }
   int GetNTags() const { return tags_.size(); }
   // Print all tags to stdout.
-  void ListTags() const;
+  void Print() const;
   Jpeg *GetJpeg() { return jpeg_;}
 protected:
   void Reset();

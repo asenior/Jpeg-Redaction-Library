@@ -34,6 +34,7 @@
 
 namespace jpeg_redaction {
 class TiffIfd;
+ class MakerNote;
 class TiffTag
 {
 public:
@@ -262,7 +263,7 @@ protected:
   unsigned int valpointer_;
   mutable unsigned int valpointerout_;
   TiffIfd *subifd_; // Makernote or Exif
-  MakerNote *maker_note_;
+  MakerNote *makernote_;
 private:
   bool TagIsSubIFD() const;
 };

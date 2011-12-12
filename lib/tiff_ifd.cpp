@@ -68,11 +68,11 @@ TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
   printf("Loaded Image data\n");
   if (loadall)
     LoadAll(pFile);
-  ListTags();
+  Print();
 }
 
   // Print all tags to stdout.
-void TiffIfd::ListTags() const {
+void TiffIfd::Print() const {
   if (debug >= 0)
     printf("%s:%d Listing %d tags\n", __FILE__, __LINE__, GetNTags());
   TiffTag *width_tag = FindTag(TiffTag::tag_ImageWidth);

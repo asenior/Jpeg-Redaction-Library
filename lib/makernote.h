@@ -12,30 +12,56 @@
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 #include "tiff_ifd.h"
 
 namespace jpeg_redaction {
 
-class MakerNote {
-public:
-  MakerNote() {}
-  virtual int Read(FILE *pFile, int subfileoffset, int length) = 0;
-  virtual int Write(FILE *pFile, int subfileoffset) const = 0;
-};
+  class MakerNote {
+  public:
+    MakerNote() {}
+    virtual void Print() const = 0;
+    virtual int Read(FILE *pFile, int subfileoffset, int length) = 0;
+    virtual int Write(FILE *pFile, int subfileoffset) const = 0;
+  };
 
   // A Generic Makernote where we just read a block of data.
   // without parsing, hoping that it is relocatable.
   class GenericMakerNote : public MakerNote {
   public:
-    GenericMakerNote() {}
-    virtual int Read(FILE *pFile, int subfileoffset, int length) {};
-    virtual int Write(FILE *pFile, int subfileoffset) const {};
+  GenericMakerNote() : data_(NULL) {}
+    ~GenericMakerNote() {}
+    virtual void Print() const {
+      printf("Generic makernote length %zu\n", data_.size());
+    }
+    virtual int Read(FILE *pFile, int subfileoffset, int length) {
+      data_.resize(length);
+      int iRV = fread(&data_.front(), sizeof(unsigned char), length, pFile);
+      if (iRV != length) {
+	data_.clear();
+	return 0;
+      }
+      return 1;
+    };
+    virtual int Write(FILE *pFile, int subfileoffset) const {
+      int iRV = fwrite(&data_.front(), sizeof(unsigned char),
+		       data_.size(), pFile);
+      if (iRV != data_.size()) {
+	return 0;
+      }
+      return 1;
+    };
+    std::vector<unsigned char> data_;
   };
 
   // A makernote stored in a standard TiffIfd, e.g. Canon.
   class IfdMakerNote : public MakerNote {
   public:
     IfdMakerNote() {}
+    virtual void Print() const {
+      printf("IDF makernote...\n");
+      ifd_->Print();
+    }
     virtual int Read(FILE *pFile, int subfileoffset, int length) {};
     virtual int Write(FILE *pFile, int subfileoffset) const {};
   protected:
@@ -45,6 +71,10 @@ public:
   class Panasonic: public MakerNote {
   public:
     Panasonic() {}
+    virtual void Print() const {
+      printf("Panasonic makernote...\n");
+      ifd_->Print();
+    }
     virtual int Read(FILE *pFile, int subfileoffset, int length) {
       int start = ftell(pFile);
       char header[12];
@@ -80,24 +110,28 @@ public:
   class MakerNoteFactory {
   public:
     MakerNoteFactory() {}
-    void SetManufacturer(const char *const manuf) { manufacturer_ = manuf;}
     MakerNote *Read(FILE *pFile, int subfileoffset, int length) {
-      if (manufacturer_.compare("Canon") == 0) {
-	IfdMakerNote *canon = new IfdMakerNote;
-	canon->Read(pFile, subfileoffset, length);
-	return canon;
-      } else if (manufacturer_.compare("Panasonic") == 0) {
-	Panasonic *panasonic = new Panasonic;
-	panasonic->Read(pFile, subfileoffset, length);
-	return panasonic;
-      } else {
-	GenericMakerNote *generic = new GenericMakerNote;
-	generic->Read(pFile, subfileoffset, length);
+      int rv;
+      size_t start_location = ftell(pFile);
+      /* IfdMakerNote *ifdmn = new IfdMakerNote; */
+      /* rv = ifdmn->Read(pFile, subfileoffset, length); */
+      /* if (rv == 1) */
+      /* 	return ifdmn; */
+      /* delete ifdmn; */
+
+      /* Panasonic *panasonic = new Panasonic; */
+      /* rv = panasonic->Read(pFile, subfileoffset, length); */
+      /* if (rv == 1) */
+      /* 	return panasonic; */
+      /* delete panasonic; */
+      rv = fseek(pFile, start_location, SEEK_SET);
+      GenericMakerNote *generic = new GenericMakerNote;
+      rv = generic->Read(pFile, subfileoffset, length);
+      if (rv == 1)
 	return generic;
-      }      
+      delete generic;
+      return NULL;
     }
-  protected:
-    std::string manufacturer_;
   };
 
 }  // namespace jpeg_redaction

@@ -115,9 +115,9 @@ void JpegDecoder::WriteValue(int which_dht, int value) {
   if (value < 0) {
     coded_val ^= ((1 << coded_len) - 1);
   }
-  int len_index = dhts_[which_dht]->Lookup(coded_len);
-  int coded_len_len = dhts_[which_dht]->lengths_[len_index];
-  unsigned int coded_len_code = dhts_[which_dht]->codes_[len_index];
+  const int len_index = dhts_[which_dht]->Lookup(coded_len);
+  const int coded_len_len = dhts_[which_dht]->lengths_[len_index];
+  const unsigned int coded_len_code = dhts_[which_dht]->codes_[len_index];
   // printf("Writing value %d in %d + %d bits: %x %x\n", value,
   // 	 coded_len_len, coded_len, coded_len_code, coded_val);
   InsertBits(coded_len_code << (32-coded_len_len), coded_len_len);
@@ -314,17 +314,26 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
     int value_to_write = dc_values_[comp];
   // If solid, we write out 0.
     if ( redacting != kRedactingEnding) {
-      if (redaction_method_ == Redaction::redact_solid)
+      if (redaction_method_ == Redaction::redact_solid) {
 	// Write black.
 	//	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
 	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? -511 : -511);
+	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? 0 : 0);
+      }
       else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
       else if (redaction_method_ == Redaction::redact_pixellate ||
 	       redaction_method_ == Redaction::redact_inverse_pixellate)
 	value_to_write = LookupPixellationValue(comp);
     }
-    WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);
+    try {
+      WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);
+    } catch (...) {
+      fprintf(stderr, "Caught error in WriteValue for comp %d, table 2*%d, value %d=%d-%d.",
+	     comp, dht, value_to_write-redaction_dc_[comp],
+	     value_to_write, redaction_dc_[comp]);
+      throw("WriteValueErr");
+    }
     redaction_dc_[comp] = value_to_write;
   }
   if (redacting == kRedactingInactive)

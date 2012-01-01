@@ -18,20 +18,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Program to test that the library preserves information stored in JPEG files
+# after reading and writing.
 
 binary=./testreadwrite
+
+# Location of exiftool EXIF information dumper. 
+EXIFTOOL=exiftool
 
 if [[ ! -x ${binary} ]]; then 
     echo "binary $binary does not exist"
     exit 1;
 fi
 
+# A test suite of images from different devices.
 for i in testdata/devices/*; do
     echo "testing $i"
     ${binary} $i > testout/testreadwrite.log
-    exiftool $i | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory\)" > testout/src.exiflog
-    exiftool testout/testplainoutput.jpg  | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory \)"> testout/out.exiflog
-    winmerge testout/src.exiflog testout/out.exiflog
+    exiftool $i | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory\|JFIF Version\)" > testout/src.exiflog
+    exiftool testout/testplainoutput.jpg  | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory \|Current IPTC Digest\|JFIF Version\)"> testout/out.exiflog
+    diff  testout/src.exiflog testout/out.exiflog > /dev/null || winmerge testout/src.exiflog testout/out.exiflog
     # if     diff testout/src.exiflog testout/out.exiflog; then
     # diff testout/src.exiflog testout/out.exiflog
     # 	echo "src.exiflog out.exiflog differ"

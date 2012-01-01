@@ -32,11 +32,17 @@ if [[ ! -x ${binary} ]]; then
 fi
 
 # A test suite of images from different devices.
+# Currently all pass except 
+# droid.jpg (thumbnail length is different, but thumbnail
+#        seems to be correctly preserved.)
+# canon-1999 (Can't find the right DHT)
 for i in testdata/devices/*; do
     echo "testing $i"
+    rm -f testout/testplainoutput.jpg
     ${binary} $i > testout/testreadwrite.log
     exiftool $i | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory\|JFIF Version\)" > testout/src.exiflog
     exiftool testout/testplainoutput.jpg  | grep -v "\(Thumbnail Offset\|Exif Byte Order\|^File \|^Directory \|Current IPTC Digest\|JFIF Version\)"> testout/out.exiflog
+    
     diff  testout/src.exiflog testout/out.exiflog > /dev/null || winmerge testout/src.exiflog testout/out.exiflog
     # if     diff testout/src.exiflog testout/out.exiflog; then
     # diff testout/src.exiflog testout/out.exiflog

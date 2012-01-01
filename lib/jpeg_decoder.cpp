@@ -56,8 +56,9 @@ JpegDecoder::JpegDecoder(int w, int h,
 	   (ac_dht == NULL || dc_dht == NULL); ++i) {
       if (dhts[i]->id_ == (*components)[comp]->table_) {
 	if (debug > 0)
-	  printf("Comp %d %s DHT: %d\n",
-		 comp, (dhts[i]->class_? "AC":"DC"), i);
+	  printf("Comp %d %d%s DHT: %d AC%p DC%p\n",
+		 comp, dhts[i]->class_, (dhts[i]->class_? "AC":"DC"), i,
+		 ac_dht, dc_dht);
 	if (dhts[i]->class_ == 0)
 	  dc_dht = dhts[i];
 	else
@@ -66,11 +67,11 @@ JpegDecoder::JpegDecoder(int w, int h,
     }
     if (ac_dht == NULL || dc_dht == NULL) {
       for (int i = 0; i < dhts.size(); ++i)
-	fprintf(stderr, "DHT %d id %d\n", i, dhts[i]->id_);
-      fprintf(stderr, "comp %d/%zu table %d dhts %zu AC %p dc %p\n",
-	     comp, components->size(),
-	     (*components)[comp]->table_, dhts.size(), ac_dht, dc_dht);
-      throw("Can't find table ");
+      	fprintf(stderr, "DHT %d %p id %d\n", i, dhts[i], dhts[i]->id_);
+      fprintf(stderr, "comp %d of %zu table %d dhts %zu AC %p dc %p\n",
+      	     comp, components->size(),
+      	     (*components)[comp]->table_, dhts.size(), ac_dht, dc_dht);
+      throw("Can't find DHT table in JpegDecoder::JpegDecoder " __FILE__);
     }
     dhts_.push_back(dc_dht);
     dhts_.push_back(ac_dht);

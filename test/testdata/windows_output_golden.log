@@ -97,6 +97,97 @@ Loading SUB IFD 0x8769 at 666 (654 + 12) IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 Loading SUB IFD 0xa005 at 11528 (11516 + 12) IFDSize: 2 
 
  DIDIFD
@@ -121,7 +212,90 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+Panasonic makernote... 0x5bce70
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -222,6 +396,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 
 Next offset 0
 Got marker 0xffe2 APPn at 32160
+Generic APPn ffe2 loaded. Marker string: MPF
 Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
 Got marker 0xffc0 SOF0 at 32392
@@ -249,12 +424,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
 Removed 8246 stuff_bytes in 2779271 now 2771025
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 62424 MCUS. 408x306 blocks h:2 v:1
 
 
@@ -269,6 +444,21 @@ DecodeImage H 3264 W 2448
 Writing exif at 2
 Saving 2 Exif IFDs
 Writing IFD 0 at 20
+Write TiffIfd Locs Where: 890 What: 1726-0
+Write TiffIfd Locs Where: 938 What: 9926-0
+Write TiffIfd Locs Where: 1106 What: 9942-0
+Write TiffIfd Locs Where: 1298 What: 9962-0
+Write TiffIfd Locs Where: 1310 What: 9978-0
+Write TiffIfd Locs Where: 1394 What: 10020-0
+Write TiffIfd Locs Where: 1430 What: 10168-0
+Write TiffIfd Locs Where: 1442 What: 10232-0
+Write TiffIfd Locs Where: 1454 What: 10296-0
+Write TiffIfd Locs Where: 1478 What: 10360-0
+Write TiffIfd Locs Where: 1502 What: 10432-0
+Write TiffIfd Locs Where: 1526 What: 10504-0
+Write TiffIfd Locs Where: 1550 What: 10576-0
+Write TiffIfd Locs Where: 1574 What: 10704-0
+Write TiffIfd Locs Where: 1706 What: 10832-0
 Write TiffIfd Locs Where: 268 What: 672-12
 Write TiffIfd Locs Where: 280 What: 680-12
 Write TiffIfd Locs Where: 328 What: 688-12
@@ -278,14 +468,14 @@ Write TiffIfd Locs Where: 376 What: 736-12
 Write TiffIfd Locs Where: 388 What: 744-12
 Write TiffIfd Locs Where: 436 What: 752-12
 Write TiffIfd Locs Where: 448 What: 760-12
-Write TiffIfd Locs Where: 508 What: 10848-12
-Write TiffIfd Locs Where: 592 What: 10878-12
-Write TiffIfd Locs Where: 10920 What: 11048-12
-Write TiffIfd Locs Where: 10944 What: 11072-12
-Write TiffIfd Locs Where: 10956 What: 11096-12
-Write TiffIfd Locs Where: 11004 What: 11120-12
-Write TiffIfd Locs Where: 11016 What: 11128-12
-Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 508 What: 10852-12
+Write TiffIfd Locs Where: 592 What: 10882-12
+Write TiffIfd Locs Where: 10924 What: 11052-12
+Write TiffIfd Locs Where: 10948 What: 11076-12
+Write TiffIfd Locs Where: 10960 What: 11100-12
+Write TiffIfd Locs Where: 11008 What: 11124-12
+Write TiffIfd Locs Where: 11020 What: 11132-12
+Write TiffIfd Locs Where: 11044 What: 11142-12
 Write TiffIfd Locs Where: 30 What: 194-12
 Write TiffIfd Locs Where: 42 What: 204-12
 Write TiffIfd Locs Where: 66 What: 212-12
@@ -293,33 +483,33 @@ Write TiffIfd Locs Where: 78 What: 220-12
 Write TiffIfd Locs Where: 102 What: 228-12
 Write TiffIfd Locs Where: 114 What: 238-12
 Write TiffIfd Locs Where: 138 What: 258-12
-Write TiffIfd Locs Where: 150 What: 10886-12
-Write TiffIfd Locs Where: 162 What: 11149-12
-Write TiffIfd Locs Where: 174 What: 11357-12
-Write TiffIfd Locs Where: 186 What: 11421-12
-Writing IFD 1 at 11549
+Write TiffIfd Locs Where: 150 What: 10890-12
+Write TiffIfd Locs Where: 162 What: 11153-12
+Write TiffIfd Locs Where: 174 What: 11361-12
+Write TiffIfd Locs Where: 186 What: 11425-12
+Writing IFD 1 at 11553
 Saving thumbnail to file
 Saving: 4 markers
-Saved marker ffdb length 132 at 11669
-Saved marker ffc0 length 17 at 11803
-Saved marker ffc4 length 418 at 11822
+Saved marker ffdb length 132 at 11673
+Saved marker ffc0 length 17 at 11807
+Saved marker ffc4 length 418 at 11826
 Inserted 31 stuff_bytes in 6104 now 6135
-Saved marker ffda length 6106 at 12242
+Saved marker ffda length 6106 at 12246
 thumbnail written
-Write TiffIfd Locs Where: 11583 What: 11651-12
-Write TiffIfd Locs Where: 11595 What: 11659-12
-Write TiffIfd Locs Where: 11619 What: 11667-12
+Write TiffIfd Locs Where: 11587 What: 11655-12
+Write TiffIfd Locs Where: 11599 What: 11663-12
+Write TiffIfd Locs Where: 11623 What: 11671-12
 IFD Locs Where: 16 What: 8
-IFD Locs Where: 190 What: 11537
-IFD Locs Where: 11647 What: 0
+IFD Locs Where: 190 What: 11541
+IFD Locs Where: 11651 What: 0
 Saving: 6 markers
-Saved marker ffe2 length 96 at 18383
-Saved marker ffdb length 132 at 18481
-Saved marker ffc0 length 17 at 18615
-Saved marker ffc4 length 418 at 18634
-Saved marker ffdd length 4 at 19054
+Saved marker ffe2 length 96 at 18387
+Saved marker ffdb length 132 at 18485
+Saved marker ffc0 length 17 at 18619
+Saved marker ffc4 length 418 at 18638
+Saved marker ffdd length 4 at 19058
 Inserted 8246 stuff_bytes in 2771025 now 2779271
-Saved marker ffda length 2771027 at 19060
+Saved marker ffda length 2771027 at 19064
 Testing redaction
 Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
@@ -334,6 +524,97 @@ Loading SUB IFD 0x8769 at 666 (654 + 12) IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 Loading SUB IFD 0xa005 at 11528 (11516 + 12) IFDSize: 2 
 
  DIDIFD
@@ -358,7 +639,90 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+Panasonic makernote... 0x5b9708
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -459,6 +823,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 
 Next offset 0
 Got marker 0xffe2 APPn at 32160
+Generic APPn ffe2 loaded. Marker string: MPF
 Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
 Got marker 0xffc0 SOF0 at 32392
@@ -486,12 +851,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
 Removed 8246 stuff_bytes in 2779271 now 2771025
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 62424 MCUS. 408x306 blocks h:2 v:1
 
 
@@ -508,12 +873,12 @@ DecodeImage H 3264 W 2448
 Redacting thumbnail
 adding region 0 of 1
 Scaling 3264x2448 -> 160x120
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 150 MCUS. 20x15 blocks h:2 v:1
 
 
@@ -549,6 +914,21 @@ Strip (48,192: 4916 MCUs) has 4754 bits (rep 672), src 1968110 dest 1891066 diff
 Writing exif at 2
 Saving 2 Exif IFDs
 Writing IFD 0 at 20
+Write TiffIfd Locs Where: 890 What: 1726-0
+Write TiffIfd Locs Where: 938 What: 9926-0
+Write TiffIfd Locs Where: 1106 What: 9942-0
+Write TiffIfd Locs Where: 1298 What: 9962-0
+Write TiffIfd Locs Where: 1310 What: 9978-0
+Write TiffIfd Locs Where: 1394 What: 10020-0
+Write TiffIfd Locs Where: 1430 What: 10168-0
+Write TiffIfd Locs Where: 1442 What: 10232-0
+Write TiffIfd Locs Where: 1454 What: 10296-0
+Write TiffIfd Locs Where: 1478 What: 10360-0
+Write TiffIfd Locs Where: 1502 What: 10432-0
+Write TiffIfd Locs Where: 1526 What: 10504-0
+Write TiffIfd Locs Where: 1550 What: 10576-0
+Write TiffIfd Locs Where: 1574 What: 10704-0
+Write TiffIfd Locs Where: 1706 What: 10832-0
 Write TiffIfd Locs Where: 268 What: 672-12
 Write TiffIfd Locs Where: 280 What: 680-12
 Write TiffIfd Locs Where: 328 What: 688-12
@@ -558,14 +938,14 @@ Write TiffIfd Locs Where: 376 What: 736-12
 Write TiffIfd Locs Where: 388 What: 744-12
 Write TiffIfd Locs Where: 436 What: 752-12
 Write TiffIfd Locs Where: 448 What: 760-12
-Write TiffIfd Locs Where: 508 What: 10848-12
-Write TiffIfd Locs Where: 592 What: 10878-12
-Write TiffIfd Locs Where: 10920 What: 11048-12
-Write TiffIfd Locs Where: 10944 What: 11072-12
-Write TiffIfd Locs Where: 10956 What: 11096-12
-Write TiffIfd Locs Where: 11004 What: 11120-12
-Write TiffIfd Locs Where: 11016 What: 11128-12
-Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 508 What: 10852-12
+Write TiffIfd Locs Where: 592 What: 10882-12
+Write TiffIfd Locs Where: 10924 What: 11052-12
+Write TiffIfd Locs Where: 10948 What: 11076-12
+Write TiffIfd Locs Where: 10960 What: 11100-12
+Write TiffIfd Locs Where: 11008 What: 11124-12
+Write TiffIfd Locs Where: 11020 What: 11132-12
+Write TiffIfd Locs Where: 11044 What: 11142-12
 Write TiffIfd Locs Where: 30 What: 194-12
 Write TiffIfd Locs Where: 42 What: 204-12
 Write TiffIfd Locs Where: 66 What: 212-12
@@ -573,33 +953,33 @@ Write TiffIfd Locs Where: 78 What: 220-12
 Write TiffIfd Locs Where: 102 What: 228-12
 Write TiffIfd Locs Where: 114 What: 238-12
 Write TiffIfd Locs Where: 138 What: 258-12
-Write TiffIfd Locs Where: 150 What: 10886-12
-Write TiffIfd Locs Where: 162 What: 11149-12
-Write TiffIfd Locs Where: 174 What: 11357-12
-Write TiffIfd Locs Where: 186 What: 11421-12
-Writing IFD 1 at 11549
+Write TiffIfd Locs Where: 150 What: 10890-12
+Write TiffIfd Locs Where: 162 What: 11153-12
+Write TiffIfd Locs Where: 174 What: 11361-12
+Write TiffIfd Locs Where: 186 What: 11425-12
+Writing IFD 1 at 11553
 Saving thumbnail to file
 Saving: 4 markers
-Saved marker ffdb length 132 at 11669
-Saved marker ffc0 length 17 at 11803
-Saved marker ffc4 length 418 at 11822
+Saved marker ffdb length 132 at 11673
+Saved marker ffc0 length 17 at 11807
+Saved marker ffc4 length 418 at 11826
 Inserted 29 stuff_bytes in 6043 now 6072
-Saved marker ffda length 6106 at 12242
+Saved marker ffda length 6106 at 12246
 thumbnail written
-Write TiffIfd Locs Where: 11583 What: 11651-12
-Write TiffIfd Locs Where: 11595 What: 11659-12
-Write TiffIfd Locs Where: 11619 What: 11667-12
+Write TiffIfd Locs Where: 11587 What: 11655-12
+Write TiffIfd Locs Where: 11599 What: 11663-12
+Write TiffIfd Locs Where: 11623 What: 11671-12
 IFD Locs Where: 16 What: 8
-IFD Locs Where: 190 What: 11537
-IFD Locs Where: 11647 What: 0
+IFD Locs Where: 190 What: 11541
+IFD Locs Where: 11651 What: 0
 Saving: 6 markers
-Saved marker ffe2 length 96 at 18320
-Saved marker ffdb length 132 at 18418
-Saved marker ffc0 length 17 at 18552
-Saved marker ffc4 length 418 at 18571
-Saved marker ffdd length 4 at 18991
+Saved marker ffe2 length 96 at 18324
+Saved marker ffdb length 132 at 18422
+Saved marker ffc0 length 17 at 18556
+Saved marker ffc4 length 418 at 18575
+Saved marker ffdd length 4 at 18995
 Inserted 8155 stuff_bytes in 2760885 now 2769040
-Saved marker ffda length 2771027 at 18997
+Saved marker ffda length 2771027 at 19001
 Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
@@ -613,6 +993,97 @@ Loading SUB IFD 0x8769 at 666 (654 + 12) IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 Loading SUB IFD 0xa005 at 11528 (11516 + 12) IFDSize: 2 
 
  DIDIFD
@@ -637,7 +1108,90 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+Panasonic makernote... 0x5bce50
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -738,6 +1292,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 
 Next offset 0
 Got marker 0xffe2 APPn at 32160
+Generic APPn ffe2 loaded. Marker string: MPF
 Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
 Got marker 0xffc0 SOF0 at 32392
@@ -765,12 +1320,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
 Removed 8246 stuff_bytes in 2779271 now 2771025
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 62424 MCUS. 408x306 blocks h:2 v:1
 
 
@@ -787,12 +1342,12 @@ DecodeImage H 3264 W 2448
 Redacting thumbnail
 adding region 0 of 1
 Scaling 3264x2448 -> 160x120
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 150 MCUS. 20x15 blocks h:2 v:1
 
 
@@ -825,6 +1380,21 @@ i 90515 shift_final 1 mask h80 l7f
 Writing exif at 2
 Saving 2 Exif IFDs
 Writing IFD 0 at 20
+Write TiffIfd Locs Where: 890 What: 1726-0
+Write TiffIfd Locs Where: 938 What: 9926-0
+Write TiffIfd Locs Where: 1106 What: 9942-0
+Write TiffIfd Locs Where: 1298 What: 9962-0
+Write TiffIfd Locs Where: 1310 What: 9978-0
+Write TiffIfd Locs Where: 1394 What: 10020-0
+Write TiffIfd Locs Where: 1430 What: 10168-0
+Write TiffIfd Locs Where: 1442 What: 10232-0
+Write TiffIfd Locs Where: 1454 What: 10296-0
+Write TiffIfd Locs Where: 1478 What: 10360-0
+Write TiffIfd Locs Where: 1502 What: 10432-0
+Write TiffIfd Locs Where: 1526 What: 10504-0
+Write TiffIfd Locs Where: 1550 What: 10576-0
+Write TiffIfd Locs Where: 1574 What: 10704-0
+Write TiffIfd Locs Where: 1706 What: 10832-0
 Write TiffIfd Locs Where: 268 What: 672-12
 Write TiffIfd Locs Where: 280 What: 680-12
 Write TiffIfd Locs Where: 328 What: 688-12
@@ -834,14 +1404,14 @@ Write TiffIfd Locs Where: 376 What: 736-12
 Write TiffIfd Locs Where: 388 What: 744-12
 Write TiffIfd Locs Where: 436 What: 752-12
 Write TiffIfd Locs Where: 448 What: 760-12
-Write TiffIfd Locs Where: 508 What: 10848-12
-Write TiffIfd Locs Where: 592 What: 10878-12
-Write TiffIfd Locs Where: 10920 What: 11048-12
-Write TiffIfd Locs Where: 10944 What: 11072-12
-Write TiffIfd Locs Where: 10956 What: 11096-12
-Write TiffIfd Locs Where: 11004 What: 11120-12
-Write TiffIfd Locs Where: 11016 What: 11128-12
-Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 508 What: 10852-12
+Write TiffIfd Locs Where: 592 What: 10882-12
+Write TiffIfd Locs Where: 10924 What: 11052-12
+Write TiffIfd Locs Where: 10948 What: 11076-12
+Write TiffIfd Locs Where: 10960 What: 11100-12
+Write TiffIfd Locs Where: 11008 What: 11124-12
+Write TiffIfd Locs Where: 11020 What: 11132-12
+Write TiffIfd Locs Where: 11044 What: 11142-12
 Write TiffIfd Locs Where: 30 What: 194-12
 Write TiffIfd Locs Where: 42 What: 204-12
 Write TiffIfd Locs Where: 66 What: 212-12
@@ -849,33 +1419,33 @@ Write TiffIfd Locs Where: 78 What: 220-12
 Write TiffIfd Locs Where: 102 What: 228-12
 Write TiffIfd Locs Where: 114 What: 238-12
 Write TiffIfd Locs Where: 138 What: 258-12
-Write TiffIfd Locs Where: 150 What: 10886-12
-Write TiffIfd Locs Where: 162 What: 11149-12
-Write TiffIfd Locs Where: 174 What: 11357-12
-Write TiffIfd Locs Where: 186 What: 11421-12
-Writing IFD 1 at 11549
+Write TiffIfd Locs Where: 150 What: 10890-12
+Write TiffIfd Locs Where: 162 What: 11153-12
+Write TiffIfd Locs Where: 174 What: 11361-12
+Write TiffIfd Locs Where: 186 What: 11425-12
+Writing IFD 1 at 11553
 Saving thumbnail to file
 Saving: 4 markers
-Saved marker ffdb length 132 at 11669
-Saved marker ffc0 length 17 at 11803
-Saved marker ffc4 length 418 at 11822
+Saved marker ffdb length 132 at 11673
+Saved marker ffc0 length 17 at 11807
+Saved marker ffc4 length 418 at 11826
 Inserted 33 stuff_bytes in 6085 now 6118
-Saved marker ffda length 6106 at 12242
+Saved marker ffda length 6106 at 12246
 thumbnail written
-Write TiffIfd Locs Where: 11583 What: 11651-12
-Write TiffIfd Locs Where: 11595 What: 11659-12
-Write TiffIfd Locs Where: 11619 What: 11667-12
+Write TiffIfd Locs Where: 11587 What: 11655-12
+Write TiffIfd Locs Where: 11599 What: 11663-12
+Write TiffIfd Locs Where: 11623 What: 11671-12
 IFD Locs Where: 16 What: 8
-IFD Locs Where: 190 What: 11537
-IFD Locs Where: 11647 What: 0
+IFD Locs Where: 190 What: 11541
+IFD Locs Where: 11651 What: 0
 Saving: 6 markers
-Saved marker ffe2 length 96 at 18366
-Saved marker ffdb length 132 at 18464
-Saved marker ffc0 length 17 at 18598
-Saved marker ffc4 length 418 at 18617
-Saved marker ffdd length 4 at 19037
+Saved marker ffe2 length 96 at 18370
+Saved marker ffdb length 132 at 18468
+Saved marker ffc0 length 17 at 18602
+Saved marker ffc4 length 418 at 18621
+Saved marker ffdd length 4 at 19041
 Inserted 8246 stuff_bytes in 2771025 now 2779271
-Saved marker ffda length 2771027 at 19043
+Saved marker ffda length 2771027 at 19047
 Got marker 0xffe1 APPn at 2
 APP Block size is 32156 7d9c
 EXIF byte_order: 4949
@@ -889,6 +1459,97 @@ Loading SUB IFD 0x8769 at 666 (654 + 12) IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 Loading SUB IFD 0xa005 at 11528 (11516 + 12) IFDSize: 2 
 
  DIDIFD
@@ -913,7 +1574,90 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+Panasonic makernote... 0x5b96b8
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -1014,6 +1758,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 
 Next offset 0
 Got marker 0xffe2 APPn at 32160
+Generic APPn ffe2 loaded. Marker string: MPF
 Got marker 0xffdb DQT at 32258
  sz 132 nextloc 32392
 Got marker 0xffc0 SOF0 at 32392
@@ -1041,12 +1786,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 2812114 (len 2779273)
 Removed 8246 stuff_bytes in 2779271 now 2771025
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 62424 MCUS. 408x306 blocks h:2 v:1
 
 
@@ -1063,12 +1808,12 @@ DecodeImage H 3264 W 2448
 Redacting thumbnail
 adding region 0 of 1
 Scaling 3264x2448 -> 160x120
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 150 MCUS. 20x15 blocks h:2 v:1
 
 
@@ -1238,6 +1983,21 @@ i 308696 shift_final 7 mask hfe l1
 Writing exif at 2
 Saving 2 Exif IFDs
 Writing IFD 0 at 20
+Write TiffIfd Locs Where: 890 What: 1726-0
+Write TiffIfd Locs Where: 938 What: 9926-0
+Write TiffIfd Locs Where: 1106 What: 9942-0
+Write TiffIfd Locs Where: 1298 What: 9962-0
+Write TiffIfd Locs Where: 1310 What: 9978-0
+Write TiffIfd Locs Where: 1394 What: 10020-0
+Write TiffIfd Locs Where: 1430 What: 10168-0
+Write TiffIfd Locs Where: 1442 What: 10232-0
+Write TiffIfd Locs Where: 1454 What: 10296-0
+Write TiffIfd Locs Where: 1478 What: 10360-0
+Write TiffIfd Locs Where: 1502 What: 10432-0
+Write TiffIfd Locs Where: 1526 What: 10504-0
+Write TiffIfd Locs Where: 1550 What: 10576-0
+Write TiffIfd Locs Where: 1574 What: 10704-0
+Write TiffIfd Locs Where: 1706 What: 10832-0
 Write TiffIfd Locs Where: 268 What: 672-12
 Write TiffIfd Locs Where: 280 What: 680-12
 Write TiffIfd Locs Where: 328 What: 688-12
@@ -1247,14 +2007,14 @@ Write TiffIfd Locs Where: 376 What: 736-12
 Write TiffIfd Locs Where: 388 What: 744-12
 Write TiffIfd Locs Where: 436 What: 752-12
 Write TiffIfd Locs Where: 448 What: 760-12
-Write TiffIfd Locs Where: 508 What: 10848-12
-Write TiffIfd Locs Where: 592 What: 10878-12
-Write TiffIfd Locs Where: 10920 What: 11048-12
-Write TiffIfd Locs Where: 10944 What: 11072-12
-Write TiffIfd Locs Where: 10956 What: 11096-12
-Write TiffIfd Locs Where: 11004 What: 11120-12
-Write TiffIfd Locs Where: 11016 What: 11128-12
-Write TiffIfd Locs Where: 11040 What: 11138-12
+Write TiffIfd Locs Where: 508 What: 10852-12
+Write TiffIfd Locs Where: 592 What: 10882-12
+Write TiffIfd Locs Where: 10924 What: 11052-12
+Write TiffIfd Locs Where: 10948 What: 11076-12
+Write TiffIfd Locs Where: 10960 What: 11100-12
+Write TiffIfd Locs Where: 11008 What: 11124-12
+Write TiffIfd Locs Where: 11020 What: 11132-12
+Write TiffIfd Locs Where: 11044 What: 11142-12
 Write TiffIfd Locs Where: 30 What: 194-12
 Write TiffIfd Locs Where: 42 What: 204-12
 Write TiffIfd Locs Where: 66 What: 212-12
@@ -1262,30 +2022,30 @@ Write TiffIfd Locs Where: 78 What: 220-12
 Write TiffIfd Locs Where: 102 What: 228-12
 Write TiffIfd Locs Where: 114 What: 238-12
 Write TiffIfd Locs Where: 138 What: 258-12
-Write TiffIfd Locs Where: 150 What: 10886-12
-Write TiffIfd Locs Where: 162 What: 11149-12
-Write TiffIfd Locs Where: 174 What: 11357-12
-Write TiffIfd Locs Where: 186 What: 11421-12
-Writing IFD 1 at 11549
+Write TiffIfd Locs Where: 150 What: 10890-12
+Write TiffIfd Locs Where: 162 What: 11153-12
+Write TiffIfd Locs Where: 174 What: 11361-12
+Write TiffIfd Locs Where: 186 What: 11425-12
+Writing IFD 1 at 11553
 Saving thumbnail to file
 Saving: 4 markers
-Saved marker ffdb length 132 at 11669
-Saved marker ffc0 length 17 at 11803
-Saved marker ffc4 length 418 at 11822
+Saved marker ffdb length 132 at 11673
+Saved marker ffc0 length 17 at 11807
+Saved marker ffc4 length 418 at 11826
 Inserted 31 stuff_bytes in 5966 now 5997
-Saved marker ffda length 6106 at 12242
+Saved marker ffda length 6106 at 12246
 thumbnail written
-Write TiffIfd Locs Where: 11583 What: 11651-12
-Write TiffIfd Locs Where: 11595 What: 11659-12
-Write TiffIfd Locs Where: 11619 What: 11667-12
+Write TiffIfd Locs Where: 11587 What: 11655-12
+Write TiffIfd Locs Where: 11599 What: 11663-12
+Write TiffIfd Locs Where: 11623 What: 11671-12
 IFD Locs Where: 16 What: 8
-IFD Locs Where: 190 What: 11537
-IFD Locs Where: 11647 What: 0
+IFD Locs Where: 190 What: 11541
+IFD Locs Where: 11651 What: 0
 Saving: 6 markers
-Saved marker ffe2 length 96 at 18245
-Saved marker ffdb length 132 at 18343
-Saved marker ffc0 length 17 at 18477
-Saved marker ffc4 length 418 at 18496
-Saved marker ffdd length 4 at 18916
+Saved marker ffe2 length 96 at 18249
+Saved marker ffdb length 132 at 18347
+Saved marker ffc0 length 17 at 18481
+Saved marker ffc4 length 418 at 18500
+Saved marker ffdd length 4 at 18920
 Inserted 8246 stuff_bytes in 2771025 now 2779271
-Saved marker ffda length 2771027 at 18922
+Saved marker ffda length 2771027 at 18926

@@ -56,9 +56,8 @@ JpegDecoder::JpegDecoder(int w, int h,
 	   (ac_dht == NULL || dc_dht == NULL); ++i) {
       if (dhts[i]->id_ == (*components)[comp]->table_) {
 	if (debug > 0)
-	  printf("Comp %d %d%s DHT: %d AC%p DC%p\n",
-		 comp, dhts[i]->class_, (dhts[i]->class_? "AC":"DC"), i,
-		 ac_dht, dc_dht);
+	  printf("Comp %d %d%s DHT: %d\n",
+		 comp, dhts[i]->class_, (dhts[i]->class_? "AC":"DC"), i);
 	if (dhts[i]->class_ == 0)
 	  dc_dht = dhts[i];
 	else
@@ -104,10 +103,12 @@ void JpegDecoder::WriteZeroLength(int which_dht) {
 }
 
   // Write value out as coded in the given dht.
-void JpegDecoder::WriteValue(int which_dht, int value) {
+  // return 0 on success.
+  // return >= 1 if the value can't be written. 
+int JpegDecoder::WriteValue(int which_dht, int value) {
   if (value == 0) {
     WriteZeroLength(which_dht);
-    return;
+    return 0;
   }
   int absval = abs(value);
   int coded_len = 0;
@@ -117,12 +118,15 @@ void JpegDecoder::WriteValue(int which_dht, int value) {
     coded_val ^= ((1 << coded_len) - 1);
   }
   const int len_index = dhts_[which_dht]->Lookup(coded_len);
+  if (len_index < 0)
+    return 1;
   const int coded_len_len = dhts_[which_dht]->lengths_[len_index];
   const unsigned int coded_len_code = dhts_[which_dht]->codes_[len_index];
   // printf("Writing value %d in %d + %d bits: %x %x\n", value,
   // 	 coded_len_len, coded_len, coded_len_code, coded_val);
   InsertBits(coded_len_code << (32-coded_len_len), coded_len_len);
   InsertBits(coded_val << (32 - coded_len), coded_len);
+  return 0;
 }
 
 void JpegDecoder::SetRedactingState(Redaction *redaction) {
@@ -313,7 +317,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
   // Work out the (absolute) value we want to write.
   // Default is the cumulative sum so far.
     int value_to_write = dc_values_[comp];
-  // If solid, we write out 0.
+    // If solid, we write out 0.
     if ( redacting != kRedactingEnding) {
       if (redaction_method_ == Redaction::redact_solid) {
 	// Write black.

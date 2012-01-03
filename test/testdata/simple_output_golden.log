@@ -23,6 +23,7 @@ In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Testing with loadall=true
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -57,12 +58,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -86,6 +87,7 @@ Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Testing redaction
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -120,12 +122,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -162,6 +164,7 @@ Saved marker ffc4 length 181 at 426
 Inserted 876 stuff_bytes in 54530 now 55406
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -196,12 +199,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -237,6 +240,7 @@ Saved marker ffc4 length 181 at 426
 Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -271,12 +275,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 

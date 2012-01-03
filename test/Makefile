@@ -27,6 +27,7 @@ READWRITE = testreadwrite
 METADATATESTBINARY = metadatatest
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
+TEST_REDACTION = testredaction
 BITSHIFTS = bit_shifts_test
 EXIFTOOL = exiftool
 
@@ -46,6 +47,9 @@ $(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h testout_dir ../lib/debug_f
 	$(CC) $(CXXFLAGS) -I../lib bit_shifts_test.cpp ../lib/debug_flag.cpp $(LIBPATH)  -o $@
 
 $(BINARY): $(LIB) jpegtest.cpp test_utils.cpp testout_dir
+	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(TEST_REDACTION): $(LIB) test_redaction.cpp test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp testout_dir
@@ -114,6 +118,10 @@ test_exif:  $(BINARY) testout_dir clean_rawgrey
 	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt > /dev/null
 	@echo "== " $@ " passed"
 
+test_redaction:  $(TEST_REDACTION) testout_dir
+	./$(TEST_REDACTION) > testout/test_redaction_output.log
+	@echo "== " $@ " passed"
+
 test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	./$(EXIF_REMOVE) testdata/windows.jpg > testout/testexif_removal_output.log
 	@cmp testout/test_noexif.jpg testdata/test_noexif_golden.jpg
@@ -132,5 +140,6 @@ test_bit_shifts: $(BITSHIFTS)
 
 test_devices:  $(READWRITE) testout_dir
 	./testreadwrite.sh
+
 
 # DO NOT DELETE

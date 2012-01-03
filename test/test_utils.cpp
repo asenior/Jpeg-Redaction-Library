@@ -132,14 +132,15 @@ namespace jpeg_redaction {
     }
 
     // Test wiping a region from a jpeg file.
-    int test_redaction(const char * const filename) {
+    int test_redaction(const char * const filename,
+		       const char *const regions) {
       printf("Testing redaction\n");
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
 	Redaction redaction;
 
-	redaction.AddRegions(";50,300,50,200;");
+	redaction.AddRegions(regions);
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");

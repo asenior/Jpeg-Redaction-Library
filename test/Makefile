@@ -38,7 +38,7 @@ default: all
 all: $(BINARY) $(BITSHIFTS) $(EXIF_REMOVE) $(IFDTESTBINARY)
 
 test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
-	test_bit_shifts test_metadata
+	test_bit_shifts test_metadata test_devices test_redaction
 
 $(LIB): 
 	cd ../lib; $(MAKE) lib

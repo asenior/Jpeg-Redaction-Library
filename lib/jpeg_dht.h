@@ -204,7 +204,8 @@ class JpegDHT {
       if (symbols_[i] == value)
 	return i;
     }
-    fprintf(stderr, "Can't find value %d\n", value);
+    if (debug > 0)
+      fprintf(stderr, "Can't find value %d\n", value);
     return -1;
   }
   // Class is 0 for DC, 1 for AC.

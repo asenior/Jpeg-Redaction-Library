@@ -217,8 +217,8 @@ void JpegDecoder::DecodeOneMCU() {
 	int subblock_redaction = redacting_;
 	if (redacting_ == kRedactingStarting && subblock != 0)
 	  subblock_redaction = kRedactingActive;
-	if (redacting_ == kRedactingEnding && subblock != 0)
-	  subblock_redaction = kRedactingInactive;
+	// if (redacting_ == kRedactingEnding && subblock != 0)
+	//   subblock_redaction = kRedactingInactive;
 
 	int dc_value = 0;
 	try {
@@ -322,8 +322,8 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
       if (redaction_method_ == Redaction::redact_solid) {
 	// Write black.
 	//	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
-	//	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? -511 : -511);
-	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? 0 : 0);
+	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : ((comp==1) ? 0 : 0);
+	//	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? 0 : 0);
       }
       else if (redaction_method_ == Redaction::redact_copystrip)
 	value_to_write = redaction_dc_[comp];
@@ -331,14 +331,18 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
 	       redaction_method_ == Redaction::redact_inverse_pixellate)
 	value_to_write = LookupPixellationValue(comp);
     }
-    try {
-      WriteValue(2 * dht, value_to_write - redaction_dc_[comp]);
-    } catch (...) {
-      fprintf(stderr, "Caught error in WriteValue for comp %d, table 2*%d, value %d=%d-%d.",
-	     comp, dht, value_to_write-redaction_dc_[comp],
-	     value_to_write, redaction_dc_[comp]);
-      throw("WriteValueErr");
+    int rv;
+    while (rv = WriteValue(2 * dht, value_to_write - redaction_dc_[comp]) != 0) {
+      int delta = value_to_write - redaction_dc_[comp];
+      value_to_write = delta *.9 + redaction_dc_[comp];
     }
+    // if (rv != 0) {
+    //   fprintf(stderr,
+    // 	  "Caught error in WriteValue for comp %d, table 2*%d, value %d=%d-%d.",
+    // 	      comp, dht, value_to_write-redaction_dc_[comp],
+    // 	      value_to_write, redaction_dc_[comp]);
+    //   throw("WriteValueErr");
+    // }
     redaction_dc_[comp] = value_to_write;
   }
   if (redacting == kRedactingInactive)

@@ -27,25 +27,43 @@
 #include "redaction.h"
 #include "test_utils.h"
 
+int TestRedaction(const std::string &filename, const char *const regions) {
+  int rv = jpeg_redaction::tests::test_redaction(filename.c_str(), regions);
+  if (rv)  {
+    fprintf(stderr, "Failed on test_redaction %s\n", regions);
+    return 1;
+  }
+  return 0;
+}
+
 int main(int argc, char **argv) {
   // An 1152 x 693 JPEG without EXIF.
+  // redaction strings are l,r,t,b[:method];...
+  // [c]opystrip, [S]olid, [p]ixellate,[i]nverse pixellate
   std::string filename("testdata/devices/samsung1.jpg");
   if (argc > 1)
     filename = argv[1];
-  // We'll compare goldens of stdout for each file, so dump 
-  // interesting info to stdout.
   jpeg_redaction::debug = 0;
-  // l,r,t,b[:method];...
-  string regions = ";50,300,50,200;";
-  rv = jpeg_redaction::tests::test_redaction(filename.c_str(), regions.c_str());
-  if (rv)  {
-    fprintf(stderr, "Failed on test_redaction %s\n", regions.c_str());
-    exit(1);
-  }
-  regions = "-50,-10,50,200;";
-  rv = jpeg_redaction::tests::test_redaction(filename.c_str(), regions.c_str());
-  if (rv)  {
-    fprintf(stderr, "Failed on test_redaction %s\n", regions.c_str());
-    exit(1);
-  }
+
+  // Different redaction types.
+  if (TestRedaction(filename, ";50,300,50,200:p;")) return 1;
+  if (TestRedaction(filename, ";50,300,50,200:s;")) return 1;
+  if (TestRedaction(filename, ";50,300,50,200:c;")) return 1;
+  if (TestRedaction(filename, ";50,300,50,200:i;")) return 1;
+
+  // Corner cases.
+  // Completely off left.
+  if (TestRedaction(filename, "-50,-10,50,200:p;")) return 1;
+  // Overlapping top left.
+  if (TestRedaction(filename, "-50,800,-50,200:p;")) return 1;
+  if (TestRedaction(filename, "50,199,-500,-200:p;")) return 1;
+  if (TestRedaction(filename, "2000,2200,50,200:p;")) return 1;
+  if (TestRedaction(filename, "-10,1200,50,200:p;")) return 1;
+
+  // Multiple regions.
+  if (TestRedaction(filename, ";50,300,50,200:p;200,500,120,500:p")) return 1;
+  // ... with different types.
+  if (TestRedaction(filename, ";50,300,50,200:s;200,500,120,500:p")) return 1;
+  if (TestRedaction(filename, ";50,300,50,200:p;200,500,120,500:s")) return 1;
+  if (TestRedaction(filename, ";50,300,50,200:s;200,500,120,500:s")) return 1;
 }

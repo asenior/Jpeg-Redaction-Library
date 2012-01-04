@@ -322,7 +322,7 @@ int JpegDecoder::DecodeOneBlock(int dht, int comp, int redacting) {
       if (redaction_method_ == Redaction::redact_solid) {
 	// Write black.
 	//	value_to_write = (comp == 0) ? (-127 * (1 << dct_gain_)) : 0;
-	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? -511 : -511);
+	//	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? -511 : -511);
 	value_to_write = (comp == 0) ? (0 * (1 << dct_gain_)) : ((comp==1) ? 0 : 0);
       }
       else if (redaction_method_ == Redaction::redact_copystrip)

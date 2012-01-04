@@ -50,7 +50,7 @@ $(BINARY): $(LIB) jpegtest.cpp test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(TEST_REDACTION): $(LIB) test_redaction.cpp test_utils.cpp testout_dir
-	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
+	$(CC) $(CXXFLAGS) -I../lib test_redaction.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib testreadwrite.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@

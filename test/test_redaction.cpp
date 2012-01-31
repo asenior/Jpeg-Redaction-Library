@@ -36,6 +36,16 @@ int TestRedaction(const std::string &filename, const char *const regions) {
   return 0;
 }
 
+int TestRedactionPack(const std::string &filename, const char *const regions) {
+  int rv = jpeg_redaction::tests::test_redaction_pack_unpack(filename.c_str(),
+							     regions);
+  if (rv)  {
+    fprintf(stderr, "Failed on test_redaction_pack_unpack %s\n", regions);
+    return 1;
+  }
+  return 0;
+}
+
 int main(int argc, char **argv) {
   // An 1152 x 693 JPEG without EXIF.
   // redaction strings are l,r,t,b[:method];...
@@ -44,6 +54,8 @@ int main(int argc, char **argv) {
   if (argc > 1)
     filename = argv[1];
   jpeg_redaction::debug = 0;
+
+  if (TestRedactionPack(filename, ";50,300,50,200:p;")) return 1;
 
   // Different redaction types.
   if (TestRedaction(filename, ";50,300,50,200:p;")) return 1;

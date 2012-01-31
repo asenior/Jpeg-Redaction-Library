@@ -156,6 +156,34 @@ namespace jpeg_redaction {
       return 0;
     }
 
+    // Test wiping a region from a jpeg file, packing data up in a blob
+    // and unpacking it.
+    int test_redaction_pack_unpack(const char * const filename,
+				   const char *const regions) {
+      printf("Testing redaction\n");
+      try {
+	Jpeg j2;
+	bool success = j2.LoadFromFile(filename, true);
+	Redaction redaction;
+
+	redaction.AddRegions(regions);
+	j2.DecodeImage(&redaction, NULL);
+	if (!redaction.ValidateStrips())
+	  throw("Strips not valid");
+	std::vector<unsigned char> redaction_pack;
+	redaction.Pack(&redaction_pack);
+	printf("Packed redaction object is %d bytes\n", redaction_pack.size());
+	
+	Redaction unpacked_redaction;
+	unpacked_redaction.Unpack(loaded_pack);
+	j2.ReverseRedaction(unpacked_redaction);
+      } catch (const char *error) {
+	fprintf(stderr, "Error: <%s> at outer level\n", error);
+	return 1;
+      }
+      return 0;
+    }
+
     // Test wiping a region and then restoring it again from
     // saved redaction data (strips).
     int test_reversingredaction(const char * const filename,

@@ -96,7 +96,60 @@ public:
     bits_ += bits;
     return ++blocks_;
   }
+  // Copy an int from one location to another.
+  // Changing the byte order if not <TODO>.
+  // Also used by Region.
+  static void MemcpyByteSwapping(int *dest, const int *src) {
+    // TODO(byteswapping) to standard ordering.
+    memcpy(dest, src, sizeof(int));
+  }
+  // Return a blob that contains all the data and can be unpacked into the
+  // same structure with Unpack().
+  void Pack(std::vector<unsigned char> *pack) {
+    int version = 1;
+    if ((bits_ + 7) / 8 != data_.size()) {
+      fprintf(stderr, "bits_ %d bytes %d data_.size() %d\n",
+	      bits_, (bits_ + 7) / 8, data_.size());
+      throw("size mismatch in pack");
+    }
+    const int size = GetPackSize();
+    pack->resize(size);
+    // TODO(byteswapping) to standard ordering.
+    int * store = (int *)&pack[0];
+    MemcpyByteSwapping(store++, &version);
+    MemcpyByteSwapping(store++, &bits_);
+    MemcpyByteSwapping(store++, &src_start_);
+    MemcpyByteSwapping(store++, &dest_start_);
+    MemcpyByteSwapping(store++, &replaced_by_bits_);
+    MemcpyByteSwapping(store++, &x_);
+    MemcpyByteSwapping(store++, &y_);
+    MemcpyByteSwapping(store++, &blocks_);
+    memcpy(store, &data_[0], data_.size() * sizeof(unsigned char));
+  }
+  // Take a blob of data created by Pack and insert it into the Strip object.
+  void Unpack(std::vector<unsigned char> const &pack) {
+    int version = 0;
+    const int * store = 0;
+    MemcpyByteSwapping(&version, store++);
+    if (version != 1) throw("Wrong version in redaction.h: Unpack");
+    MemcpyByteSwapping(&bits_, store++);
+    const int data_size = pack_.size() - sizeof(int) * 8;
+    if ((bits_ + 7) / 8 != data_size)
+      throw("Data size mismatch in unpack");
+    data_
+    MemcpyByteSwapping(&src_start_, store++);
+    MemcpyByteSwapping(&dest_start_, store++);
+    MemcpyByteSwapping(&replaced_by_bits_, store++);
+    MemcpyByteSwapping(&x_, store++);
+    MemcpyByteSwapping(&y_, store++);
+    MemcpyByteSwapping(&blocks_, store++);
+    memcpy(&data_[0], store, data_size * sizeof(unsigned char));
+  }    
 protected:
+  // How many bytes are needed to store this object's Pack().
+  int GetPackSize() const {
+    return sizeof(int) * 8 + data_.size();
+  }
   std::vector<unsigned char> data_; // Raw binary encoded data.
   int bits_;
   // In the original strip at what bit did the strip start.
@@ -162,6 +215,25 @@ public:
     }
     int GetHeight() const {
       return b_ - t_;
+    }
+    void Pack(std::vector<unsigned char> *pack) const {
+      pack.resize(5 * sizeof(int));
+      const int * pack_ptr = (int*)&pack[0];
+      MemcpyByteSwapping(pack_ptr++, &l_);
+      MemcpyByteSwapping(pack_ptr++, &r_);
+      MemcpyByteSwapping(pack_ptr++, &t_);
+      MemcpyByteSwapping(pack_ptr++, &b_);
+      MemcpyByteSwapping(pack_ptr++, &redaction_method_);
+    }
+    void Unpack(std::vector<unsigned char> const &pack) {
+      if (pack.size() != 5 * sizeof(int))
+	throw("Region pack is not 5 * sizeof(int)");
+      int * pack_ptr = (int*)&pack[0];
+      MemcpyByteSwapping(&l_, pack_ptr++);
+      MemcpyByteSwapping(&r_, pack_ptr++);
+      MemcpyByteSwapping(&t_, pack_ptr++);
+      MemcpyByteSwapping(&b_, pack_ptr++);
+      MemcpyByteSwapping(&redaction_method_, pack_ptr++);
     }
     int l_, r_, t_, b_;
 
@@ -236,6 +308,99 @@ public:
 	return false;
     }
     return true;
+  }
+  // Pack up the regions and the strips into a single blob that can 
+  // be unpacked later.
+  void Pack(std::vector<unsigned char> *pack) {
+    if (!ValidateStrips())
+      throw("Couldn't validate strips before packing");
+    const int num_strips = NumStrips();
+    const int num_regions = NumRegions();
+    pack.resize(NumStrips());
+    // Calculate how many bytes are needed for the whole pack.
+    // Store (as ints) the number of strips and regions,
+    // the length of each strip's blob, then l,r,t,b,type for each region
+    // and then an unsiged char blob for each strip.
+    int size = sizeof(int) * (2 + NumStrips() + 5  * NumRegions());
+    for (int i = 0; i < NumStrips(); ++i) {
+      const JpegStrip * strip = GetStrip(i);
+      size += strip->GetPackSize();
+    }
+    // Now start assembling the pack:
+    pack->resize(size);
+    unsigned char *packptr = &(*pack)[0];
+    MemcpyByteSwapping(packptr++, &num_strips);
+    packptr += sizeof(int);
+    MemcpyByteSwapping(packptr++, &num_regions);
+    packptr += sizeof(int);
+    for (int i = 0; i < NumRegions(); ++i) {
+      std::vector<unsigned char> packed_region;
+      regions_[i].Pack(&packed_region);
+      if (packed_region.size() != 5 * sizeof(int))
+	throw("Region size is not 5 unsigned ints");
+      memcpy(packptr, &packed_region[0], packed_region.size());
+      packptr += packed_region.size();
+    }
+    for (int i = 0; i < NumStrips(); ++i) {
+      const int strip_size = strips_[i]->GetPackSize();
+      MemcpyByteSwapping(packptr, &strip_size);
+      packptr += sizeof(int);
+      std::vector<unsigned char> packed_strip;
+      strips_[i]->Pack(&packed_strip);
+      if (packed_strip.size() != strip_size) {
+	throw("strip's actual size is not the same as predicted");
+      }
+      memcpy(packptr, &packed_strip[0], packed_strip.size());
+      packptr += packed_strip.size();
+    }
+    if (packptr != &(*pack)[0] + size) {
+      throw("After packing pointer is not start + size");
+    }
+  }
+
+  // Take a binary pack and turn it into a redaction object.
+  void Unpack(const std::vector<unsigned char> &pack) {
+    regions_.clear();
+    strips_.clear();
+    int num_strips = 0;
+    int num_regions = 0;
+    const unsigned char *packptr = &pack[0];
+    MemcpyByteSwapping(packptr++, &num_strips);
+    packptr += sizeof(int);
+    MemcpyByteSwapping(packptr++, &num_regions);
+    packptr += sizeof(int);
+
+    int pack_size = sizeof(int) * (2 + num_strips + 5  * num_regions);
+    regions_.resize(num_regions);
+    strips_.resize(num_strips);
+    printf("Unpacking: %d regions, %d strips. %uz bytes\n",
+	   num_regions, num_strips, pack.size());
+    for (int i = 0; i < NumRegions(); ++i) {
+      std::vector<unsigned char> packed_region;
+      const unsigned int size = 5 * sizeof(int);
+      packed_region.resize(size);
+      memcpy(&packed_region[0], packptr, size);
+      regions_[i].Unpack(&packed_region);
+      packptr += size;
+    }
+    for (int i = 0; i < NumStrips(); ++i) {
+      std::vector<unsigned char> packed_strip;
+      unsigned int strip_size;
+      MemcpyByteSwapping(&strip_size, packptr);
+      packptr += sizeof(int);
+      printf("Unpacking Region %d size %u\n", i, strip_size);
+      packed_region.resize(strip_size);
+      memcpy(&packed_strip[0], packptr, strip_size);
+      strips_[i]->Unpack(&packed_strip);
+      packptr += strip_size;
+      pack_size += strip_size;
+    }
+    if (packptr != &pack[0] + pack_size ||
+	pack_size != pack.size()) {
+      fprintf(stderr, "pack.size() %d. Calculated %d ptrdiff %d\n",
+	      pack.size(), pack_size, packptr-&pack[0]);
+      throw("After packing pointer is not start + size");
+    }
   }
   void Add(const Redaction &red) {
     for (int i = 0; i < red.NumRegions(); ++i)

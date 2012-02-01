@@ -175,7 +175,7 @@ namespace jpeg_redaction {
 	printf("Packed redaction object is %d bytes\n", redaction_pack.size());
 	
 	Redaction unpacked_redaction;
-	unpacked_redaction.Unpack(loaded_pack);
+	unpacked_redaction.Unpack(redaction_pack);
 	j2.ReverseRedaction(unpacked_redaction);
       } catch (const char *error) {
 	fprintf(stderr, "Error: <%s> at outer level\n", error);

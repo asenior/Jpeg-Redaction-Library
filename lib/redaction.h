@@ -34,6 +34,9 @@ public:
     blocks_ = 0;
     bits_ = 0;
   }
+  JpegStrip(const std::vector<unsigned char> &pack) {
+    Unpack(pack);
+  }
   // After finishing a strip, make a copy of the block of data that was removed.
   void SetSrcEnd(int data_end, int blocks) {
     bits_ = data_end - src_start_;
@@ -105,7 +108,7 @@ public:
   }
   // Return a blob that contains all the data and can be unpacked into the
   // same structure with Unpack().
-  void Pack(std::vector<unsigned char> *pack) {
+  void Pack(std::vector<unsigned char> *pack) const {
     int version = 1;
     if ((bits_ + 7) / 8 != data_.size()) {
       fprintf(stderr, "bits_ %d bytes %d data_.size() %d\n",
@@ -129,14 +132,14 @@ public:
   // Take a blob of data created by Pack and insert it into the Strip object.
   void Unpack(std::vector<unsigned char> const &pack) {
     int version = 0;
-    const int * store = 0;
+    const int * store = (const int *)&pack[0];
     MemcpyByteSwapping(&version, store++);
     if (version != 1) throw("Wrong version in redaction.h: Unpack");
     MemcpyByteSwapping(&bits_, store++);
-    const int data_size = pack_.size() - sizeof(int) * 8;
+    const int data_size = pack.size() - sizeof(int) * 8;
     if ((bits_ + 7) / 8 != data_size)
       throw("Data size mismatch in unpack");
-    data_
+    data_.resize(data_size);
     MemcpyByteSwapping(&src_start_, store++);
     MemcpyByteSwapping(&dest_start_, store++);
     MemcpyByteSwapping(&replaced_by_bits_, store++);
@@ -145,11 +148,11 @@ public:
     MemcpyByteSwapping(&blocks_, store++);
     memcpy(&data_[0], store, data_size * sizeof(unsigned char));
   }    
-protected:
   // How many bytes are needed to store this object's Pack().
   int GetPackSize() const {
     return sizeof(int) * 8 + data_.size();
   }
+protected:
   std::vector<unsigned char> data_; // Raw binary encoded data.
   int bits_;
   // In the original strip at what bit did the strip start.
@@ -181,6 +184,7 @@ public:
       redaction_method_ = redact_solid;
       if (l >= r || t >= b) throw("Bad rectangle created");
     }
+    Region()  : l_(0), r_(0), t_(0), b_(0) {}
     void SetRedactionMethod(redaction_method method) {
       redaction_method_ = method;
     }
@@ -217,23 +221,24 @@ public:
       return b_ - t_;
     }
     void Pack(std::vector<unsigned char> *pack) const {
-      pack.resize(5 * sizeof(int));
-      const int * pack_ptr = (int*)&pack[0];
-      MemcpyByteSwapping(pack_ptr++, &l_);
-      MemcpyByteSwapping(pack_ptr++, &r_);
-      MemcpyByteSwapping(pack_ptr++, &t_);
-      MemcpyByteSwapping(pack_ptr++, &b_);
-      MemcpyByteSwapping(pack_ptr++, &redaction_method_);
+      pack->resize(5 * sizeof(int));
+      int * pack_ptr = (int*)&(*pack)[0];
+      JpegStrip::MemcpyByteSwapping(pack_ptr++, &l_);
+      JpegStrip::MemcpyByteSwapping(pack_ptr++, &r_);
+      JpegStrip::MemcpyByteSwapping(pack_ptr++, &t_);
+      JpegStrip::MemcpyByteSwapping(pack_ptr++, &b_);
+      JpegStrip::MemcpyByteSwapping(pack_ptr++,
+				    (const int *)&redaction_method_);
     }
     void Unpack(std::vector<unsigned char> const &pack) {
       if (pack.size() != 5 * sizeof(int))
 	throw("Region pack is not 5 * sizeof(int)");
       int * pack_ptr = (int*)&pack[0];
-      MemcpyByteSwapping(&l_, pack_ptr++);
-      MemcpyByteSwapping(&r_, pack_ptr++);
-      MemcpyByteSwapping(&t_, pack_ptr++);
-      MemcpyByteSwapping(&b_, pack_ptr++);
-      MemcpyByteSwapping(&redaction_method_, pack_ptr++);
+      JpegStrip::MemcpyByteSwapping(&l_, pack_ptr++);
+      JpegStrip::MemcpyByteSwapping(&r_, pack_ptr++);
+      JpegStrip::MemcpyByteSwapping(&t_, pack_ptr++);
+      JpegStrip::MemcpyByteSwapping(&b_, pack_ptr++);
+      JpegStrip::MemcpyByteSwapping((int*)&redaction_method_, pack_ptr++);
     }
     int l_, r_, t_, b_;
 
@@ -316,7 +321,6 @@ public:
       throw("Couldn't validate strips before packing");
     const int num_strips = NumStrips();
     const int num_regions = NumRegions();
-    pack.resize(NumStrips());
     // Calculate how many bytes are needed for the whole pack.
     // Store (as ints) the number of strips and regions,
     // the length of each strip's blob, then l,r,t,b,type for each region
@@ -329,9 +333,9 @@ public:
     // Now start assembling the pack:
     pack->resize(size);
     unsigned char *packptr = &(*pack)[0];
-    MemcpyByteSwapping(packptr++, &num_strips);
+    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_strips);
     packptr += sizeof(int);
-    MemcpyByteSwapping(packptr++, &num_regions);
+    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_regions);
     packptr += sizeof(int);
     for (int i = 0; i < NumRegions(); ++i) {
       std::vector<unsigned char> packed_region;
@@ -343,7 +347,7 @@ public:
     }
     for (int i = 0; i < NumStrips(); ++i) {
       const int strip_size = strips_[i]->GetPackSize();
-      MemcpyByteSwapping(packptr, &strip_size);
+      JpegStrip::MemcpyByteSwapping((int *)packptr, &strip_size);
       packptr += sizeof(int);
       std::vector<unsigned char> packed_strip;
       strips_[i]->Pack(&packed_strip);
@@ -365,14 +369,13 @@ public:
     int num_strips = 0;
     int num_regions = 0;
     const unsigned char *packptr = &pack[0];
-    MemcpyByteSwapping(packptr++, &num_strips);
+    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_strips);
     packptr += sizeof(int);
-    MemcpyByteSwapping(packptr++, &num_regions);
+    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_regions);
     packptr += sizeof(int);
 
     int pack_size = sizeof(int) * (2 + num_strips + 5  * num_regions);
     regions_.resize(num_regions);
-    strips_.resize(num_strips);
     printf("Unpacking: %d regions, %d strips. %uz bytes\n",
 	   num_regions, num_strips, pack.size());
     for (int i = 0; i < NumRegions(); ++i) {
@@ -380,18 +383,19 @@ public:
       const unsigned int size = 5 * sizeof(int);
       packed_region.resize(size);
       memcpy(&packed_region[0], packptr, size);
-      regions_[i].Unpack(&packed_region);
+      regions_[i].Unpack(packed_region);
       packptr += size;
     }
     for (int i = 0; i < NumStrips(); ++i) {
       std::vector<unsigned char> packed_strip;
-      unsigned int strip_size;
-      MemcpyByteSwapping(&strip_size, packptr);
+      int strip_size;
+      JpegStrip::MemcpyByteSwapping(&strip_size, (int *)packptr);
       packptr += sizeof(int);
       printf("Unpacking Region %d size %u\n", i, strip_size);
-      packed_region.resize(strip_size);
+      packed_strip.resize(strip_size);
       memcpy(&packed_strip[0], packptr, strip_size);
-      strips_[i]->Unpack(&packed_strip);
+      JpegStrip *one_strip = new JpegStrip(packed_strip);
+      strips_.push_back(one_strip);
       packptr += strip_size;
       pack_size += strip_size;
     }

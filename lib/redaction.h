@@ -111,14 +111,15 @@ public:
   void Pack(std::vector<unsigned char> *pack) const {
     int version = 1;
     if ((bits_ + 7) / 8 != data_.size()) {
-      fprintf(stderr, "bits_ %d bytes %d data_.size() %d\n",
+      fprintf(stderr, "bits_ %d bytes %d data_.size() %zu\n",
 	      bits_, (bits_ + 7) / 8, data_.size());
       throw("size mismatch in pack");
     }
     const int size = GetPackSize();
+    //    printf("Packing strip size %d 32+%zu\n", size, data_.size());
     pack->resize(size);
     // TODO(byteswapping) to standard ordering.
-    int * store = (int *)&pack[0];
+    int * store = (int *)&(*pack)[0];
     MemcpyByteSwapping(store++, &version);
     MemcpyByteSwapping(store++, &bits_);
     MemcpyByteSwapping(store++, &src_start_);
@@ -127,6 +128,7 @@ public:
     MemcpyByteSwapping(store++, &x_);
     MemcpyByteSwapping(store++, &y_);
     MemcpyByteSwapping(store++, &blocks_);
+    //    printf("Store diff %d\n", ((unsigned char *)store) - &pack[0]);
     memcpy(store, &data_[0], data_.size() * sizeof(unsigned char));
   }
   // Take a blob of data created by Pack and insert it into the Strip object.
@@ -276,7 +278,6 @@ public:
     char method[11];
     int rv = sscanf(rect_string.c_str(), "%d,%d,%d,%d:%10s", &l, &r, &t, &b,
 		    method);
-    //    printf("Region: %s rv %d\n", rect_string.c_str(), rv);
     if (rv != 4 && rv != 5) {
       std::string message("Region string badly formed, should be l,r,t,b");
       message += rect_string;
@@ -327,9 +328,12 @@ public:
     // and then an unsiged char blob for each strip.
     int size = sizeof(int) * (2 + NumStrips() + 5  * NumRegions());
     for (int i = 0; i < NumStrips(); ++i) {
-      const JpegStrip * strip = GetStrip(i);
-      size += strip->GetPackSize();
+      const int strip_size = strips_[i]->GetPackSize();
+      size += strip_size;
     }
+    if (debug > 1)
+      printf("Packing redaction size %d, %d strips, %d regions\n", size,
+	     NumStrips(), NumRegions());
     // Now start assembling the pack:
     pack->resize(size);
     unsigned char *packptr = &(*pack)[0];
@@ -352,6 +356,8 @@ public:
       std::vector<unsigned char> packed_strip;
       strips_[i]->Pack(&packed_strip);
       if (packed_strip.size() != strip_size) {
+	printf("Strip size mismatch %zu vs %d\n",
+	       packed_strip.size(), strip_size);
 	throw("strip's actual size is not the same as predicted");
       }
       memcpy(packptr, &packed_strip[0], packed_strip.size());
@@ -369,16 +375,17 @@ public:
     int num_strips = 0;
     int num_regions = 0;
     const unsigned char *packptr = &pack[0];
-    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_strips);
+    JpegStrip::MemcpyByteSwapping(&num_strips, (const int *)packptr);
     packptr += sizeof(int);
-    JpegStrip::MemcpyByteSwapping((int *)packptr, &num_regions);
+    JpegStrip::MemcpyByteSwapping(&num_regions, (const int *)packptr);
     packptr += sizeof(int);
 
     int pack_size = sizeof(int) * (2 + num_strips + 5  * num_regions);
     regions_.resize(num_regions);
-    printf("Unpacking: %d regions, %d strips. %uz bytes\n",
-	   num_regions, num_strips, pack.size());
-    for (int i = 0; i < NumRegions(); ++i) {
+    if (debug > 2)
+      printf("Unpacking: %d regions, %d strips. %zu bytes\n",
+	     num_regions, num_strips, pack.size());
+    for (int i = 0; i < num_regions; ++i) {
       std::vector<unsigned char> packed_region;
       const unsigned int size = 5 * sizeof(int);
       packed_region.resize(size);
@@ -386,12 +393,11 @@ public:
       regions_[i].Unpack(packed_region);
       packptr += size;
     }
-    for (int i = 0; i < NumStrips(); ++i) {
+    for (int i = 0; i < num_strips; ++i) {
       std::vector<unsigned char> packed_strip;
       int strip_size;
       JpegStrip::MemcpyByteSwapping(&strip_size, (int *)packptr);
       packptr += sizeof(int);
-      printf("Unpacking Region %d size %u\n", i, strip_size);
       packed_strip.resize(strip_size);
       memcpy(&packed_strip[0], packptr, strip_size);
       JpegStrip *one_strip = new JpegStrip(packed_strip);

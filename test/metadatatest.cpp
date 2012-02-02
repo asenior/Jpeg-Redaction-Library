@@ -26,6 +26,7 @@
 #include <string>
 #include "jpeg.h"
 #include "debug_flag.h"
+#include "redaction.h"
 
 namespace jpeg_redaction {
 namespace tests {
@@ -109,7 +110,7 @@ namespace tests {
       const unsigned char *retrieved_blob = reread.GetObscuraMetaData(&length);
       if (length != redaction_pack.size()) {
 	fprintf(stderr, "Original length %zu, new length %u\n",
-		blob.size(), length);
+		redaction_pack.size(), length);
 	throw("Retrieved metadata wrong length");
       }
       // Check that the two packs are the same.
@@ -117,11 +118,12 @@ namespace tests {
 	throw("Retrieved metadata not identical.");
       
       // Now use the pack to reverse the redaction.
-      std::vector<unsigned char> loaded_pack(retrieved_blob, length);
+      std::vector<unsigned char> loaded_pack(length);
+      memcpy(&loaded_pack[0], retrieved_blob, length);
       Redaction unpacked_redaction;
       unpacked_redaction.Unpack(loaded_pack);
       reread.ReverseRedaction(unpacked_redaction);
-      std::string output_filename = "testout/testunredacted_pack.jpg";
+      output_filename = "testout/testunredacted_pack.jpg";
       if (reread.Save(output_filename.c_str()) != 0) {
 	fprintf(stderr, "Couldn't save %s\n", output_filename.c_str());
 	return 1;

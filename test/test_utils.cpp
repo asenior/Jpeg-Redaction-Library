@@ -172,7 +172,7 @@ namespace jpeg_redaction {
 	  throw("Strips not valid");
 	std::vector<unsigned char> redaction_pack;
 	redaction.Pack(&redaction_pack);
-	printf("Packed redaction object is %d bytes\n", redaction_pack.size());
+	printf("Packed redaction object is %zu bytes\n", redaction_pack.size());
 	
 	Redaction unpacked_redaction;
 	unpacked_redaction.Unpack(redaction_pack);

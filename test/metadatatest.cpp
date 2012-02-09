@@ -30,14 +30,14 @@
 
 namespace jpeg_redaction {
 namespace tests {
-  int test_insert_and_save(const char * const filename) {
+  int test_insert_and_save(const char * const filename, int blobsize) {
     try {
       Jpeg original;
       printf("*********** Loading original image*********** ***************\n");
       bool success = original.LoadFromFile(filename, true);
       if (!success) exit(1);
       std::vector<unsigned char> blob;
-      blob.resize(2000);
+      blob.resize(blobsize);
       for (int i = 0; i < blob.size(); ++i) {
 	blob[i] = (unsigned char)(rand() * 255);
       }
@@ -141,6 +141,7 @@ int main(int argc, char **argv) {
   std::string filename("testdata/windows.jpg");
   if (argc > 1)
     filename = argv[1];
-  jpeg_redaction::tests::test_insert_and_save(filename.c_str());
+  jpeg_redaction::tests::test_insert_and_save(filename.c_str(), 2000);
+  jpeg_redaction::tests::test_insert_and_save(filename.c_str(), 64* 1024 * 5);
   jpeg_redaction::tests::test_save_redaction_regions(filename.c_str());
 }

@@ -35,7 +35,6 @@
 namespace jpeg_redaction {
  const int ObscuraMetadata::kObscuraMarker = JPEG_APP0 + 7;
  const char *ObscuraMetadata::kDescriptorType = "ObscuraMetaData";
- const char *ObscuraMetadata::kRedactionDataType = "ObscuraRedaction";
 
   void DumpHex(unsigned char *data, int len) {
     for (int i = 0; i < len; ++i) {

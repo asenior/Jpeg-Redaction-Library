@@ -46,7 +46,7 @@ namespace jpeg_redaction {
   // without parsing, hoping that it is relocatable.
   class GenericMakerNote : public MakerNote {
   public:
-  GenericMakerNote() : data_(NULL) {}
+  GenericMakerNote() {}
     ~GenericMakerNote() {}
     virtual void Print() const {
       printf("Generic makernote length %zu\n", data_.size());

@@ -23,6 +23,7 @@ In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Testing with loadall=true
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -57,12 +58,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -86,6 +87,7 @@ Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Testing redaction
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -120,12 +122,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -134,22 +136,22 @@ MCU 0 dc_value -72 y_value_ -147. Doubling gain to 1
 MCU 5 dc_value 221 y_value_ 322. Doubling gain to 2
 Got to 1271 mcus. 4 bits left.
 Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
-padding 6 bits mask 3f
-Redacted data length 54520 bytes 436154 bits
+padding 4 bits mask 0f
+Redacted data length 54520 bytes 436156 bits
 sos block now 54530 bytes
 DecodeImage H 648 W 486
 Redacting thumbnail
 Redaction::10 strips
-Strip (48,48: 143 MCUs) has 8020 bits (rep 1072), src 40095 dest 40095 diff 0 offset 0.
-Strip (48,64: 184 MCUs) has 7977 bits (rep 1032), src 58844 dest 51896 diff 6948 offset 6948.
-Strip (48,80: 225 MCUs) has 8693 bits (rep 1094), src 75715 dest 61822 diff 13893 offset 13893.
-Strip (48,96: 266 MCUs) has 8296 bits (rep 1021), src 95764 dest 74272 diff 21492 offset 21492.
-Strip (48,112: 307 MCUs) has 7224 bits (rep 984), src 115403 dest 86636 diff 28767 offset 28767.
-Strip (48,128: 348 MCUs) has 7275 bits (rep 954), src 132502 dest 97495 diff 35007 offset 35007.
-Strip (48,144: 389 MCUs) has 8228 bits (rep 1009), src 149126 dest 107798 diff 41328 offset 41328.
-Strip (48,160: 430 MCUs) has 11197 bits (rep 986), src 166433 dest 117886 diff 48547 offset 48547.
-Strip (48,176: 471 MCUs) has 9666 bits (rep 962), src 187637 dest 128879 diff 58758 offset 58758.
-Strip (48,192: 512 MCUs) has 10832 bits (rep 1172), src 209291 dest 141829 diff 67462 offset 67462.
+Strip (48,48: 143 MCUs) has 8020 bits (rep 1074), src 40095 dest 40095 diff 0 offset 0.
+Strip (48,64: 184 MCUs) has 7977 bits (rep 1032), src 58844 dest 51898 diff 6946 offset 6946.
+Strip (48,80: 225 MCUs) has 8693 bits (rep 1094), src 75715 dest 61824 diff 13891 offset 13891.
+Strip (48,96: 266 MCUs) has 8296 bits (rep 1021), src 95764 dest 74274 diff 21490 offset 21490.
+Strip (48,112: 307 MCUs) has 7224 bits (rep 984), src 115403 dest 86638 diff 28765 offset 28765.
+Strip (48,128: 348 MCUs) has 7275 bits (rep 954), src 132502 dest 97497 diff 35005 offset 35005.
+Strip (48,144: 389 MCUs) has 8228 bits (rep 1009), src 149126 dest 107800 diff 41326 offset 41326.
+Strip (48,160: 430 MCUs) has 11197 bits (rep 986), src 166433 dest 117888 diff 48545 offset 48545.
+Strip (48,176: 471 MCUs) has 9666 bits (rep 962), src 187637 dest 128881 diff 58756 offset 58756.
+Strip (48,192: 512 MCUs) has 10832 bits (rep 1172), src 209291 dest 141831 diff 67460 offset 67460.
 Saving: 9 markers
 Saved marker ffe0 length 16 at 2
 Saved marker ffdb length 67 at 20
@@ -159,9 +161,10 @@ Saved marker ffc4 length 31 at 177
 Saved marker ffc4 length 181 at 210
 Saved marker ffc4 length 31 at 393
 Saved marker ffc4 length 181 at 426
-Inserted 876 stuff_bytes in 54530 now 55406
+Inserted 808 stuff_bytes in 54530 now 55338
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -196,12 +199,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -237,6 +240,7 @@ Saved marker ffc4 length 181 at 426
 Inserted 934 stuff_bytes in 64170 now 65104
 Saved marker ffda length 64172 at 609
 Got marker 0xffe0 APPn at 2
+Generic APPn ffe0 loaded. Marker string: JFIF
 Got marker 0xffdb DQT at 20
  sz 67 nextloc 89
 Got marker 0xffdb DQT at 89
@@ -271,12 +275,12 @@ SOS slice 12
 In scan found marker 0xffd9
 EOI at 65719 (len 65106)
 Removed 934 stuff_bytes in 65104 now 64170
-Comp 0 DC DHT: 0
-Comp 0 AC DHT: 1
-Comp 1 DC DHT: 2
-Comp 1 AC DHT: 3
-Comp 2 DC DHT: 2
-Comp 2 AC DHT: 3
+Comp 0 0DC DHT: 0
+Comp 0 1AC DHT: 1
+Comp 1 0DC DHT: 2
+Comp 1 1AC DHT: 3
+Comp 2 0DC DHT: 2
+Comp 2 1AC DHT: 3
 Expect 1271 MCUS. 82x62 blocks h:2 v:2
 
 
@@ -285,98 +289,98 @@ MCU 0 dc_value -72 y_value_ -147. Doubling gain to 1
 MCU 5 dc_value 221 y_value_ 322. Doubling gain to 2
 Got to 1271 mcus. 4 bits left.
 Reordering Image 82, 62 = 5084 pixels. 5084 bytes. h,v 2,2
-padding 3 bits mask 07
-Redacted data length 48620 bytes 388957 bits
-sos block now 48630 bytes
+padding 7 bits mask 7f
+Redacted data length 48619 bytes 388945 bits
+sos block now 48629 bytes
 DecodeImage H 648 W 486
 Redacting thumbnail
 Redaction::11 strips
 Strip (48,80: 238 MCUs) has 13672 bits (rep 2012), src 75715 dest 75715 diff 0 offset 0.
-Strip (48,96: 279 MCUs) has 13048 bits (rep 2073), src 95764 dest 84104 diff 11660 offset 11660.
-Strip (48,112: 320 MCUs) has 11200 bits (rep 1463), src 115403 dest 92768 diff 22635 offset 22635.
-Strip (48,128: 361 MCUs) has 10962 bits (rep 1415), src 132502 dest 100130 diff 32372 offset 32372.
-Strip (48,144: 402 MCUs) has 12017 bits (rep 1407), src 149126 dest 107207 diff 41919 offset 41919.
-Strip (48,160: 443 MCUs) has 15378 bits (rep 1479), src 166433 dest 113904 diff 52529 offset 52529.
-Strip (48,176: 484 MCUs) has 14171 bits (rep 1819), src 187637 dest 121209 diff 66428 offset 66428.
-Strip (48,192: 525 MCUs) has 16902 bits (rep 1736), src 209291 dest 130511 diff 78780 offset 78780.
-Strip (48,208: 566 MCUs) has 13576 bits (rep 1542), src 233161 dest 139215 diff 93946 offset 93946.
-Strip (48,224: 607 MCUs) has 13449 bits (rep 1517), src 253518 dest 147538 diff 105980 offset 105980.
-Strip (48,240: 648 MCUs) has 7856 bits (rep 1449), src 273553 dest 155641 diff 117912 offset 117912.
-Before patching size 48630 bytes 389037 bits.
+Strip (48,96: 279 MCUs) has 13048 bits (rep 2077), src 95764 dest 84104 diff 11660 offset 11660.
+Strip (48,112: 320 MCUs) has 11200 bits (rep 1463), src 115403 dest 92772 diff 22631 offset 22631.
+Strip (48,128: 361 MCUs) has 10962 bits (rep 1415), src 132502 dest 100134 diff 32368 offset 32368.
+Strip (48,144: 402 MCUs) has 12017 bits (rep 1407), src 149126 dest 107211 diff 41915 offset 41915.
+Strip (48,160: 443 MCUs) has 15378 bits (rep 1479), src 166433 dest 113908 diff 52525 offset 52525.
+Strip (48,176: 484 MCUs) has 14171 bits (rep 1819), src 187637 dest 121213 diff 66424 offset 66424.
+Strip (48,192: 525 MCUs) has 16902 bits (rep 1732), src 209291 dest 130515 diff 78776 offset 78776.
+Strip (48,208: 566 MCUs) has 13576 bits (rep 1538), src 233161 dest 139215 diff 93946 offset 93946.
+Strip (48,224: 607 MCUs) has 13449 bits (rep 1513), src 253518 dest 147534 diff 105984 offset 105984.
+Strip (48,240: 648 MCUs) has 7856 bits (rep 1445), src 273553 dest 155633 diff 117920 offset 117920.
+Before patching size 48629 bytes 389025 bits.
 Patching in strip 0
 Patch at 75795 (80) 2012->13672
-Shifting data (389037 bits in 48630 bytes) up by 11660 bits starting at b75795 B9474. New length 400697
+Shifting data (389025 bits in 48629 bytes) up by 11660 bits starting at b75795 B9474. New length 400685
 fb 10931 flm 1 fhm 254 so 1
 Ended with src_byte 9473
 i 11183 shift_final 3 mask he0 l1f
-padding 7 bits mask 7f
+padding 3 bits mask 07
 Patching in strip 1
-Patch at 95844 (80) 2073->13048
-Shifting data (400697 bits in 50088 bytes) up by 10975 bits starting at b95844 B11980. New length 411672
-fb 13352 flm 31 fhm 224 so 5
-Ended with src_byte 11980
+Patch at 95844 (80) 2077->13048
+Shifting data (400685 bits in 50086 bytes) up by 10971 bits starting at b95844 B11980. New length 411656
+fb 13351 flm 1 fhm 254 so 1
+Ended with src_byte 11979
 i 13611 shift_final 4 mask hf0 lf
 Patching in strip 2
 Patch at 115483 (80) 1463->11200
-Shifting data (411672 bits in 51459 bytes) up by 9737 bits starting at b115483 B14435. New length 421409
+Shifting data (411656 bits in 51457 bytes) up by 9737 bits starting at b115483 B14435. New length 421393
 fb 15652 flm 15 fhm 240 so 4
 Ended with src_byte 14434
 i 15835 shift_final 3 mask he0 l1f
 padding 7 bits mask 7f
 Patching in strip 3
 Patch at 132582 (80) 1415->10962
-Shifting data (421409 bits in 52677 bytes) up by 9547 bits starting at b132582 B16572. New length 430956
+Shifting data (421393 bits in 52675 bytes) up by 9547 bits starting at b132582 B16572. New length 430940
 fb 17766 flm 127 fhm 128 so 7
 Ended with src_byte 16572
 i 17942 shift_final 8 mask hff l0
 padding 4 bits mask 0f
 Patching in strip 4
 Patch at 149206 (80) 1407->12017
-Shifting data (430956 bits in 53870 bytes) up by 10610 bits starting at b149206 B18650. New length 441566
+Shifting data (430940 bits in 53868 bytes) up by 10610 bits starting at b149206 B18650. New length 441550
 fb 19977 flm 255 fhm 0 so 8
 Ended with src_byte 18650
 i 20152 shift_final 7 mask hfe l1
 padding 2 bits mask 03
 Patching in strip 5
 Patch at 166513 (80) 1479->15378
-Shifting data (441566 bits in 55196 bytes) up by 13899 bits starting at b166513 B20814. New length 455465
+Shifting data (441550 bits in 55194 bytes) up by 13899 bits starting at b166513 B20814. New length 455449
 fb 22551 flm 15 fhm 240 so 4
 Ended with src_byte 20813
 i 22736 shift_final 3 mask he0 l1f
 padding 7 bits mask 7f
 Patching in strip 6
 Patch at 187717 (80) 1819->14171
-Shifting data (455465 bits in 56934 bytes) up by 12352 bits starting at b187717 B23464. New length 467817
+Shifting data (455449 bits in 56932 bytes) up by 12352 bits starting at b187717 B23464. New length 467801
 fb 25008 flm 7 fhm 248 so 3
 Ended with src_byte 23463
 i 25235 shift_final 8 mask hff l0
 padding 7 bits mask 7f
 Patching in strip 7
-Patch at 209371 (80) 1736->16902
-Shifting data (467817 bits in 58478 bytes) up by 15166 bits starting at b209371 B26171. New length 482983
-fb 28067 flm 127 fhm 128 so 7
-Ended with src_byte 26171
+Patch at 209371 (80) 1732->16902
+Shifting data (467801 bits in 58476 bytes) up by 15170 bits starting at b209371 B26171. New length 482971
+fb 28067 flm 7 fhm 248 so 3
+Ended with src_byte 26170
 i 28284 shift_final 1 mask h80 l7f
-padding 1 bits mask 01
+padding 5 bits mask 1f
 Patching in strip 8
-Patch at 233241 (80) 1542->13576
-Shifting data (482983 bits in 60373 bytes) up by 12034 bits starting at b233241 B29155. New length 495017
-fb 30659 flm 31 fhm 224 so 5
+Patch at 233241 (80) 1538->13576
+Shifting data (482971 bits in 60372 bytes) up by 12038 bits starting at b233241 B29155. New length 495009
+fb 30659 flm 1 fhm 254 so 1
 Ended with src_byte 29154
 i 30852 shift_final 1 mask h80 l7f
 padding 7 bits mask 7f
 Patching in strip 9
-Patch at 253598 (80) 1517->13449
-Shifting data (495017 bits in 61878 bytes) up by 11932 bits starting at b253598 B31699. New length 506949
-fb 33191 flm 63 fhm 192 so 6
-Ended with src_byte 31699
+Patch at 253598 (80) 1513->13449
+Shifting data (495009 bits in 61877 bytes) up by 11936 bits starting at b253598 B31699. New length 506945
+fb 33191 flm 3 fhm 252 so 2
+Ended with src_byte 31698
 i 33380 shift_final 7 mask hfe l1
-padding 3 bits mask 07
+padding 7 bits mask 7f
 Patching in strip 10
-Patch at 273633 (80) 1449->7856
-Shifting data (506949 bits in 63369 bytes) up by 6407 bits starting at b273633 B34204. New length 513356
-fb 35005 flm 255 fhm 0 so 8
-Ended with src_byte 34204
+Patch at 273633 (80) 1445->7856
+Shifting data (506945 bits in 63369 bytes) up by 6411 bits starting at b273633 B34204. New length 513356
+fb 35005 flm 15 fhm 240 so 4
+Ended with src_byte 34203
 i 35186 shift_final 1 mask h80 l7f
 padding 4 bits mask 0f
 Saving: 9 markers

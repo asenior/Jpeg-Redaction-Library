@@ -68,13 +68,13 @@ TiffIfd::TiffIfd(FILE *pFile, unsigned int ifdoffset,
   printf("Loaded Image data\n");
   if (loadall)
     LoadAll(pFile);
-  ListTags();
+  Print();
 }
 
   // Print all tags to stdout.
-void TiffIfd::ListTags() const {
+void TiffIfd::Print() const {
   if (debug >= 0)
-    printf("%s:%d Listing %d tags\n", __FILE__, __LINE__, GetNTags());
+    printf("%s:%d Listing %zu tags\n", __FILE__, __LINE__, GetNTags());
   TiffTag *width_tag = FindTag(TiffTag::tag_ImageWidth);
   TiffTag *height_tag = FindTag(TiffTag::tag_ImageHeight);
   if (width_tag && height_tag) {
@@ -160,7 +160,7 @@ unsigned int TiffIfd::Write(FILE *pFile,
 
   // If we're keeping track of pending pointers, fill them in now.
   if (pending_pointers_where.size() != pending_pointers_what.size()) {
-    printf("Pending pointers where %d what %d\n", 
+    printf("Pending pointers where %zu what %zu\n", 
 	   pending_pointers_where.size(), pending_pointers_what.size());
     throw("pending pointers don't match");
   }

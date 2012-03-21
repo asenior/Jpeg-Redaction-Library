@@ -6,6 +6,97 @@ IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 IFDSize: 2 
 
  DIDIFD
@@ -30,7 +121,89 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -109,6 +282,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 0x0202 ThumbnailLength    1x4 uint32     (6716) 
 0x0213 YCbCrPositioning   1x2 uint16     (2) 
 
+Generic APPn ffe2 loaded. Marker string: MPF
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
@@ -145,6 +319,97 @@ IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 IFDSize: 2 
 
  DIDIFD
@@ -169,7 +434,89 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -248,6 +595,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 0x0202 ThumbnailLength    1x4 uint32     (6716) 
 0x0213 YCbCrPositioning   1x2 uint16     (2) 
 
+Generic APPn ffe2 loaded. Marker string: MPF
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
@@ -277,6 +625,97 @@ IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 IFDSize: 2 
 
  DIDIFD
@@ -301,7 +740,89 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -380,6 +901,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 0x0202 ThumbnailLength    1x4 uint32     (6716) 
 0x0213 YCbCrPositioning   1x2 uint16     (2) 
 
+Generic APPn ffe2 loaded. Marker string: MPF
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
@@ -407,6 +929,97 @@ IFDSize: 34
 
  DIDIFD
 Loaded Image data
+Reading Makernote
+Loading Panasonic
+IFDSize: 79 
+
+ DIDIFD
+Loaded Image data
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+Panasonic69: ENGLAND
+Panasonic6b: LONDON
+Panasonic6d: LONDON
+Panasonic6f: ROSSLYN HILL UNITARIAN CHAPEL
 IFDSize: 2 
 
  DIDIFD
@@ -431,7 +1044,89 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9208 LightSource        1x2 uint16     (0) 
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
-0x927c MakerNote         10088x1 bytes      (0x50 0x61 0x6e 0x61 ) 
+0x927c MakerNote         10088x1 bytes      (Now printing makernote
+tiff_ifd.cpp:77 Listing 79 tags
+0x0001 GPSlat_ref         1x2 uint16     (2) 
+0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
+0x0003 GPSlong_ref        1x2 uint16     (1) 
+0x0007 GPStime_stamp      1x2 uint16     (1) 
+0x000f GPStrack           2x1 uint8      (16 0) 
+0x001a GPSdest_dist       1x2 uint16     (2) 
+0x001c Unknown            1x2 uint16     (2) 
+0x001f Unknown            1x2 uint16     (7) 
+0x0020 Unknown            1x2 uint16     (2) 
+0x0021 Unknown           8200x1 bytes      (0x44 0x56 0x01 0x02 ) 
+0x0022 Unknown            1x2 uint16     (0) 
+0x0023 Unknown            1x2 uint16     (0) 
+0x0024 Unknown            1x2 uint16     (0) 
+0x0025 Unknown           16x1 bytes      (0x46 0x35 0x33 0x31 ) 
+0x0026 Unknown            4x1 bytes      (0x30 0x33 0x30 0x30) 
+0x0027 Unknown            1x2 uint16     (0) 
+0x0028 Unknown            1x2 uint16     (1) 
+0x0029 Unknown            1x4 uint32     (3713) 
+0x002a Unknown            1x2 uint16     (0) 
+0x002b Unknown            1x4 uint32     (0) 
+0x002c Unknown            1x2 uint16     (0) 
+0x002d Unknown            1x2 uint16     (0) 
+0x002e Unknown            1x2 uint16     (1) 
+0x002f Unknown            1x2 uint16     (1) 
+0x0030 Unknown            1x2 uint16     (1) 
+0x0031 Unknown            1x2 uint16     (4) 
+0x0032 Unknown            1x2 uint16     (0) 
+0x0033 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x0034 Unknown            1x2 uint16     (1) 
+0x0035 Unknown            1x2 uint16     (1) 
+0x0036 Unknown            1x2 uint16     (65535) 
+0x0037 Unknown            1x2 uint16     (257) 
+0x0038 Unknown            1x2 uint16     (2) 
+0x0039 Unknown            1x2 uint16     (0) 
+0x003a Unknown            1x2 uint16     (1) 
+0x003b Unknown            1x2 uint16     (1) 
+0x003c Unknown            1x2 uint16     (65535) 
+0x003d Unknown            1x2 uint16     (1) 
+0x003e Unknown            1x2 uint16     (1) 
+0x003f Unknown            1x2 uint16     (0) 
+0x0040 Unknown            1x2 uint16     (0) 
+0x0041 Unknown            1x2 uint16     (0) 
+0x0049 Unknown            1x2 uint16     (0) 
+0x004d Unknown            2x8 urational  (0.500000 0.500000) 
+0x004e Unknown           42x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x004f Unknown            1x2 uint16     (0) 
+0x0050 Unknown            1x2 uint16     (0) 
+0x0057 Unknown            1x2 uint16     (0) 
+0x0059 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x005d Unknown            1x2 uint16     (0) 
+0x005e Unknown            4x1 bytes      (0x00 0x00 0x00 0x06) 
+0x0061 Unknown           148x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0062 Unknown            1x2 uint16     (0) 
+0x0063 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+0x0065 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0066 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0067 Unknown           64x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x0068 Unknown            1x1 uint8      (1) 
+0x0069 Unknown           72x1 bytes      (0x45 0x4e 0x47 0x4c ) 
+0x006a Unknown            1x1 uint8      (1) 
+0x006b Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006c Unknown            1x1 uint8      (1) 
+0x006d Unknown           72x1 bytes      (0x4c 0x4f 0x4e 0x44 ) 
+0x006e Unknown            1x1 uint8      (1) 
+0x006f Unknown           128x1 bytes      (0x52 0x4f 0x53 0x53 ) 
+0x0070 Unknown            1x1 uint8      (0) 
+0x0071 Unknown           128x1 bytes      (0x00 0x00 0x00 0x00 ) 
+0x8000 Unknown            4x1 bytes      (0x30 0x31 0x33 0x33) 
+0x8001 Unknown            1x2 uint16     (0) 
+0x8002 Unknown            1x2 uint16     (1) 
+0x8003 Unknown            1x2 uint16     (1) 
+0x8004 Unknown            1x2 uint16     (1691) 
+0x8005 Unknown            1x2 uint16     (1054) 
+0x8006 Unknown            1x2 uint16     (1984) 
+0x8007 Unknown            1x2 uint16     (1) 
+0x8008 Unknown            1x2 uint16     (1) 
+0x8009 Unknown            1x2 uint16     (1) 
+0x8010 Unknown           20x1 string     ("9999:99:99 00:00:00") 
+0x8012 Unknown            4x1 bytes      (0x00 0x00 0x00 0x00) 
+
+) 
 0xa000 Unknown            4x1 bytes      (0x30 0x31 0x30 0x30) 
 0xa001 Unknown            1x2 uint16     (1) 
 0xa002 Unknown            1x4 uint32     (3264) 
@@ -510,6 +1205,7 @@ tiff_ifd.cpp:77 Listing 8 tags
 0x0202 ThumbnailLength    1x4 uint32     (6716) 
 0x0213 YCbCrPositioning   1x2 uint16     (2) 
 
+Generic APPn ffe2 loaded. Marker string: MPF
 Component 1 H 2 V 1, Table 0
 Component 2 H 1 V 1, Table 1
 Component 3 H 1 V 1, Table 1
@@ -517,6 +1213,21 @@ Didn't find 1
 Didn't find 5
 Didn't find 1
 Didn't find 5
+Write TiffIfd Locs Where: 937 What: 1773-0
+Write TiffIfd Locs Where: 985 What: 9973-0
+Write TiffIfd Locs Where: 1153 What: 9989-0
+Write TiffIfd Locs Where: 1345 What: 10009-0
+Write TiffIfd Locs Where: 1357 What: 10025-0
+Write TiffIfd Locs Where: 1441 What: 10067-0
+Write TiffIfd Locs Where: 1477 What: 10215-0
+Write TiffIfd Locs Where: 1489 What: 10279-0
+Write TiffIfd Locs Where: 1501 What: 10343-0
+Write TiffIfd Locs Where: 1525 What: 10407-0
+Write TiffIfd Locs Where: 1549 What: 10479-0
+Write TiffIfd Locs Where: 1573 What: 10551-0
+Write TiffIfd Locs Where: 1597 What: 10623-0
+Write TiffIfd Locs Where: 1621 What: 10751-0
+Write TiffIfd Locs Where: 1753 What: 10879-0
 Write TiffIfd Locs Where: 315 What: 719-12
 Write TiffIfd Locs Where: 327 What: 727-12
 Write TiffIfd Locs Where: 375 What: 735-12
@@ -526,14 +1237,14 @@ Write TiffIfd Locs Where: 423 What: 783-12
 Write TiffIfd Locs Where: 435 What: 791-12
 Write TiffIfd Locs Where: 483 What: 799-12
 Write TiffIfd Locs Where: 495 What: 807-12
-Write TiffIfd Locs Where: 555 What: 10895-12
-Write TiffIfd Locs Where: 639 What: 10925-12
-Write TiffIfd Locs Where: 10967 What: 11095-12
-Write TiffIfd Locs Where: 10991 What: 11119-12
-Write TiffIfd Locs Where: 11003 What: 11143-12
-Write TiffIfd Locs Where: 11051 What: 11167-12
-Write TiffIfd Locs Where: 11063 What: 11175-12
-Write TiffIfd Locs Where: 11087 What: 11185-12
+Write TiffIfd Locs Where: 555 What: 10899-12
+Write TiffIfd Locs Where: 639 What: 10929-12
+Write TiffIfd Locs Where: 10971 What: 11099-12
+Write TiffIfd Locs Where: 10995 What: 11123-12
+Write TiffIfd Locs Where: 11007 What: 11147-12
+Write TiffIfd Locs Where: 11055 What: 11171-12
+Write TiffIfd Locs Where: 11067 What: 11179-12
+Write TiffIfd Locs Where: 11091 What: 11189-12
 Write TiffIfd Locs Where: 30 What: 206-12
 Write TiffIfd Locs Where: 42 What: 216-12
 Write TiffIfd Locs Where: 54 What: 251-12
@@ -542,12 +1253,12 @@ Write TiffIfd Locs Where: 90 What: 267-12
 Write TiffIfd Locs Where: 114 What: 275-12
 Write TiffIfd Locs Where: 126 What: 285-12
 Write TiffIfd Locs Where: 150 What: 305-12
-Write TiffIfd Locs Where: 162 What: 10933-12
-Write TiffIfd Locs Where: 174 What: 11196-12
-Write TiffIfd Locs Where: 186 What: 11404-12
-Write TiffIfd Locs Where: 198 What: 11468-12
+Write TiffIfd Locs Where: 162 What: 10937-12
+Write TiffIfd Locs Where: 174 What: 11200-12
+Write TiffIfd Locs Where: 186 What: 11408-12
+Write TiffIfd Locs Where: 198 What: 11472-12
 Saving thumbnail to file
 thumbnail written
-Write TiffIfd Locs Where: 11630 What: 11698-12
-Write TiffIfd Locs Where: 11642 What: 11706-12
-Write TiffIfd Locs Where: 11666 What: 11714-12
+Write TiffIfd Locs Where: 11634 What: 11702-12
+Write TiffIfd Locs Where: 11646 What: 11710-12
+Write TiffIfd Locs Where: 11670 What: 11718-12

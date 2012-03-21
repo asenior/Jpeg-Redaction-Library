@@ -105,7 +105,7 @@ class Photoshop3Block
     }
 
     int Write(FILE *pFile) {
-      printf("Writing BIM3 at %d\n", ftell(pFile));
+      printf("Writing BIM3 at %zu\n", ftell(pFile));
       const bool arch_big_endian = ArchBigEndian();
       int length = 0;
       int iRV;
@@ -142,7 +142,7 @@ class Photoshop3Block
       iRV = fwrite(&bim_length_rounded_swap, sizeof(unsigned int), 1, pFile);
       length += sizeof(unsigned int);
 
-      printf("Writing BIM length %d, %x %d\n",
+      printf("Writing BIM length %d, %p %zu\n",
 	     bim_length_rounded, &data_[0], data_.size());
       if (bim_type_ == tag_bim_iptc_) {
 	if (iptc_ == NULL) throw("IPTC is null in write");

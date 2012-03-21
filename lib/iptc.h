@@ -174,7 +174,7 @@ public:
       iRV = fread(&data_[0], sizeof(unsigned char), length, pFile);
 
       if (iRV != length) throw("IPTC read fail length");
-      printf("IPTC dataset %d,%d len %d", record_, tag_, length);
+      printf("IPTC dataset %d,%d len %lu", record_, tag_, length);
       for (int i =0; i < length; ++i)
 	printf("%c", data_[i]);
       printf("\n");

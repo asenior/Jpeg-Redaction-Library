@@ -89,5 +89,5 @@ int main(int argc, char **argv) {
   filename = argv[start_arg];
   outfile = argv[start_arg+1];
   regions = argv[start_arg+2];
-  jpeg_redaction::redact(filename, outfile, regions);
+  return jpeg_redaction::redact(filename, outfile, regions);
 }

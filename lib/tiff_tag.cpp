@@ -33,7 +33,7 @@
 
 namespace jpeg_redaction {
   TiffTag::TiffTag(FILE *pFile, bool byte_swapping) : 
-    data_(NULL), subifd_(NULL) {
+    data_(NULL), subifd_(NULL), makernote_(NULL) {
     if (pFile == NULL)
       throw("NULL file");
     int iRV = fread(&tagid_, sizeof(short), 1, pFile);
@@ -84,7 +84,7 @@ namespace jpeg_redaction {
 	     value, value, totallength);
   }
   TiffTag::TiffTag(int tagid, enum tag_types type, int count,
-		   unsigned char *data) {
+		   unsigned char *data) : makernote_(NULL) {
     tagid_ = tagid;
     type_ = type;
     count_ = count;
@@ -270,7 +270,13 @@ int TiffTag::WriteDataBlock(FILE *pFile, int subfileoffset) {
     valpointerout_ = subifd_->Write(pFile, zero, subfileoffset);
     return valpointerout_; // Will get subtracted later.
   }
-
+  if (tagid_ == tag_MakerNote) {
+    if (makernote_ != NULL) {
+      valpointerout_ = ftell(pFile);
+      makernote_->Write(pFile, 0);
+      return valpointerout_;
+    }
+  }
   if (totallength > 4) {
     if (!loaded_)
       throw("Trying to write when data was never read");
@@ -302,32 +308,35 @@ int TiffTag::Load(FILE *pFile, unsigned int subfileoffset,
 			    subfileoffset, byte_swapping);
     loaded_ = true;
     return 1;
-  } else {
-    int iRV = fseek(pFile, position, SEEK_SET);
-    if (tagid_ == tag_MakerNote) {
-      // printf("\n\n\n*******************************************************\n"
-      // 	     "************************************************************\n",
-      // 	     "Makernote\n");
-      // MakerNoteFactory factory;
-      // factory.SetManufacturer("Panasonic");
-      // MakerNote *maker = factory.Read(pFile, subfileoffset, count_);
-      //    //    position = valpointer_;
-    }
-    const int type_len = LengthOfType(type_);
-    const int totallength = count_ * type_len;
-    data_ = new unsigned char [totallength];
-    iRV = fread(data_, sizeof(char), totallength, pFile);
-    if (iRV  != totallength)
-      throw("Couldn't read data block.");
-    if (byte_swapping) {
-      if (type_ == tiff_rational || type_ == tiff_urational)
-	ByteSwapInPlace(data_, count_ * 2, type_len/2);
-      else
-	ByteSwapInPlace(data_, count_, type_len);
-    }
-    loaded_ = true;
-    return totallength;
   }
+  int iRV = fseek(pFile, position, SEEK_SET);
+  if (tagid_ == tag_MakerNote) {
+    printf("Reading Makernote\n");
+    MakerNoteFactory factory;
+    makernote_ = factory.Read(pFile, subfileoffset, count_);
+    if (makernote_ != NULL) {
+      loaded_ = true;
+      return count_;
+    } else {
+      fprintf(stderr, "Failed to read Makernote.");
+      // Otherwise fall through to general handling.
+    }
+    //    position = valpointer_;
+  }
+  const int type_len = LengthOfType(type_);
+  const int totallength = count_ * type_len;
+  data_ = new unsigned char [totallength];
+  iRV = fread(data_, sizeof(char), totallength, pFile);
+  if (iRV  != totallength)
+    throw("Couldn't read data block.");
+  if (byte_swapping) {
+    if (type_ == tiff_rational || type_ == tiff_urational)
+      ByteSwapInPlace(data_, count_ * 2, type_len/2);
+    else
+      ByteSwapInPlace(data_, count_, type_len);
+  }
+  loaded_ = true;
+  return totallength;
 }
 
 void TiffTag::SetValOut(unsigned int val) {
@@ -351,7 +360,14 @@ void TiffTag::TraceValue(int maxvals) const {
     printf("IFD %d", valpointer_);
     return;
   }
-
+  if (tagid_ == tag_MakerNote) {
+    if (makernote_) {
+      printf("Now printing makernote\n");
+      makernote_->Print();
+    } else
+      printf("unresolved makernote...");
+    return;
+  }
   for(int i=0; i<maxvals && i< count_; ++i) {
     switch(type_) {
     case tiff_string:

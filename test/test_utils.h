@@ -33,10 +33,13 @@ namespace jpeg_redaction {
 		   const char *const fn);
     int test_loadallfalse(const char * const filename);
     int test_readwrite(const char * const filename);
-    int test_redaction(const char * const filename);
+    int test_redaction(const char * const filename,
+		       const char * const regions);
+    int test_redaction_pack_unpack(const char * const filename,
+				   const char *const regions);
     int test_reversingredaction(const char * const filename,
 				const Redaction::Region &rect);
     int test_reversingredactions_multi(const std::string &filename);
-  } // namespace tests
-} // namespace jpeg_redaction
+  }  // namespace tests
+}  // namespace jpeg_redaction
 #endif  // INCLUDE_JPEG_REDACTION_TEST_TEST_UTILS

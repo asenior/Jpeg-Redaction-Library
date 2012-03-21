@@ -35,10 +35,10 @@ public:
       throw("ShiftTail: shift is negative");
 
     if (debug > 0)
-      printf("Shifting data (%d bits in %d bytes) up by %d bits "
-	     "starting at b%d B%d. New length %d\n",
-	     *data_bits, data->size(), shift, start,
-	     start/8, *data_bits + shift);
+      printf("Shifting data (%d bits in %zu bytes) up by %d bits "
+	   "starting at b%d B%d. New length %d\n",
+	   *data_bits, data->size(), shift, start,
+	   start/8, *data_bits + shift);
 
     // Enough space for everything.
     *data_bits += shift;
@@ -146,3 +146,4 @@ public:
 }; 
 }  // namespace jpeg_redaction
 #endif  // INCLUDE_JPEG_REDACTION_LIBRARY_BIT_SHIFTS
+

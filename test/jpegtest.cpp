@@ -44,7 +44,8 @@ int main(int argc, char **argv) {
     fprintf(stderr, "Failed on test_readwrite\n");
     exit(1);
   }
-  rv = jpeg_redaction::tests::test_redaction(filename.c_str());
+  rv = jpeg_redaction::tests::test_redaction(filename.c_str(),
+					     ";50,300,50,200;");
   if (rv)  {
     fprintf(stderr, "Failed on test_redaction\n");
     exit(1);

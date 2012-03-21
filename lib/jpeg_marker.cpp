@@ -67,7 +67,7 @@ namespace jpeg_redaction {
     // Then write all the data up to & including it and write out the
     // stuff byte (00).
     if (check > data_.size()) {
-      fprintf(stderr, "data size is %d\n", data_.size());
+      fprintf(stderr, "data size is %zu\n", data_.size());
       throw("data too short in stuffing.");
     }
     while (check < data_.size()) {
@@ -88,17 +88,17 @@ namespace jpeg_redaction {
     if (written < check)
       rv = fwrite(&data_[written], sizeof(char), check - written, pFile);
     if (debug > 0)
-      printf("Inserted %d stuff_bytes in %d now %d\n", stuff_bytes,
+      printf("Inserted %d stuff_bytes in %zu now %zu\n", stuff_bytes,
 	     data_.size(), data_.size() + stuff_bytes);
   }
   void JpegMarker::RemoveStuffBytes() {
     if (data_.size() != length_ - 2) {
-      fprintf(stderr, "Data %d len %d\n", data_.size(), length_);
+      fprintf(stderr, "Data %zu len %d\n", data_.size(), length_);
       throw("Data length mismatch in RemoveStuffBytes");
     }
     const int start_of_huffman = 10;
     if (data_.size() < start_of_huffman) {
-      fprintf(stderr, "Data %d len %d\n", data_.size(), length_);
+      fprintf(stderr, "Data %zu len %d\n", data_.size(), length_);
       throw("Data too short in RemoveStuffBytes");
     }
 
@@ -113,7 +113,7 @@ namespace jpeg_redaction {
       }
     }
     if (debug > 0)
-      printf("Removed %d stuff_bytes in %d now %d\n",
+      printf("Removed %d stuff_bytes in %zu now %zu\n",
 	     stuff_bytes, data_.size(), data_.size() - stuff_bytes);
     length_ -= stuff_bytes;
     data_.resize(data_.size() - stuff_bytes);

@@ -72,14 +72,14 @@ namespace jpeg_redaction {
     bool compare_bytes(const std::vector<unsigned char> &orig,
 		       const std::vector<unsigned char> &other) {
       if (orig.size() != other.size()) {
-	fprintf(stderr, "Size mismatch: orig %d vs new %d\n",
+	fprintf(stderr, "Size mismatch: orig %zu vs new %zu\n",
 		orig.size(), other.size());
 	return false;
       }
       for(int i = 0; i < orig.size(); ++i) {
 	if (orig[i] != other[i]) {
 	  fprintf(stderr,
-		  "Byte mismatch at %d of %d: new %02x vs orig %02x\n",
+		  "Byte mismatch at %d of %zu: new %02x vs orig %02x\n",
 		  i, orig.size(), other[i], orig[i]);
 	  return false;
 	}
@@ -132,14 +132,15 @@ namespace jpeg_redaction {
     }
 
     // Test wiping a region from a jpeg file.
-    int test_redaction(const char * const filename) {
+    int test_redaction(const char * const filename,
+		       const char *const regions) {
       printf("Testing redaction\n");
       try {
 	Jpeg j2;
 	bool success = j2.LoadFromFile(filename, true);
 	Redaction redaction;
 
-	redaction.AddRegions(";50,300,50,200;");
+	redaction.AddRegions(regions);
 	j2.DecodeImage(&redaction, NULL);
 	if (!redaction.ValidateStrips())
 	  throw("Strips not valid");
@@ -148,6 +149,34 @@ namespace jpeg_redaction {
 	  fprintf(stderr, "Couldn't save %s\n", output_filename.c_str());
 	  return 1;
 	}
+      } catch (const char *error) {
+	fprintf(stderr, "Error: <%s> at outer level\n", error);
+	return 1;
+      }
+      return 0;
+    }
+
+    // Test wiping a region from a jpeg file, packing data up in a blob
+    // and unpacking it.
+    int test_redaction_pack_unpack(const char * const filename,
+				   const char *const regions) {
+      printf("Testing redaction\n");
+      try {
+	Jpeg j2;
+	bool success = j2.LoadFromFile(filename, true);
+	Redaction redaction;
+
+	redaction.AddRegions(regions);
+	j2.DecodeImage(&redaction, NULL);
+	if (!redaction.ValidateStrips())
+	  throw("Strips not valid");
+	std::vector<unsigned char> redaction_pack;
+	redaction.Pack(&redaction_pack);
+	printf("Packed redaction object is %zu bytes\n", redaction_pack.size());
+	
+	Redaction unpacked_redaction;
+	unpacked_redaction.Unpack(redaction_pack);
+	j2.ReverseRedaction(unpacked_redaction);
       } catch (const char *error) {
 	fprintf(stderr, "Error: <%s> at outer level\n", error);
 	return 1;

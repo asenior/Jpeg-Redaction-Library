@@ -34,6 +34,7 @@
 
 namespace jpeg_redaction {
 class TiffIfd;
+ class MakerNote;
 class TiffTag
 {
 public:
@@ -240,7 +241,8 @@ public:
     strncpy((char*)data_, s, totallength);
   }
   static int LengthOfType(short type) {
-     if (type == tiff_int8|| type == tiff_uint8|| type == tiff_string|| type == tiff_bytes)
+     if (type == tiff_int8 || type == tiff_uint8 ||
+	 type == tiff_string|| type == tiff_bytes)
        return 1;
      if (type == tiff_uint16 || type == tiff_int16)
        return 2;
@@ -261,6 +263,7 @@ protected:
   unsigned int valpointer_;
   mutable unsigned int valpointerout_;
   TiffIfd *subifd_; // Makernote or Exif
+  MakerNote *makernote_;
 private:
   bool TagIsSubIFD() const;
 };

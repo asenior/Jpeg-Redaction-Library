@@ -27,6 +27,7 @@ READWRITE = testreadwrite
 METADATATESTBINARY = metadatatest
 IFDTESTBINARY = ifdtest
 EXIF_REMOVE = exiftest
+TEST_REDACTION = testredaction
 BITSHIFTS = bit_shifts_test
 EXIFTOOL = exiftool
 
@@ -37,7 +38,7 @@ default: all
 all: $(BINARY) $(BITSHIFTS) $(EXIF_REMOVE) $(IFDTESTBINARY)
 
 test: $(BINARY) test_ifd test_simple test_windows test_exif_removal \
-	test_bit_shifts
+	test_bit_shifts test_metadata test_devices test_redaction
 
 $(LIB): 
 	cd ../lib; $(MAKE) lib
@@ -47,6 +48,9 @@ $(BITSHIFTS): bit_shifts_test.cpp ../lib/bit_shifts.h testout_dir ../lib/debug_f
 
 $(BINARY): $(LIB) jpegtest.cpp test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib jpegtest.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
+
+$(TEST_REDACTION): $(LIB) test_redaction.cpp test_utils.cpp testout_dir
+	$(CC) $(CXXFLAGS) -I../lib test_redaction.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
 
 $(READWRITE): $(LIB) testreadwrite.cpp testout_dir test_utils.cpp testout_dir
 	$(CC) $(CXXFLAGS) -I../lib testreadwrite.cpp  test_utils.cpp $(LIBPATH) $(LIB)  -o $@
@@ -114,6 +118,10 @@ test_exif:  $(BINARY) testout_dir clean_rawgrey
 	diff testdata/testexif_golden.exiftxt testout/testexif.exiftxt > /dev/null
 	@echo "== " $@ " passed"
 
+test_redaction:  $(TEST_REDACTION) testout_dir
+	./$(TEST_REDACTION) > testout/test_redaction_output.log
+	@echo "== " $@ " passed"
+
 test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	./$(EXIF_REMOVE) testdata/windows.jpg > testout/testexif_removal_output.log
 	@cmp testout/test_noexif.jpg testdata/test_noexif_golden.jpg
@@ -123,7 +131,7 @@ test_exif_removal:  $(EXIF_REMOVE) testout_dir clean_rawgrey
 	@echo "== " $@ " passed"
 
 test_metadata:  $(METADATATESTBINARY) testout_dir
-	./$(METADATATESTBINARY) testdata/windows.jpg
+	./$(METADATATESTBINARY) testdata/windows.jpg > testout/test_metadata_output.log
 	@echo "== " $@ " passed"
 
 test_bit_shifts: $(BITSHIFTS)
@@ -132,5 +140,6 @@ test_bit_shifts: $(BITSHIFTS)
 
 test_devices:  $(READWRITE) testout_dir
 	./testreadwrite.sh
+
 
 # DO NOT DELETE

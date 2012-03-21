@@ -93,7 +93,7 @@ namespace jpeg_redaction {
       ifd_ = NULL;
     }
     virtual void Print() const {
-      if (debug > 0)
+      if (debug > 1)
 	printf("Panasonic makernote... %p\n", this);
       if (ifd_ == NULL)
 	throw("Panasonic ifd is NULL");

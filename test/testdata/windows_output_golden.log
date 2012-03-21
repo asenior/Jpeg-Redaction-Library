@@ -213,7 +213,6 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
 0x927c MakerNote         10088x1 bytes      (Now printing makernote
-Panasonic makernote... 0x5bce70
 tiff_ifd.cpp:77 Listing 79 tags
 0x0001 GPSlat_ref         1x2 uint16     (2) 
 0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
@@ -640,7 +639,6 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
 0x927c MakerNote         10088x1 bytes      (Now printing makernote
-Panasonic makernote... 0x5b9708
 tiff_ifd.cpp:77 Listing 79 tags
 0x0001 GPSlat_ref         1x2 uint16     (2) 
 0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
@@ -1109,7 +1107,6 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
 0x927c MakerNote         10088x1 bytes      (Now printing makernote
-Panasonic makernote... 0x5bce50
 tiff_ifd.cpp:77 Listing 79 tags
 0x0001 GPSlat_ref         1x2 uint16     (2) 
 0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 
@@ -1575,7 +1572,6 @@ tiff_ifd.cpp:77 Listing 34 tags
 0x9209 Flash              1x2 uint16     (16) 
 0x920a FocalLength        1x8 urational  (15.800000) 
 0x927c MakerNote         10088x1 bytes      (Now printing makernote
-Panasonic makernote... 0x5b96b8
 tiff_ifd.cpp:77 Listing 79 tags
 0x0001 GPSlat_ref         1x2 uint16     (2) 
 0x0002 GPSlat             4x1 bytes      (0x00 0x01 0x00 0x00) 

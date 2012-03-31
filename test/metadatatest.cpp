@@ -62,8 +62,12 @@ namespace tests {
 		blob.size(), length);
 	throw("Retrieved metadata wrong length");
       }
-      if (memcmp(retrieved_blob, &blob.front(), length) != 0)
-	throw("Retrieved metadata not identical.");
+      for (int i = 0; i < length; ++i) {
+	if (retrieved_blob[i] != blob[i]) {
+	  printf("Metadata mismatch at %d/%d\n", i, length);
+	    throw("Retrieved metadata not identical.");
+	}
+      }
     } catch (const char *error) {
       fprintf(stderr, "Error: <%s> at outer level\n", error);
       exit(1);
@@ -90,7 +94,7 @@ namespace tests {
       //	SaveBytes(sos_block->data_, "testout/redactedsos");
       std::vector<unsigned char> redaction_pack;
       redaction.Pack(&redaction_pack);
-      printf("Packed redaction object is %d bytes\n", redaction_pack.size());
+      printf("Packed redaction object is %zu bytes\n", redaction_pack.size());
       original.SetObscuraMetaData(redaction_pack.size(),
 				  &redaction_pack.front());
       

@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
     bool load_all = true;
     jpeg_redaction::TiffIfd ifd(pFile, ifd_loc, load_all,
                                 tiff_offset, byte_swapping);
-    printf("%d tags in IFD\n",  ifd.GetNTags());
+    printf("%zu tags in IFD\n",  ifd.GetNTags());
     if (ifd.GetNTags() != 14) throw("Wrong number of tags");
     const int tag_types[] = {0x10f, 0x110, 0x112, 0x11a, 0x11b, 0x128,
 			     0x131, 0x132, 0x213, 0x8769, 0x8825, 0xc4a5,
